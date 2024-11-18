@@ -1,0 +1,203 @@
+<template>
+  <header
+    class="ud-header bg-darkblue text-white top-0 left-0 z-50 w-full h-20 flex flex-row justify-center lg:justify-start lg:pl-12 lg:h-28"
+  >
+    <div class="flex flex-row items-center justify-around lg:justify-start">
+      <!--Menu Mobile-->
+      <nav class="navbar-mobile lg:hidden">
+        <!--Hamburger-->
+        <i
+          id="hamburgerNonactive"
+          class="fa-bars fas fa-2xl absolute left-3 z-999 text-white cursor-pointer w-7"
+        ></i>
+        <i
+          id="hamburgerActive"
+          class="fa-times fas fa-2xl absolute left-3 z-999 text-white cursor-pointer w-7"
+        ></i>
+        <div
+          class="modal hidden absolute top-0 left-0 z-100 bg-darkblue h-screen w-full text-4xl font-semibold items-center animate-menuslideinleft"
+        >
+          <div
+            class="navbar-mobile-list h-screen flex flex-col items-center justify-start pt-16 space-y-5"
+          >
+            <router-link
+              :to="{ name: 'Home' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page d'accueil du site 'Nation Sound'"
+              >Accueil</router-link
+            >
+            <router-link
+              :to="{ name: 'Informations' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page d'informations du site 'Nation Sound'"
+              >Informations</router-link
+            >
+            <router-link
+              :to="{ name: 'Programmation' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page programmation du site 'Nation Sound'"
+              >Programmation</router-link
+            >
+            <router-link
+              :to="{ name: 'Billetterie' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page billetterie du site 'Nation Sound'"
+              >Billetterie</router-link
+            >
+            <router-link
+              :to="{ name: 'Infos_pratiques' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page d'infos pratiques du site 'Nation Sound'"
+              >Infos pratiques</router-link
+            >
+            <router-link
+              :to="{ name: 'Partenaires' }"
+              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              title="Vers la page des partenaires du site 'Nation Sound'"
+              >Partenaires</router-link
+            >
+          </div>
+        </div>
+      </nav>
+      <!--Logo-->
+      <div class="lg:pr-6 flex flex-col items-center">
+        <router-link :to="{ name: 'Home' }" title="Page d'accueil">
+          <img
+            src="../images/logo.png"
+            id="logo"
+            class="w-20 md:w-28"
+            alt="logo"
+          />
+        </router-link>
+        <p class="hidden text-xl font-semibold lg:flex">
+          <span class="text-lightblue font-bold">11.12.13</span
+          ><span id="logoTitle">&nbsp;JUILLET</span>
+        </p>
+      </div>
+      <!--Menu desktop-->
+      <nav
+        class="navbar-desktop hidden lg:text-xl lg:font-semibold lg:flex lg:flex-row lg:space-x-5"
+      >
+        <router-link
+          :to="{ name: 'Home' }"
+          class="uppercase transition duration-0 hover:text-lightblue hover:duration-500"
+          title="Vers la page d'accueil du site 'Nation Sound'"
+          >Accueil</router-link
+        >
+        <router-link
+          :to="{ name: 'Informations' }"
+          class="uppercase transition duration-0 hover:text-lightblue hover:duration-500"
+          title="Vers la page d'informations du site 'Nation Sound'"
+          >Informations</router-link
+        >
+        <router-link
+          :to="{ name: 'Programmation' }"
+          class="uppercase transition duration-0 hover:text-lightblue hover:duration-500"
+          title="Vers la page programmation du site 'Nation Sound'"
+          >Programmation</router-link
+        >
+        <router-link
+          :to="{ name: 'Billetterie' }"
+          class="uppercase transition duration-0 hover:text-lightblue hover:duration-500"
+          title="Vers la page billetterie du site 'Nation Sound'"
+          >Billetterie</router-link
+        >
+        <router-link
+          :to="{ name: 'Infos_pratiques' }"
+          class="uppercase transition duration-0 hover:text-lightblue min-w-[170px] hover:duration-500"
+          title="Vers la page d'infos pratiques du site 'Nation Sound'"
+          >Infos pratiques</router-link
+        >
+        <router-link
+          :to="{ name: 'Partenaires' }"
+          class="uppercase transition duration-0 hover:text-lightblue hover:duration-500"
+          title="Vers la page des partenaires du site 'Nation Sound'"
+          >Partenaires</router-link
+        >
+      </nav>
+    </div>
+    <!--User-->
+    <div class="user absolute top-8 lg:top-10 right-5 z-50">
+      <i class="fa-regular fa-user fa-xl text-white"></i>
+    </div>
+  </header>
+</template>
+
+<script>
+export default {
+  name: "Header",
+  mounted() {
+    // Menu Mobile
+
+    // Je sélectionne et je stocke l'icône hamburger non active (fa-bars)
+    const hamburgerNonactive = document.querySelector(
+      ".navbar-mobile #hamburgerNonactive"
+    );
+    // Je sélectionne et je stocke l'icône hamburger active (fa-times)
+    const hamburgerActive = document.querySelector(
+      ".navbar-mobile #hamburgerActive"
+    );
+    // Je sélectionne et je stocke l'élément DIV menu global
+    const modal = document.querySelector(".modal");
+    // Je sélectionne et je stocke les liens du menu
+    const modalLinks = document.querySelectorAll(".navbar-mobile-list a");
+    // Je sélectionne et je stocke le logo
+    const logo = document.getElementById("logo");
+    // Je sélectionne et je stocke le titre du logo
+    const logoTitle = document.getElementById("logoTitle");
+    // Je sélectionne et je stocke l'icône User
+    const logoUser = document.querySelector(".user i");
+
+    // Ouvrir le menu quand on clique sur l'hamburger non active (fa-bars)
+    hamburgerNonactive.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      hamburgerNonactive.style.display = "none";
+      hamburgerActive.style.display = "flex";
+    });
+
+    // Fermer le menu quand on clique sur l'hamburger active (fa-times)
+    hamburgerActive.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      hamburgerNonactive.style.display = "flex";
+      hamburgerActive.style.display = "none";
+    });
+
+    // Fermer le menu quand on clique sur un lien du menu
+    modalLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        hamburgerNonactive.style.display = "flex";
+        hamburgerActive.style.display = "none";
+      });
+    });
+
+    // Changer la couleur du menu au scroll
+    window.onscroll = () => {
+      // Je sélectionne et je stocke la barre du menu
+      const ud_header = document.querySelector(".ud-header");
+      // Je stocke le menu en fixed
+      const fixed = ud_header.offsetTop;
+
+      // Si un scroll est enclenché alors le menu passe en position fixed et change de couleur
+      if (window.scrollY > fixed) {
+        ud_header.classList.remove("bg-darkblue");
+        ud_header.classList.add("sticky");
+        ud_header.classList.add("blueMenu");
+        logo.src = "../assets/images/logo_1.png";
+        logoTitle.style.color = "#0b162c";
+        hamburgerNonactive.style.color = "#0b162c";
+        logoUser.style.color = "#0b162c";
+        // Sinon le menu garde l'état d'origine
+      } else {
+        ud_header.classList.add("bg-darkblue");
+        ud_header.classList.remove("sticky");
+        ud_header.classList.remove("blueMenu");
+        logo.src = "../assets/images/logo.png";
+        logoTitle.style.color = "#ffffff";
+        hamburgerNonactive.style.color = "#ffffff";
+        logoUser.style.color = "#ffffff";
+      }
+    };
+  },
+};
+</script>
