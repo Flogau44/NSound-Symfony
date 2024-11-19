@@ -29,6 +29,11 @@ class AlertType
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    public function __toString()
+    {
+        return $this->type;
+    }
+
     public function __construct()
     {
         $this->alerts = new ArrayCollection();

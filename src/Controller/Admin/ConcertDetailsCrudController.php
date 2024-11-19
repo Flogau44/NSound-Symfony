@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ConcertDetails;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class ConcertDetailsCrudController extends AbstractCrudController
 {
@@ -15,14 +17,16 @@ class ConcertDetailsCrudController extends AbstractCrudController
         return ConcertDetails::class;
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            AssociationField::new('artist'),
+            AssociationField::new('date'),
+            AssociationField::new('scene'),
+            AssociationField::new('schedule'),
+            DateField::new('created_at'),
         ];
     }
-    */
+
 }

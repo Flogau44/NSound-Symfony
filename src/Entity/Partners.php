@@ -22,8 +22,8 @@ class Partners
     #[ORM\Column(type: Types::TEXT)]
     private ?string $url = null;
 
-    #[ORM\Column(type: Types::BINARY)]
-    private $logo;
+    #[ORM\Column(length: 255)]
+    private ?string $logo = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -31,6 +31,9 @@ class Partners
     #[ORM\ManyToOne(inversedBy: 'partners')]
     #[ORM\JoinColumn(nullable: false)]
     private ?PartnerCategories $type = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
 
     public function getId(): ?int
     {
@@ -93,6 +96,18 @@ class Partners
     public function setType(?PartnerCategories $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

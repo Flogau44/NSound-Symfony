@@ -29,6 +29,11 @@ class Genres
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    public function __toString()
+    {
+    return $this->genre;
+    }
+
     public function __construct()
     {
         $this->artists = new ArrayCollection();

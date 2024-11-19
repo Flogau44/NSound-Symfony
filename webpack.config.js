@@ -28,6 +28,11 @@ Encore
   //enable Tailwind CSS
   .enablePostCssLoader()
 
+  //enable aliases
+  .addAliases({
+    "@images": path.resolve(__dirname, "./assets/images/"),
+  })
+
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 

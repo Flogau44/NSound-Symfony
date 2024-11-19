@@ -29,6 +29,11 @@ class Scenes
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    public function __toString()
+    {
+    return $this->name;
+    }
+
     public function __construct()
     {
         $this->concertDetails = new ArrayCollection();

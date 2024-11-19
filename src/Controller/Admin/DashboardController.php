@@ -10,6 +10,7 @@ use App\Entity\Partners;
 use App\Entity\Artists;
 use App\Entity\ConcertDetails;
 use App\Entity\Dates;
+use App\Entity\Genres;
 use App\Entity\Scenes;
 use App\Entity\Schedules;
 use App\Entity\User;
@@ -52,18 +53,19 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        //yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('News', 'fas fa-list', News::class);
-        yield MenuItem::linkToCrud('Alertes', 'fas fa-list', Alerts::class);
-        yield MenuItem::linkToCrud('Types des alertes', 'fas fa-list', AlertType::class);
-        yield MenuItem::linkToCrud('Categories des partenaires', 'fas fa-list', PartnerCategories::class);
-        yield MenuItem::linkToCrud('Partenaires', 'fas fa-list', Partners::class);
-        yield MenuItem::linkToCrud('Dates', 'fas fa-list', Dates::class);
-        yield MenuItem::linkToCrud('Artistes', 'fas fa-list', Artists::class);
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToCrud('News', 'fa-solid fa-newspaper', News::class);
+        yield MenuItem::linkToCrud('Alertes', 'fa-regular fa-bell', Alerts::class);
+        yield MenuItem::linkToCrud('Type des alertes', 'fa-solid fa-list', AlertType::class);
+        yield MenuItem::linkToCrud('Partenaires', 'fa-regular fa-handshake', Partners::class);
+        yield MenuItem::linkToCrud('Categories des partenaires', 'fa-solid fa-list', PartnerCategories::class);
         yield MenuItem::linkToCrud('Détail des concerts', 'fas fa-list', ConcertDetails::class);
-        yield MenuItem::linkToCrud('Scènes', 'fas fa-list', Scenes::class);
-        yield MenuItem::linkToCrud('Horaires', 'fas fa-list', Schedules::class);
-        yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Artistes', 'fa-solid fa-guitar', Artists::class);
+        yield MenuItem::linkToCrud('Genres', 'fa-solid fa-music', Genres::class);
+        yield MenuItem::linkToCrud('Scènes', 'fa-solid fa-sliders', Scenes::class);
+        yield MenuItem::linkToCrud('Dates', 'fa-solid fa-calendar-days', Dates::class);
+        yield MenuItem::linkToCrud('Horaires', 'fa-regular fa-clock', Schedules::class);
+        yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
 
     }
 }

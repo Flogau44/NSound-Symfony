@@ -21,8 +21,8 @@ class Artists
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::BINARY)]
-    private $picture;
+    #[ORM\Column(length: 255)]
+    private ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -41,6 +41,14 @@ class Artists
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $video = null;
+
+    public function __toString()
+    {
+    return $this->name;
+    }
 
     public function __construct()
     {
@@ -144,6 +152,18 @@ class Artists
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(string $video): static
+    {
+        $this->video = $video;
 
         return $this;
     }

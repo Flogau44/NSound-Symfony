@@ -29,9 +29,9 @@ class News
     #[Groups(['read:news', 'write:news'])]
     private ?string $content = null;
 
-    #[ORM\Column(type: Types::BINARY, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['read:news', 'write:news'])]
-    private $picture;
+    private ?string $picture = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Groups(['read:news', 'write:news'])]

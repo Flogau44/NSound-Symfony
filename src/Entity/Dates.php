@@ -30,6 +30,11 @@ class Dates
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    public function __toString()
+    {
+    return $this->date ? $this->date->format('d-m-Y') : '';
+    }
+
     public function __construct()
     {
         $this->concertDetails = new ArrayCollection();

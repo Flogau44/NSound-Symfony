@@ -3,10 +3,11 @@
 namespace App\Controller\Admin;
 
 use App\Entity\PartnerCategories;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class PartnerCategoriesCrudController extends AbstractCrudController
 {
@@ -15,14 +16,12 @@ class PartnerCategoriesCrudController extends AbstractCrudController
         return PartnerCategories::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
+            TextField::new('type'),
+            SlugField::new('slug')->setTargetFieldName('type'),
         ];
     }
-    */
+
 }
