@@ -58,7 +58,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Alertes', 'fa-regular fa-bell', Alerts::class);
         yield MenuItem::linkToCrud('Type des alertes', 'fa-solid fa-list', AlertType::class);
         yield MenuItem::linkToCrud('Partenaires', 'fa-regular fa-handshake', Partners::class);
-        yield MenuItem::linkToCrud('Categories des partenaires', 'fa-solid fa-list', PartnerCategories::class);
+        yield MenuItem::linkToCrud('Catégories des partenaires', 'fa-solid fa-list', PartnerCategories::class);
         yield MenuItem::linkToCrud('Détail des concerts', 'fas fa-list', ConcertDetails::class);
         yield MenuItem::linkToCrud('Artistes', 'fa-solid fa-guitar', Artists::class);
         yield MenuItem::linkToCrud('Genres', 'fa-solid fa-music', Genres::class);
