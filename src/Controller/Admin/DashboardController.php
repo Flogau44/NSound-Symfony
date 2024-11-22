@@ -66,6 +66,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Dates', 'fa-solid fa-calendar-days', Dates::class);
         yield MenuItem::linkToCrud('Horaires', 'fa-regular fa-clock', Schedules::class);
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
-
     }
 }

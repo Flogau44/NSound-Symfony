@@ -1,0 +1,39 @@
+{% extends '@EasyAdmin/page/login.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="login-wrapper">
+        <h1 class="login-title">{{ 'page.login.title'|trans }}</h1>
+
+        {{ form_start(login_form, { action: path('admin_login_check') }) }}
+            {{ form_row(login_form._username) }}
+
+            <div class="input-group">
+                {{ form_widget(login_form._password, { 'attr': {'class': 'form-control'} }) }}
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="fa fa-eye" id="togglePassword" style="cursor: pointer;"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">{{ 'page.login.submit'|trans }}</button>
+        {{ form_end(login_form) }}
+
+        <div class="login-footer">
+            <a href="{{ path('admin_password_reset') }}">{{ 'page.login.forgot_password'|trans }}</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            const passwordField = document.querySelector('[name="_password"]');
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+{% endblock %}
