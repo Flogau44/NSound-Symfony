@@ -54,17 +54,27 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+
+        yield MenuItem::section('News');
         yield MenuItem::linkToCrud('News', 'fa-solid fa-newspaper', News::class);
+
+        yield MenuItem::section('Alertes');
         yield MenuItem::linkToCrud('Alertes', 'fa-regular fa-bell', Alerts::class);
         yield MenuItem::linkToCrud('Type des alertes', 'fa-solid fa-list', AlertType::class);
+
+        yield MenuItem::section('Partenaires');
         yield MenuItem::linkToCrud('Partenaires', 'fa-regular fa-handshake', Partners::class);
         yield MenuItem::linkToCrud('Catégories des partenaires', 'fa-solid fa-list', PartnerCategories::class);
+
+        yield MenuItem::section('Concerts');
         yield MenuItem::linkToCrud('Détail des concerts', 'fas fa-list', ConcertDetails::class);
         yield MenuItem::linkToCrud('Artistes', 'fa-solid fa-guitar', Artists::class);
         yield MenuItem::linkToCrud('Genres', 'fa-solid fa-music', Genres::class);
         yield MenuItem::linkToCrud('Scènes', 'fa-solid fa-sliders', Scenes::class);
         yield MenuItem::linkToCrud('Dates', 'fa-solid fa-calendar-days', Dates::class);
         yield MenuItem::linkToCrud('Horaires', 'fa-regular fa-clock', Schedules::class);
+
+        yield MenuItem::section('Utilisateurs');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
     }
 }

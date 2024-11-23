@@ -4,11 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\ConcertDetails;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ConcertDetailsCrudController extends AbstractCrudController
 {
@@ -28,5 +29,11 @@ class ConcertDetailsCrudController extends AbstractCrudController
             DateField::new('created_at'),
         ];
     }
-
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('date')
+            ->add('scene')
+            ->add('schedule');
+    }
 }
