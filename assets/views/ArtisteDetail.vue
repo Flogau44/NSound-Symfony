@@ -10,102 +10,123 @@
           <router-link
             :to="{ name: 'Programmation' }"
             title="Revenir aux artistes"
-            class=""
-            >Revenir à la programmation</router-link
           >
+            Revenir à la programmation
+          </router-link>
         </button>
       </div>
-      <section id="artist">
-        <!-- Article ajouté en JavaScript via le lien du fichier JSON Wordpress-->
+      <section id="artist" v-if="artist">
+        <img
+          :src="artist.pictureUrl"
+          :alt="artist.pictureAlt"
+          class="imgArtist"
+        />
+        <div class="informationArtist">
+          <div class="headerArtist">
+            <h1 class="nameArtist">{{ artist.title }}</h1>
+            <p class="genreArtist">{{ artist.genres.join(", ") }}</p>
+          </div>
+          <div class="concertArtist">
+            <p class="dateArtist">{{ artist.date }}</p>
+            <p class="horaireArtist">{{ artist.horaire }}</p>
+            <p class="sceneArtist">{{ artist.scene }}</p>
+          </div>
+          <div class="urlsArtist" v-html="artist.url"></div>
+          <div class="resumeArtist" v-html="artist.content"></div>
+          <div class="pt-6 flex justify-center" v-html="artist.video"></div>
+        </div>
       </section>
     </section>
   </main>
 </template>
 
 <script>
+import apiClient from "../axios";
+
 export default {
   name: "ArtisteDetail",
-  mounted() {
-    //Sélection de la div où toutes les données de l'artiste seront chargées
-    let postsContainer = document.querySelector("#artist");
-
-    //Créer la fonction qui permet de créer toute la mise en forme d'un artiste (éléments et attributs)
-    const createArtist = (item) => {
-      //Je crée l'élement img pour récupérer dans wordpress l'image de l'artiste
-      let image = document.createElement("img");
-      image.src = `${item["_embedded"]["wp:featuredmedia"][0]["source_url"]}`;
-      image.setAttribute(
-        "alt",
-        `${item["_embedded"]["wp:featuredmedia"][0]["slug"]}`
-      );
-      image.classList.add("imgArtist");
-      postsContainer.appendChild(image);
-
-      //Je crée l'élement div pour afficher correctement les informations de l'artiste
-      let informationArtist = document.createElement("div");
-      informationArtist.classList.add("informationArtist");
-      postsContainer.appendChild(informationArtist);
-
-      //Je crée l'élement div pour afficher correctement la partie en tête de l'artiste
-      let headerArtist = document.createElement("div");
-      headerArtist.classList.add("headerArtist");
-      informationArtist.appendChild(headerArtist);
-
-      //Je crée l'élement div pour récupérer dans wordpres le résumé de l'artiste
-      let resumeArtist = document.createElement("div");
-      resumeArtist.innerHTML = `${item.content.rendered}`;
-      resumeArtist.classList.add("resumeArtist");
-      informationArtist.appendChild(resumeArtist);
-
-      //Je crée l'élement h1 pour récupérer dans wordpress le nom de l'artiste
-      let name = document.createElement("h1");
-      name.innerText = `${item.title.rendered}`;
-      name.classList.add("nameArtist");
-      headerArtist.appendChild(name);
-
-      //Je crée l'élement p pour récupérer dans wordpress la date de concert de l'artiste
-      let date = document.createElement("p");
-      date.innerText = `${item.class_list[11].slice(11)}`;
-      date.classList.add("dateArtist");
-      headerArtist.appendChild(date);
-
-      //Je crée l'élement p pour récupérer dans wordpress l'horaire de concert de l'artiste
-      let horaire = document.createElement("p");
-      horaire.innerText = `${item.class_list[9].slice(11)}`;
-      horaire.classList.add("horaireArtist");
-      headerArtist.appendChild(horaire);
-
-      //Je crée l'élement p pour récupérer dans wordpress la scène du concert de l'artiste
-      let scene = document.createElement("p");
-      scene.innerText = `${item._embedded["wp:term"][0][1].name.slice(3)}`;
-      scene.classList.add("sceneArtist");
-      headerArtist.appendChild(scene);
+  data() {
+    return {
+      artist: null,
     };
-
-    // Récupérer l'ID de l'article dans les paramètres de l'URL
+  },
+  async mounted() {
     const id = this.$route.params.id;
+    const concertDetailsUrl = "/concert_details";
+    const artistsUrl = "/artists";
+    const genresUrl = "/genres";
+    const scenesUrl = "/scenes";
+    const datesUrl = "/dates";
+    const schedulesUrl = "/schedules";
 
-    // Récupérer les données de l'API WordPress et ensuite afficher ces données sur la page artiste suivant l'id
-    //Sélection de l'url WP-JSON
-    const restUrl =
-      "https://flo-perso.alwaysdata.net/nationsound/wordpress/wp-json/wp/v2/posts?_embed&categories=4&per_page=60";
+    try {
+      // Récupérer les données de l'API
+      const [
+        concertDetailsResponse,
+        artistResponse,
+        genreResponse,
+        sceneResponse,
+        dateResponse,
+        scheduleResponse,
+      ] = await Promise.all([
+        apiClient.get(concertDetailsUrl),
+        apiClient.get(artistsUrl),
+        apiClient.get(genresUrl),
+        apiClient.get(scenesUrl),
+        apiClient.get(datesUrl),
+        apiClient.get(schedulesUrl),
+      ]);
 
-    async function updateData() {
-      try {
-        const reponseJSON = await fetch(restUrl);
-        // code à exécuter après réception de la réponse
-        // conversion de la réponse au format Javascript
-        const reponseJS = await reponseJSON.json();
-        // Trouver l'id de l'artiste correspondant à l'id de l'url
-        const item = reponseJS.find((a) => a.id == id);
-        // Je rappelle la fonction createArticle afin de créer tout les éléments de l'artiste
-        createArtist(item);
-      } catch (error) {
-        console.log(error, "erreur");
-      }
+      // Trouver les détails du concert correspondant
+      const concertDetails = concertDetailsResponse.data.member.find(
+        (detail) => detail.id == id
+      );
+
+      // Trouver l'artiste correspondant
+      const artist = artistResponse.data.member.find(
+        (item) => item["@id"] === concertDetails.artist
+      );
+
+      // Trouver les genres correspondants
+      const genres = genreResponse.data.member
+        .filter((item) => artist.genres.includes(item["@id"]))
+        .map((item) => item.genre);
+
+      // Trouver la scène correspondante
+      const scene = sceneResponse.data.member.find(
+        (item) => item["@id"] === concertDetails.scene
+      );
+
+      // Trouver la date correspondante
+      const date = dateResponse.data.member.find(
+        (item) => item["@id"] === concertDetails.date
+      );
+
+      // Trouver l'horaire correspondant
+      const schedule = scheduleResponse.data.member.find(
+        (item) => item["@id"] === concertDetails.schedule
+      );
+
+      // Assigner les données de l'artiste
+      this.artist = {
+        title: artist.name,
+        genres: genres,
+        content: artist.content,
+        video: artist.video,
+        pictureUrl: `http://127.0.0.1:8000/build/images/${artist.picture}`,
+        pictureAlt: artist.slug,
+        url: artist.url,
+        date: new Date(date.date).toLocaleDateString("fr-FR", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+        }),
+        horaire: schedule.schedule,
+        scene: scene.name,
+      };
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'artiste :", error);
     }
-    //Je rappelle la fonction updateData afin d'afficher les données de l'artiste
-    updateData();
   },
 };
 </script>

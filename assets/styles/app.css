@@ -118,6 +118,9 @@
 .resumeArticle {
   @apply py-6;
 }
+.urlArticle {
+  @apply underline hover:underline text-darkblue hover:text-lightblue;
+}
 
 /*Bouton Article*/
 #filterButtonArticle {
@@ -184,10 +187,16 @@
   @apply max-w-full flex flex-col md:max-w-[500px];
 }
 .headerArtist {
+  @apply flex flex-col mb-4;
+}
+.concertArtist {
   @apply flex flex-col gap-y-1;
 }
+.genreArtist {
+  @apply text-darkblue text-xl font-semibold italic;
+}
 .dateArtist {
-  @apply text-darkblue text-2xl font-semibold;
+  @apply text-navyblue text-2xl font-semibold;
 }
 .horaireArtist {
   @apply text-blue text-xl font-semibold;
@@ -197,6 +206,12 @@
 }
 .imgArtist {
   @apply max-w-full h-full rounded-lg md:max-w-[400px];
+}
+.urlsArtist {
+  @apply pt-6 grid grid-cols-3 md:grid-cols-5 self-start gap-x-2;
+}
+.urlArtist {
+  @apply flex flex-row gap-x-1 items-baseline md:justify-items-center text-darkblue hover:text-lightblue text-base;
 }
 .resumeArtist {
   @apply py-6;

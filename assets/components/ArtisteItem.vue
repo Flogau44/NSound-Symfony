@@ -4,21 +4,21 @@
       v-for="item in artists"
       :key="item.id"
       class="artist"
-      :data-name="item.class_list[10].slice(9)"
+      :data-name="item.date.slice(0, 10)"
     >
       <router-link
         :to="{ name: 'ArtisteDetail', params: { id: item.id } }"
         class="linkArtist"
-        :title="item._embedded['wp:featuredmedia'][0].slug"
+        :title="item.slug"
       >
         <img
-          :src="item._embedded['wp:featuredmedia'][0].source_url"
+          :src="`http://127.0.0.1:8000/build/images/${item.picture}`"
           class="imgArtists"
-          :alt="item._embedded['wp:featuredmedia'][0].slug"
+          :alt="item.slug"
         />
         <div class="descriptionArtist">
-          <h2 class="nameArtist">{{ item.title.rendered }}</h2>
-          <p class="dateArtists">{{ item.class_list[11].slice(11) }}</p>
+          <h2 class="nameArtist">{{ item.name }}</h2>
+          <p class="dateArtists">{{ formatDate(item.date) }}</p>
         </div>
       </router-link>
     </article>
@@ -46,17 +46,17 @@
               <router-link
                 :to="{ name: 'ArtisteDetail', params: { id: artist.id } }"
                 class="linkArtistHour"
-                :title="artist._embedded['wp:featuredmedia'][0].slug"
+                :title="artist.slug"
               >
                 <img
-                  :src="artist._embedded['wp:featuredmedia'][0].source_url"
+                  :src="`http://127.0.0.1:8000/build/images/${artist.picture}`"
                   class="imgArtistHour"
-                  :alt="artist._embedded['wp:featuredmedia'][0].slug"
+                  :alt="artist.slug"
                 />
                 <div class="descriptionArtistHour">
-                  <h2 class="nameArtistHour">{{ artist.title.rendered }}</h2>
+                  <h2 class="nameArtistHour">{{ artist.name }}</h2>
                   <p class="horaireArtistHour">
-                    {{ artist.class_list[9].slice(11) }}
+                    {{ artist.schedule }}
                   </p>
                 </div>
               </router-link>
@@ -69,81 +69,134 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import apiClient from "../axios";
 
 export default {
   name: "Programmation",
-  setup() {
-    const artists = ref([]);
-    const scenes = ref([]);
+  data() {
+    return {
+      artists: [],
+      scenes: [],
+    };
+  },
+  async mounted() {
+    const concertDetailsUrl = "/concert_details";
+    const artistsUrl = "/artists";
+    const scenesUrl = "/scenes";
+    const datesUrl = "/dates";
+    const schedulesUrl = "/schedules";
 
-    function getDayName(dateString) {
-      const [day, month, year] = dateString.split("/");
+    try {
+      const [
+        concertDetailsResponse,
+        artistsResponse,
+        scenesResponse,
+        datesResponse,
+        schedulesResponse,
+      ] = await Promise.all([
+        apiClient.get(concertDetailsUrl),
+        apiClient.get(artistsUrl),
+        apiClient.get(scenesUrl),
+        apiClient.get(datesUrl),
+        apiClient.get(schedulesUrl),
+      ]);
+
+      const concertDetails = concertDetailsResponse.data.member;
+      const artistsData = artistsResponse.data.member;
+      const scenesData = scenesResponse.data.member;
+      const datesData = datesResponse.data.member;
+      const schedulesData = schedulesResponse.data.member;
+
+      console.log(concertDetails);
+      console.log(artistsData);
+      console.log(scenesData);
+      console.log(datesData);
+      console.log(schedulesData);
+
+      const sceneNames = scenesData.map((scene) => scene.name);
+      const days = datesData.map((date) => date.date.split("T")[0]);
+
+      const sceneData = sceneNames.map((scene) => {
+        const sceneArtists = concertDetails
+          .filter(
+            (detail) =>
+              scenesData.find((s) => s["@id"] === detail.scene)?.name === scene
+          )
+          .map((detail) => {
+            const artist = artistsData.find((a) => a["@id"] === detail.artist);
+            const schedule = schedulesData.find(
+              (s) => s["@id"] === detail.schedule
+            );
+            const date = datesData.find((d) => d["@id"] === detail.date)?.date;
+            return {
+              ...artist,
+              schedule: schedule?.schedule,
+              date: date,
+            };
+          });
+
+        const dayData = days.map((day) => {
+          const dayArtists = sceneArtists.filter((artist) =>
+            artist.date.includes(day)
+          );
+          dayArtists.sort((a, b) => {
+            const timeA = a.schedule;
+            const timeB = b.schedule;
+            return timeA.localeCompare(timeB);
+          });
+          return { date: day, artists: dayArtists };
+        });
+
+        return { name: scene, days: dayData };
+      });
+
+      this.artists = artistsData.map((artist) => {
+        const artistDetails = concertDetails.find(
+          (detail) => detail.artist === artist["@id"]
+        );
+        const date = datesData.find(
+          (date) => date["@id"] === artistDetails?.date
+        )?.date;
+        return {
+          ...artist,
+          date: date,
+        };
+      });
+      this.scenes = sceneData;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des artistes :", error);
+    }
+  },
+  methods: {
+    getDayName(dateString) {
+      const [year, month, day] = dateString.split("-");
       const date = new Date(`${year}-${month}-${day}`);
       return date.toLocaleDateString("fr-FR", { weekday: "long" });
-    }
-
-    // Convertir une date JJ/MM/AAAA en JJ Mois AAAA
-    function convertDate(dateString) {
-      const [jour, moisIndex, annee] = dateString.split("/");
-      const date = new Date(`${annee}-${moisIndex}-${jour}`);
+    },
+    convertDate(dateString) {
+      const [year, month, day] = dateString.split("-");
+      const date = new Date(`${year}-${month}-${day}`);
       return date.toLocaleDateString("fr-FR", {
         day: "numeric",
         month: "long",
         year: "numeric",
       });
-    }
-
-    const fetchArtists = async () => {
-      const restUrl =
-        "https://flo-perso.alwaysdata.net/nationsound/wordpress/wp-json/wp/v2/posts?_embed&categories=4&per_page=60";
-      try {
-        const response = await fetch(restUrl);
-        const data = await response.json();
-        artists.value = data.filter(
-          (a) => a.class_list[7] === "category-artiste"
-        );
-
-        const sceneNames = [
-          "mainstage-1",
-          "mainstage-2",
-          "sonata",
-          "resonance",
-          "reverb",
-        ];
-        const days = ["11/07/2025", "12/07/2025", "13/07/2025"];
-        const sceneData = sceneNames.map((scene) => {
-          const sceneArtists = artists.value.filter(
-            (a) => a.class_list[8] === `category-scene-${scene}`
-          );
-          const dayData = days.map((day) => {
-            const dayArtists = sceneArtists.filter((a) =>
-              a._embedded["wp:term"][0][4].name.includes(day)
-            );
-            // Tri des artistes par horaire en ordre croissant
-            dayArtists.sort((a, b) => {
-              const timeA = a.class_list[9].slice(11);
-              const timeB = b.class_list[9].slice(11);
-              return timeA.localeCompare(timeB);
-            });
-            return { date: day, artists: dayArtists };
-          });
-          return { name: scene, days: dayData };
-        });
-        scenes.value = sceneData;
-      } catch (error) {
-        console.error("Erreur lors de la récupération des artistes :", error);
-      }
-    };
-
-    onMounted(fetchArtists);
-
-    return {
-      artists,
-      scenes,
-      getDayName,
-      convertDate,
-    };
+    },
+    getDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("fr-FR", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    },
   },
 };
 </script>

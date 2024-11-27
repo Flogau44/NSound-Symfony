@@ -31,25 +31,13 @@
         Line-Up
       </button>
       <button
+        v-for="date in dates"
+        :key="date.filter"
         type="button"
         class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
-        data-filter="firstdate"
+        :data-filter="date.filter"
       >
-        Ven.11/07
-      </button>
-      <button
-        type="button"
-        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
-        data-filter="seconddate"
-      >
-        Sam.12/07
-      </button>
-      <button
-        type="button"
-        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
-        data-filter="thirddate"
-      >
-        Dim.13/07
+        {{ date.label }}
       </button>
     </div>
   </div>
@@ -58,7 +46,15 @@
 <script>
 export default {
   name: "FilterArtists",
-
+  data() {
+    return {
+      dates: [
+        { filter: "2025-07-11", label: "Ven.11/07", class: "active" },
+        { filter: "2025-07-12", label: "Sam.12/07", class: "" },
+        { filter: "2025-07-13", label: "Dim.13/07", class: "" },
+      ],
+    };
+  },
   mounted() {
     // Sélectionner les éléments HTML
     const artistsOrPlanning = document.querySelectorAll(

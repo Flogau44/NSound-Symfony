@@ -29,10 +29,9 @@ class ArtistsCrudController extends AbstractCrudController
             AssociationField::new('genres'),
             TextEditorField::new('content'),
             ImageField::new('picture')->setBasePath('build/images/')->setUploadDir('public/build/images/')->setUploadedFileNamePattern('[randomhash].[extension]')->setRequired(false),
-            UrlField::new('url'),
+            TextareaField::new('url'),
             TextareaField::new('video')->renderAsHtml(),
             DateField::new('created_at'),
         ];
     }
-
 }

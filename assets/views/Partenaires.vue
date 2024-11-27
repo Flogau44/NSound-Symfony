@@ -4,98 +4,78 @@
       <div class="flex flex-row justify-center">
         <h1 class="uppercase">— Nos partenaires —</h1>
       </div>
-      <div id="partners"></div>
+      <div id="partners">
+        <div
+          v-for="(partners, categoryName) in categorizedPartners"
+          :key="categoryName"
+          class="categoryPartner"
+          :data-partenaires="categoryName"
+        >
+          <div class="nameCategory">
+            <h2 class="categoryTitle">{{ categoryName.toUpperCase() }}</h2>
+          </div>
+          <div class="categoryPartners">
+            <div v-for="partner in partners" :key="partner.id" class="partner">
+              <a
+                :href="partner.url"
+                class="linkPartner"
+                :title="partner.slug"
+                target="_blank"
+              >
+                <img
+                  :src="`http://127.0.0.1:8000/build/images/${partner.logo}`"
+                  class="imgPartner"
+                  :alt="partner.slug"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 </template>
 
 <script>
+import apiClient from "../axios";
+
 export default {
   name: "Partenaires",
-  mounted() {
-    //Sélection de la div où toutes les partenaires seront chargées
-    const postsContainer = document.querySelector("#partners");
-
-    //Créer la fonction qui permet de créer toute la mise en forme d'un partenaire (éléments et attributs)
-    const displayPartnerType = (categoryName, partners) => {
-      //Je crée l'élement div pour afficher correctement les partenaires pour chaque catégorie
-      const categoryPartner = document.createElement("div");
-      categoryPartner.classList.add("categoryPartner");
-      categoryPartner.setAttribute("data-partenaires", categoryName);
-      postsContainer.appendChild(categoryPartner);
-
-      //Je crée l'élement div pour afficher correctement la catégorie partenaire
-      const nameCategory = document.createElement("div");
-      nameCategory.classList.add("nameCategory");
-      categoryPartner.appendChild(nameCategory);
-
-      //Je crée l'élement h2 pour récupérer dans wordpress le titre de la catégorie partenaire (officiel et média)
-      const nameCategoryPartner = document.createElement("h2");
-      nameCategoryPartner.classList.add("categoryTitle");
-      nameCategoryPartner.innerText = `${categoryName.toUpperCase()}`;
-      nameCategory.appendChild(nameCategoryPartner);
-
-      //Je crée l'élement div pour afficher correctement les partenaires à leur catégorie
-      const categoryAllPartners = document.createElement("div");
-      categoryAllPartners.classList.add("categoryPartners");
-      categoryPartner.appendChild(categoryAllPartners);
-
-      partners.forEach((partner) => {
-        //Je crée l'élement div pour afficher correctement les informations de chaque partenaires
-        const namePartner = document.createElement("div");
-        namePartner.classList.add("partner");
-        categoryAllPartners.appendChild(namePartner);
-
-        //Je crée l'élement a pour générer un lien qui permettra d'aller sur la page détaillée du partenaire
-        const link = document.createElement("a");
-        link.href = `${partner.excerpt.rendered.slice(3, -5)}`; //Sélectionner le lien https://
-        link.classList.add("linkPartner");
-        link.setAttribute(
-          "title",
-          `${partner["_embedded"]["wp:featuredmedia"][0]["slug"]}`
-        );
-        link.setAttribute("target", "_blank");
-        namePartner.appendChild(link);
-
-        //Je crée l'élement img pour récupérer dans wordpress l'image de chaque partenaires
-        const image = document.createElement("img");
-        image.src = `${partner["_embedded"]["wp:featuredmedia"][0]["source_url"]}`;
-        image.classList.add("imgPartner");
-        image.setAttribute(
-          "alt",
-          `${partner["_embedded"]["wp:featuredmedia"][0]["slug"]}`
-        );
-        link.appendChild(image);
-      });
+  data() {
+    return {
+      categorizedPartners: {},
     };
+  },
+  async mounted() {
+    const restUrl = "/partners";
+    const categoriesUrl = "/partner_categories";
 
-    // Récupérer les données de l'API WordPress et ensuite afficher ces données sur la page information
-    //Sélection de l'url WP-JSON
-    const restUrl =
-      "https://flo-perso.alwaysdata.net/nationsound/wordpress/wp-json/wp/v2/posts?_embed&categories=55&per_page=60";
+    try {
+      const [partnersResponse, categoriesResponse] = await Promise.all([
+        apiClient.get(restUrl),
+        apiClient.get(categoriesUrl),
+      ]);
 
-    async function updateData() {
-      try {
-        const reponseJSON = await fetch(restUrl);
-        // code à exécuter après réception de la réponse
-        // conversion de la réponse au format Javascript
-        const reponseJS = await reponseJSON.json();
-        // Récupérer la liste complète des types et partenaires au chargement de la page
-        // Filtrer les partenaires par type
-        const partnerType = ["officiels", "medias"]; //Tableau avec les types de partenaire
+      const partners = partnersResponse.data.member;
+      const categories = categoriesResponse.data.member;
+      const categorizedPartners = {};
 
-        partnerType.forEach((type) => {
-          const typePartner = reponseJS.filter(
-            (a) => a.class_list[8] === `category-partenaires-${type}`
-          );
-          displayPartnerType(type, typePartner);
-        });
-      } catch (error) {
-        console.log(error, "erreur");
-      }
+      categories.forEach((category) => {
+        const categoryName = category.slug.split("-")[1]; // Extraire le mot après le tiret
+        categorizedPartners[categoryName] = partners
+          .filter((partner) => partner.type === category["@id"])
+          .map((partner) => ({
+            id: partner.id,
+            url: partner.url,
+            slug: partner.slug,
+            logo: partner.logo,
+          }));
+      });
+
+      this.categorizedPartners = categorizedPartners;
+    } catch (error) {
+      console.log(error, "erreur");
     }
-    //Je rappelle la fonction updateData afin d'afficher les données de l'article
-    updateData();
   },
 };
 </script>

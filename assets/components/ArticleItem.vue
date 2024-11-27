@@ -3,16 +3,14 @@
     <router-link
       :to="{ name: 'ArticleDetail', params: { id: item.id } }"
       class="linkArticle"
-      :title="item['_embedded']['wp:featuredmedia'][0]['slug']"
+      :title="item.title"
     >
-      <img
-        :src="item['_embedded']['wp:featuredmedia'][0]['source_url']"
-        class="imgArticles"
-        :alt="item['_embedded']['wp:featuredmedia'][0]['slug']"
-      />
+      <img :src="item.pictureUrl" class="imgArticles" :alt="item.slug" />
       <div class="descriptionArticle">
-        <h2 class="titleArticle">{{ item.title.rendered }}</h2>
-        <p class="dateArticle">{{ formateDate(item.date) }}</p>
+        <h2 class="titleArticle">{{ item.title }}</h2>
+        <p class="dateArticle">
+          {{ formateDate(item.created_at) }}
+        </p>
       </div>
     </router-link>
   </article>
