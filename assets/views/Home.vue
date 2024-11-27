@@ -39,9 +39,9 @@
     <section
       class="py-10 px-4 md:px-16 flex flex-col justify-center items-center text-base bg-darkblue md:text-xl"
     >
-      <h2 class="uppercase flex justify-center text-lightblue">
-        — Dernières Actualités —
-      </h2>
+      <div class="py-4 w-full flex flex-row justify-center">
+        <h2 class="uppercase text-lightblue">— Dernières Actualités —</h2>
+      </div>
       <LastArticles />
     </section>
     <section class="py-10 px-4 flex flex-col text-base md:px-16 md:text-xl">

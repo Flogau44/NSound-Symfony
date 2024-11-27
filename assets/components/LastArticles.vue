@@ -1,24 +1,34 @@
 <template>
-  <section
-    id="articles"
-    class="intersect:animate-fade-up intersect:animate-duration-1000 intersect:animate-delay-500"
+  <div
+    id="slider3"
+    class="splide px-16 md:px-20"
+    role="group"
+    aria-label="Splide Basic HTML Example"
   >
-    <article v-for="item in articles" :key="item.id" class="article">
-      <router-link
-        :to="{ name: 'ArticleDetail', params: { id: item.id } }"
-        class="linkArticle"
-        :title="item.title"
-      >
-        <img :src="item.pictureUrl" class="imgArticles" :alt="item.slug" />
-        <div class="descriptionArticle">
-          <h2 class="titleLastArticle">{{ item.title }}</h2>
-          <p class="dateLastArticle">
-            {{ formatDate(item.created_at) }}
-          </p>
-        </div>
-      </router-link>
-    </article>
-  </section>
+    <div class="splide__track">
+      <ul class="splide__list" id="slider3-list">
+        <li v-for="item in articles" :key="item.id" class="splide__slide">
+          <router-link
+            :to="{ name: 'ArticleDetail', params: { id: item.id } }"
+            class="articleCarousel"
+            :title="item.title"
+          >
+            <img
+              :src="item.pictureUrl"
+              class="imgArticlesCarousel"
+              :alt="item.slug"
+            />
+            <div class="descriptionArticleCarousel">
+              <h2 class="titleLastArticle">{{ item.title }}</h2>
+              <p class="dateLastArticle">
+                {{ formatDate(item.created_at) }}
+              </p>
+            </div>
+          </router-link>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -36,16 +46,25 @@ export default {
 
     try {
       const response = await apiClient.get(restUrl);
-      this.articles = response.data.member
-        .map((item) => {
-          return {
-            ...item,
-            pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
-          };
-        })
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-        .slice(0, 3);
-      console.log(response);
+      this.articles = response.data.member.map((item) => {
+        return {
+          ...item,
+          pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
+        };
+      });
+      this.$nextTick(() => {
+        new Splide("#slider3", {
+          type: "loop",
+          drag: "free",
+          perPage: 4,
+          gap: "20px",
+          breakpoints: {
+            1280: { perPage: 3, gap: "10px" },
+            1024: { perPage: 2 },
+            480: { perPage: 1 },
+          },
+        }).mount();
+      });
     } catch (error) {
       console.log("Erreur lors de la récupération des articles :", error);
     }
