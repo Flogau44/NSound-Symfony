@@ -32,6 +32,7 @@
           </li>
         </ul>
       </div>
+      <div class="splide__pagination bottom-2"></div>
     </div>
   </section>
 </template>

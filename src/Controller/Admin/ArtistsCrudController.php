@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Artists;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -23,7 +24,7 @@ class ArtistsCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        return [
+        $fields = [
             TextField::new('name'),
             SlugField::new('slug')->setTargetFieldName('name'),
             AssociationField::new('genres'),
@@ -33,5 +34,19 @@ class ArtistsCrudController extends AbstractCrudController
             TextareaField::new('video')->renderAsHtml(),
             DateField::new('created_at'),
         ];
+        if ($pageName === Crud::PAGE_INDEX) {
+            // Afficher seulement certains champs dans la vue tableau
+            return [
+                TextField::new('name'),
+                SlugField::new('slug')->setTargetFieldName('name'),
+                AssociationField::new('genres'),
+                TextEditorField::new('content'),
+                ImageField::new('picture')->setBasePath('build/images/')->setUploadDir('public/build/images/')->setUploadedFileNamePattern('[randomhash].[extension]')->setRequired(false),
+                TextareaField::new('url'),
+                DateField::new('created_at'),
+            ];
+        }
+
+        return $fields;
     }
 }

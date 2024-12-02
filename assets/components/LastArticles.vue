@@ -1,33 +1,34 @@
 <template>
   <div
-    id="slider3"
-    class="splide px-16 md:px-20"
+    id="slider4"
+    class="splide py-4 px-16 md:px-20"
     role="group"
     aria-label="Splide Basic HTML Example"
   >
     <div class="splide__track">
-      <ul class="splide__list" id="slider3-list">
-        <li v-for="item in articles" :key="item.id" class="splide__slide">
+      <ul class="splide__list" id="slider4-list">
+        <li v-for="article in articles" :key="article.id" class="splide__slide">
           <router-link
-            :to="{ name: 'ArticleDetail', params: { id: item.id } }"
+            :to="{ name: 'ArticleDetail', params: { id: article.id } }"
             class="articleCarousel"
-            :title="item.title"
+            :title="article.title"
           >
             <img
-              :src="item.pictureUrl"
+              :src="article.pictureUrl"
               class="imgArticlesCarousel"
-              :alt="item.slug"
+              :alt="article.slug"
             />
             <div class="descriptionArticleCarousel">
-              <h2 class="titleLastArticle">{{ item.title }}</h2>
+              <h2 class="titleLastArticle">{{ article.title }}</h2>
               <p class="dateLastArticle">
-                {{ formatDate(item.created_at) }}
+                {{ formatDate(article.created_at) }}
               </p>
             </div>
           </router-link>
         </li>
       </ul>
     </div>
+    <div class="splide__pagination -bottom-7"></div>
   </div>
 </template>
 
@@ -35,33 +36,56 @@
 import apiClient from "../axios";
 
 export default {
-  name: "Informations",
+  name: "LastArticles",
   data() {
     return {
       articles: [],
     };
   },
   async mounted() {
-    const restUrl = "/news";
+    const newsUrl = "/news";
+    const typesUrl = "/news_categories";
 
     try {
-      const response = await apiClient.get(restUrl);
-      this.articles = response.data.member.map((item) => {
+      const [newsResponse, typesResponse] = await Promise.all([
+        apiClient.get(newsUrl),
+        apiClient.get(typesUrl),
+      ]);
+
+      const types = typesResponse.data.member;
+
+      this.articles = newsResponse.data.member.map((article) => {
+        const type = types.find((t) => t.news.includes(article["@id"]));
         return {
-          ...item,
-          pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
+          ...article,
+          type: type.type,
+          pictureUrl: `http://127.0.0.1:8000/build/images/${article.picture}`,
         };
       });
+
+      // Filtrer les articles par catégorie "Générale" et "Actualité"
+      this.articles = this.articles.filter(
+        (article) => article.type === "Générale" || article.type === "Actualité"
+      );
+
+      // Trier les articles par date de création (du plus récent au plus ancien)
+      this.articles.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+
+      // Sélectionner les 3 derniers articles
+      this.articles = this.articles.slice(0, 9);
+
       this.$nextTick(() => {
-        new Splide("#slider3", {
-          type: "loop",
-          drag: "free",
+        new Splide("#slider4", {
+          direction: "ltr",
+          arrows: false,
           perPage: 4,
           gap: "20px",
           breakpoints: {
             1280: { perPage: 3, gap: "10px" },
             1024: { perPage: 2 },
-            480: { perPage: 1 },
+            640: { perPage: 1 },
           },
         }).mount();
       });

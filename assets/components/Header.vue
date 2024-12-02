@@ -15,7 +15,7 @@
           class="fa-times fas fa-2xl absolute left-3 z-999 text-white cursor-pointer w-7"
         ></i>
         <div
-          class="modal hidden absolute top-0 left-0 z-100 bg-darkblue h-screen w-full text-4xl font-semibold items-center animate-menuslideinleft"
+          class="modal hidden absolute top-0 left-0 z-100 bg-darkblue h-screen w-full text-4xl font-semibold items-center animate-slideinleft"
         >
           <div
             class="navbar-mobile-list h-screen flex flex-col items-center justify-start pt-16 space-y-5"

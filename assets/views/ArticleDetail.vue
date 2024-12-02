@@ -9,9 +9,9 @@
         >
           <router-link
             :to="{ name: 'Informations' }"
-            title="Revenir aux articles"
+            title="Revenir aux actualités"
           >
-            Revenir aux articles
+            Revenir aux actualités
           </router-link>
         </button>
       </div>

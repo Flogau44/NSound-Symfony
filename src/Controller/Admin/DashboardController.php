@@ -3,23 +3,22 @@
 namespace App\Controller\Admin;
 
 use App\Entity\News;
-use App\Entity\Alerts;
-use App\Entity\AlertType;
-use App\Entity\PartnerCategories;
-use App\Entity\Partners;
-use App\Entity\Artists;
-use App\Entity\ConcertDetails;
+use App\Entity\User;
 use App\Entity\Dates;
 use App\Entity\Genres;
 use App\Entity\Scenes;
+use App\Entity\Artists;
+use App\Entity\Partners;
 use App\Entity\Schedules;
-use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use App\Entity\ConcertDetails;
+use App\Entity\NewsCategories;
+use App\Entity\PartnerCategories;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -55,12 +54,9 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
-        yield MenuItem::section('News');
+        yield MenuItem::section('Informations');
         yield MenuItem::linkToCrud('News', 'fa-solid fa-newspaper', News::class);
-
-        yield MenuItem::section('Alertes');
-        yield MenuItem::linkToCrud('Alertes', 'fa-regular fa-bell', Alerts::class);
-        yield MenuItem::linkToCrud('Type des alertes', 'fa-solid fa-list', AlertType::class);
+        yield MenuItem::linkToCrud('Type de news', 'fa-solid fa-list', NewsCategories::class);
 
         yield MenuItem::section('Partenaires');
         yield MenuItem::linkToCrud('Partenaires', 'fa-regular fa-handshake', Partners::class);

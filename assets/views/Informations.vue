@@ -17,7 +17,7 @@ import ArticleItem from "../components/ArticleItem.vue";
 import apiClient from "../axios";
 
 export default {
-  name: "Informations",
+  name: "informations",
   components: {
     ArticleItem,
   },
@@ -27,20 +27,59 @@ export default {
     };
   },
   async mounted() {
-    const restUrl = "/news";
+    const newsUrl = "/news";
+    const typesUrl = "/news_categories";
 
     try {
-      const response = await apiClient.get(restUrl);
-      this.articles = response.data.member.map((item) => {
-        return {
-          ...item,
-          pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
-        };
-      });
-      console.log(response);
+      const [newsResponse, typesResponse] = await Promise.all([
+        apiClient.get(newsUrl),
+        apiClient.get(typesUrl),
+      ]);
+
+      const types = typesResponse.data.member;
+
+      // Créez un objet pour mapper les catégories par leur ID
+      const categoriesMap = types.reduce((acc, category) => {
+        acc[category["@id"]] = category;
+        return acc;
+      }, {});
+
+      // Ajoutez la gravité et filtrez les articles récents
+      this.articles = newsResponse.data.member
+        .map((item) => {
+          const category = categoriesMap[item.type];
+          return {
+            ...item,
+            pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
+            gravity: category ? parseInt(category.gravity, 10) : null,
+            type: category ? category.type : null,
+          };
+        })
+        .filter((item) => {
+          // Filtrer les articles récents pour les catégories "Urgente" et "Sécurité"
+          if (item.type === "Urgente" || item.type === "Sécurité") {
+            return this.isRecent(item.created_at);
+          }
+          // Toujours afficher les articles des catégories "Générale" et "Actualité"
+          return item.type === "Générale" || item.type === "Actualité";
+        });
+
+      // Triez les articles par gravité du plus grand au plus petit
+      this.articles.sort((a, b) => b.gravity - a.gravity);
+
+      console.log(this.articles);
     } catch (error) {
       console.log("Erreur lors de la récupération des articles :", error);
     }
+  },
+  methods: {
+    isRecent(date) {
+      const articleDate = new Date(date);
+      const currentDate = new Date();
+      const diffTime = Math.abs(currentDate - articleDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays <= 3;
+    },
   },
 };
 </script>

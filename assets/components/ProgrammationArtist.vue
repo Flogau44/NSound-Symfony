@@ -1,12 +1,12 @@
 <template>
   <div
-    id="slider2"
+    id="slider3"
     class="splide px-16 md:px-20"
     role="group"
     aria-label="Splide Basic HTML Example"
   >
     <div class="splide__track">
-      <ul class="splide__list" id="slider2-list">
+      <ul class="splide__list" id="slider3-list">
         <li v-for="item in artists" :key="item.id" class="splide__slide">
           <router-link
             :to="{ name: 'ArtisteDetail', params: { id: item.id } }"
@@ -62,7 +62,7 @@ export default {
         return { ...artist, date: date };
       });
       this.$nextTick(() => {
-        new Splide("#slider2", {
+        new Splide("#slider3", {
           type: "loop",
           focus: 0,
           pagination: false,
