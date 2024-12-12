@@ -2,13 +2,15 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use App\Repository\PartnersRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\PartnersRepository;
+use ApiPlatform\Metadata\GetCollection;
 
 #[ORM\Entity(repositoryClass: PartnersRepository::class)]
 #[ApiResource]
+#[GetCollection]
 class Partners
 {
     #[ORM\Id]
@@ -38,16 +40,19 @@ class Partners
     #[ORM\Column(type: 'boolean')]
     private bool $publish = false;
 
+    // Getter pour l'ID
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    // Getter pour le nom
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    // Setter pour le nom
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -55,11 +60,13 @@ class Partners
         return $this;
     }
 
+    // Getter pour l'URL
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    // Setter pour l'URL
     public function setUrl(string $url): static
     {
         $this->url = $url;
@@ -67,11 +74,13 @@ class Partners
         return $this;
     }
 
+    // Getter pour le logo
     public function getLogo()
     {
         return $this->logo;
     }
 
+    // Setter pour le logo
     public function setLogo($logo): static
     {
         $this->logo = $logo;
@@ -79,11 +88,13 @@ class Partners
         return $this;
     }
 
+    // Getter pour la date de création
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
+    // Setter pour la date de création
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
@@ -91,11 +102,13 @@ class Partners
         return $this;
     }
 
+    // Getter pour le type de partenaire
     public function getType(): ?PartnerCategories
     {
         return $this->type;
     }
 
+    // Setter pour le type de partenaire
     public function setType(?PartnerCategories $type): static
     {
         $this->type = $type;
@@ -103,11 +116,13 @@ class Partners
         return $this;
     }
 
+    // Getter pour le slug
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    // Setter pour le slug
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
@@ -115,12 +130,14 @@ class Partners
         return $this;
     }
 
-    public function getpublish(): bool
+    // Getter pour la publication
+    public function getPublish(): bool
     {
         return $this->publish;
     }
 
-    public function setpublish(bool $publish): static
+    // Setter pour la publication
+    public function setPublish(bool $publish): static
     {
         $this->publish = $publish;
 

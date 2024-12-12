@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use App\Repository\ArtistsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ArtistsRepository;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ArtistsRepository::class)]
 #[ApiResource]
+#[GetCollection]
 class Artists
 {
     #[ORM\Id]
@@ -45,26 +47,31 @@ class Artists
     #[ORM\Column(type: Types::TEXT)]
     private ?string $video = null;
 
+    // Méthode magique pour retourner le nom de l'artiste
     public function __toString()
     {
-    return $this->name;
+        return $this->name;
     }
 
+    // Constructeur pour initialiser la collection de genres
     public function __construct()
     {
         $this->genres = new ArrayCollection();
     }
 
+    // Getter pour l'ID
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    // Getter pour le nom
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    // Setter pour le nom
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -72,11 +79,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour l'image
     public function getPicture()
     {
         return $this->picture;
     }
 
+    // Setter pour l'image
     public function setPicture($picture): static
     {
         $this->picture = $picture;
@@ -84,11 +93,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour le contenu
     public function getContent(): ?string
     {
         return $this->content;
     }
 
+    // Setter pour le contenu
     public function setContent(string $content): static
     {
         $this->content = $content;
@@ -96,11 +107,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour l'URL
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
+    // Setter pour l'URL
     public function setUrl(?string $url): static
     {
         $this->url = $url;
@@ -108,11 +121,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour la date de création
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
+    // Setter pour la date de création
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
@@ -123,11 +138,13 @@ class Artists
     /**
      * @return Collection<int, Genres>
      */
+    // Getter pour les genres
     public function getGenres(): Collection
     {
         return $this->genres;
     }
 
+    // Ajouter un genre
     public function addGenre(Genres $genre): static
     {
         if (!$this->genres->contains($genre)) {
@@ -137,6 +154,7 @@ class Artists
         return $this;
     }
 
+    // Supprimer un genre
     public function removeGenre(Genres $genre): static
     {
         $this->genres->removeElement($genre);
@@ -144,11 +162,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour le slug
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    // Setter pour le slug
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
@@ -156,11 +176,13 @@ class Artists
         return $this;
     }
 
+    // Getter pour la vidéo
     public function getVideo(): ?string
     {
         return $this->video;
     }
 
+    // Setter pour la vidéo
     public function setVideo(string $video): static
     {
         $this->video = $video;

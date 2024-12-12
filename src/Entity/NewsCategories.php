@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
 use App\Repository\NewsCategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: NewsCategoriesRepository::class)]
 #[ApiResource]
+#[GetCollection]
 class NewsCategories
 {
     #[ORM\Id]
@@ -32,26 +34,31 @@ class NewsCategories
     #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'type')]
     private Collection $news;
 
+    // Méthode magique pour retourner le type de news
     public function __toString()
     {
         return $this->type;
     }
 
+    // Constructeur pour initialiser la collection de news
     public function __construct()
     {
         $this->news = new ArrayCollection();
     }
 
+    // Getter pour l'ID
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    // Getter pour le type de news
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    // Setter pour le type de news
     public function setType(string $type): static
     {
         $this->type = $type;
@@ -59,11 +66,13 @@ class NewsCategories
         return $this;
     }
 
+    // Getter pour le slug
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    // Setter pour le slug
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
@@ -71,11 +80,13 @@ class NewsCategories
         return $this;
     }
 
+    // Getter pour la gravité
     public function getGravity(): ?string
     {
         return $this->gravity;
     }
 
+    // Setter pour la gravité
     public function setGravity(string $gravity): static
     {
         $this->gravity = $gravity;
@@ -86,11 +97,13 @@ class NewsCategories
     /**
      * @return Collection<int, News>
      */
+    // Getter pour les news
     public function getNews(): Collection
     {
         return $this->news;
     }
 
+    // Ajouter une news
     public function addNews(News $news): static
     {
         if (!$this->news->contains($news)) {
@@ -101,10 +114,11 @@ class NewsCategories
         return $this;
     }
 
+    // Supprimer une news
     public function removeNews(News $news): static
     {
         if ($this->news->removeElement($news)) {
-            // set the owning side to null (unless already changed)
+            // Définir le côté propriétaire à null (sauf si déjà changé)
             if ($news->getType() === $this) {
                 $news->setType(null);
             }

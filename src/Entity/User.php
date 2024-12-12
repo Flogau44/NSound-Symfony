@@ -33,16 +33,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    // Getter pour l'ID
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    // Getter pour l'email
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    // Setter pour l'email
     public function setEmail(string $email): static
     {
         $this->email = $email;
@@ -51,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
+     * Un identifiant visuel qui représente cet utilisateur.
      *
      * @see UserInterface
      */
@@ -65,10 +68,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return list<string>
      */
+    // Getter pour les rôles
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
+        // garantir que chaque utilisateur a au moins ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
@@ -77,6 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param list<string> $roles
      */
+    // Setter pour les rôles
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -87,11 +92,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
+    // Getter pour le mot de passe
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
+    // Setter pour le mot de passe
     public function setPassword(string $password): static
     {
         $this->password = $password;
@@ -102,9 +109,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
+    // Effacer les informations d'identification
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // Si vous stockez des données temporaires et sensibles sur l'utilisateur, effacez-les ici
         // $this->plainPassword = null;
     }
 }
