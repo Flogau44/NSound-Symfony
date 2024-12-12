@@ -3,9 +3,9 @@
     class="ud-header bg-darkblue text-white top-0 left-0 z-50 w-full h-20 flex flex-row justify-center lg:justify-start lg:pl-12 lg:h-28"
   >
     <div class="flex flex-row items-center justify-around lg:justify-start">
-      <!--Menu Mobile-->
+      <!-- Menu Mobile -->
       <nav class="navbar-mobile lg:hidden">
-        <!--Hamburger-->
+        <!-- Hamburger -->
         <i
           id="hamburgerNonactive"
           class="fa-bars fas fa-2xl absolute left-3 z-999 text-white cursor-pointer w-7"
@@ -59,7 +59,7 @@
           </div>
         </div>
       </nav>
-      <!--Logo-->
+      <!-- Logo -->
       <div class="lg:pr-6 flex flex-col items-center">
         <router-link :to="{ name: 'Home' }" title="Page d'accueil">
           <img
@@ -74,7 +74,7 @@
           ><span id="logoTitle">&nbsp;JUILLET</span>
         </p>
       </div>
-      <!--Menu desktop-->
+      <!-- Menu desktop -->
       <nav
         class="navbar-desktop hidden lg:text-xl lg:font-semibold lg:flex lg:flex-row lg:space-x-5"
       >
@@ -116,7 +116,7 @@
         >
       </nav>
     </div>
-    <!--User-->
+    <!-- User -->
 
     <router-link
       :to="{ name: 'LoginForm' }"

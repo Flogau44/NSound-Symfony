@@ -26,10 +26,13 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        // Récupère l'email de la requête
         $email = $request->getPayload()->getString('_username');
 
+        // Enregistre l'email dans la session
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
+        // Crée un passeport avec les informations d'authentification
         return new Passport(
             new UserBadge($email),
             new PasswordCredentials($request->getPayload()->getString('_password')),
@@ -42,6 +45,7 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // Redirige vers la page cible après une authentification réussie
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -50,6 +54,7 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
+        // Génère l'URL de la page de connexion
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

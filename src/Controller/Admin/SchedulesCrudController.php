@@ -16,13 +16,13 @@ class SchedulesCrudController extends AbstractCrudController
         return Schedules::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour l'horaire
             TextField::new('schedule'),
+            // Champ pour le slug, basé sur l'horaire
             SlugField::new('slug')->setTargetFieldName('schedule'),
         ];
     }
-
 }

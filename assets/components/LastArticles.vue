@@ -7,12 +7,15 @@
   >
     <div class="splide__track">
       <ul class="splide__list" id="slider4-list">
+        <!-- Boucle sur les articles pour les afficher -->
         <li v-for="article in articles" :key="article.id" class="splide__slide">
+          <!-- Lien vers le détail de l'article -->
           <router-link
             :to="{ name: 'ArticleDetail', params: { id: article.id } }"
             class="articleCarousel"
             :title="article.title"
           >
+            <!-- Image de l'article -->
             <img
               :src="article.pictureUrl"
               class="imgArticlesCarousel"
@@ -21,6 +24,7 @@
             <div class="descriptionArticleCarousel">
               <h2 class="titleLastArticle">{{ article.title }}</h2>
               <p class="dateLastArticle">
+                <!-- Formate la date de création de l'article -->
                 {{ formatDate(article.created_at) }}
               </p>
             </div>
@@ -39,7 +43,7 @@ export default {
   name: "LastArticles",
   data() {
     return {
-      articles: [],
+      articles: [], // Liste des articles
     };
   },
   async mounted() {
@@ -47,6 +51,7 @@ export default {
     const typesUrl = "/news_categories";
 
     try {
+      // Récupère les articles et les catégories d'articles
       const [newsResponse, typesResponse] = await Promise.all([
         apiClient.get(newsUrl),
         apiClient.get(typesUrl),
@@ -78,6 +83,7 @@ export default {
       // Sélectionner les 3 derniers articles
       this.articles = this.articles.slice(0, 9);
 
+      // Initialiser le carrousel Splide
       this.$nextTick(() => {
         new Splide("#slider4", {
           direction: "ltr",
@@ -96,6 +102,7 @@ export default {
     }
   },
   methods: {
+    // Formate la date au format français
     formatDate(maDate) {
       const event = new Date(maDate);
       const options = { year: "numeric", month: "numeric", day: "numeric" };

@@ -4,6 +4,7 @@
       id="artistsOrPlanning"
       class="ml-4 pb-4 flex flex-row justify-start gap-x-4"
     >
+      <!-- Bouton pour afficher les artistes -->
       <button
         id="filterButtonsArtist"
         type="button"
@@ -11,6 +12,7 @@
       >
         Artistes
       </button>
+      <!-- Bouton pour afficher les horaires -->
       <button
         id="filterButtonsPlanning"
         type="button"
@@ -23,6 +25,7 @@
       id="filterButtonsSubLevel"
       class="mx-4 pb-4 grid grid-cols-2 justify-start gap-4 md:grid-cols-[repeat(4,auto)]"
     >
+      <!-- Bouton pour afficher la line-up des artistes -->
       <button
         type="button"
         class="active h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
@@ -30,6 +33,7 @@
       >
         Line-Up
       </button>
+      <!-- Boutons pour filtrer par date -->
       <button
         v-for="date in dates"
         :key="date.filter"

@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      articles: [],
+      articles: [], // Liste des articles
     };
   },
   async mounted() {
@@ -31,6 +31,7 @@ export default {
     const typesUrl = "/news_categories";
 
     try {
+      // Récupère les articles et les catégories d'articles
       const [newsResponse, typesResponse] = await Promise.all([
         apiClient.get(newsUrl),
         apiClient.get(typesUrl),
@@ -74,6 +75,7 @@ export default {
     }
   },
   methods: {
+    // Vérifie si l'article est récent (moins de 3 jours)
     isRecent(date) {
       const articleDate = new Date(date);
       const currentDate = new Date();

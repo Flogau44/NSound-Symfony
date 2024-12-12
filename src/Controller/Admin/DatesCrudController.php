@@ -20,9 +20,10 @@ class DatesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour la date
             DateField::new('date'),
+            // Champ pour le slug, basé sur la date
             SlugField::new('slug')->setTargetFieldName('date'),
         ];
     }
-  
 }

@@ -43,7 +43,7 @@ export default {
   name: "Partenaires",
   data() {
     return {
-      categorizedPartners: {},
+      categorizedPartners: {}, // Objet pour stocker les partenaires catégorisés
     };
   },
   async mounted() {
@@ -51,6 +51,7 @@ export default {
     const categoriesUrl = "/partner_categories";
 
     try {
+      // Récupère les partenaires et les catégories de partenaires
       const [partnersResponse, categoriesResponse] = await Promise.all([
         apiClient.get(restUrl),
         apiClient.get(categoriesUrl),
@@ -60,6 +61,7 @@ export default {
       const categories = categoriesResponse.data.member;
       const categorizedPartners = {};
 
+      // Catégorise les partenaires
       categories.forEach((category) => {
         const categoryName = category.slug.split("-")[1]; // Extraire le mot après le tiret
         categorizedPartners[categoryName] = partners

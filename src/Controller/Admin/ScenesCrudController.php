@@ -16,13 +16,13 @@ class ScenesCrudController extends AbstractCrudController
         return Scenes::class;
     }
 
-   
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour le nom de la scène
             TextField::new('name'),
+            // Champ pour le slug, basé sur le nom de la scène
             SlugField::new('slug')->setTargetFieldName('name'),
         ];
     }
-
 }

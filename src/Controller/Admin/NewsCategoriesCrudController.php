@@ -19,8 +19,11 @@ class NewsCategoriesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour le type de news
             TextField::new('type'),
+            // Champ pour le slug, basé sur le type de news
             SlugField::new('slug')->setTargetFieldName('type'),
+            // Champ pour la gravité de la news
             TextField::new('gravity'),
         ];
     }

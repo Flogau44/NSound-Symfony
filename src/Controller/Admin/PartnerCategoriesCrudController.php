@@ -19,9 +19,10 @@ class PartnerCategoriesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour le type de catégorie de partenaire
             TextField::new('type'),
+            // Champ pour le slug, basé sur le type de catégorie
             SlugField::new('slug')->setTargetFieldName('type'),
         ];
     }
-
 }

@@ -1,4 +1,5 @@
 <template>
+  <!-- Vérifie s'il y a des alertes récentes -->
   <div
     v-if="hasRecentAlertes"
     id="slider2"
@@ -8,11 +9,13 @@
   >
     <div class="splide__track">
       <ul class="splide__list" id="slider2-list">
+        <!-- Boucle sur les alertes récentes pour les afficher -->
         <li
           v-for="alert in recentAlertes"
           :key="alert.id"
           class="splide__slide"
         >
+          <!-- Lien vers le détail de l'article -->
           <router-link
             :to="{ name: 'ArticleDetail', params: { id: alert.id } }"
             class="alerteCarousel"
@@ -25,6 +28,7 @@
                 {{ formatDate(alert.created_at) }}
               </p>
             </div>
+            <!-- Affiche le contenu de l'alerte avec une limite de caractères -->
             <div
               class="contentAlerte"
               v-html="truncateContent(alert.content)"
@@ -44,9 +48,9 @@ export default {
   name: "news",
   data() {
     return {
-      alertes: [],
-      recentAlertes: [],
-      hasRecentAlertes: false,
+      alertes: [], // Liste des alertes
+      recentAlertes: [], // Liste des alertes récentes
+      hasRecentAlertes: false, // Indicateur de présence d'alertes récentes
     };
   },
   async mounted() {
@@ -54,6 +58,7 @@ export default {
     const typesUrl = "/news_categories";
 
     try {
+      // Récupère les alertes et les catégories d'alertes
       const [alertsResponse, typesResponse] = await Promise.all([
         apiClient.get(alertsUrl),
         apiClient.get(typesUrl),
@@ -61,6 +66,7 @@ export default {
 
       const types = typesResponse.data.member;
 
+      // Associe chaque alerte à son type
       this.alertes = alertsResponse.data.member.map((alert) => {
         const type = types.find((t) => t.news.includes(alert["@id"]));
         return {
@@ -82,6 +88,7 @@ export default {
       // Vérifier s'il y a des alertes récentes
       this.hasRecentAlertes = this.recentAlertes.length > 0;
 
+      // Initialise le carrousel Splide si des alertes récentes sont présentes
       this.$nextTick(() => {
         if (this.hasRecentAlertes) {
           new Splide("#slider2", {
@@ -96,11 +103,13 @@ export default {
     }
   },
   methods: {
+    // Formate la date au format français
     formatDate(maDate) {
       const event = new Date(maDate);
       const options = { year: "numeric", month: "numeric", day: "numeric" };
       return event.toLocaleDateString("fr-FR", options);
     },
+    // Tronque le contenu de l'alerte si trop long
     truncateContent(content) {
       const maxLength = 255; // Limite de caractères à afficher
       if (content.length > maxLength) {
@@ -108,6 +117,7 @@ export default {
       }
       return content;
     },
+    // Vérifie si l'alerte est récente (moins de 3 jours)
     isRecent(date) {
       const alertDate = new Date(date);
       const currentDate = new Date();

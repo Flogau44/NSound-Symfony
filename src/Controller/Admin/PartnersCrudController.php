@@ -23,19 +23,30 @@ class PartnersCrudController extends AbstractCrudController
         return Partners::class;
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour publier ou non le partenaire
             BooleanField::new('publish'),
+            // Champ pour le nom du partenaire
             TextField::new('name'),
+            // Champ pour le slug, basé sur le nom
             SlugField::new('slug')->setTargetFieldName('name'),
+            // Champ pour l'association avec le type de partenaire
             AssociationField::new('type'),
-            ImageField::new('logo')->setBasePath('build/images/')->setUploadDir('public/build/images/')->setUploadedFileNamePattern('[randomhash].[extension]')->setRequired(false),
+            // Champ pour le logo, avec configuration du chemin de base et du répertoire de téléchargement
+            ImageField::new('logo')
+                ->setBasePath('build/images/')
+                ->setUploadDir('public/build/images/')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
+            // Champ pour l'URL
             UrlField::new('url'),
+            // Champ pour la date de création
             DateField::new('created_at'),
         ];
     }
+
     public function configureFilters(Filters $filters): Filters
     {
         return $filters

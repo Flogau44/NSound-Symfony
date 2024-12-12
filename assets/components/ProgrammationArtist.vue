@@ -7,12 +7,15 @@
   >
     <div class="splide__track">
       <ul class="splide__list" id="slider3-list">
+        <!-- Boucle sur les artistes pour les afficher -->
         <li v-for="item in artists" :key="item.id" class="splide__slide">
+          <!-- Lien vers le détail de l'artiste -->
           <router-link
             :to="{ name: 'ArtisteDetail', params: { id: item.id } }"
             class="artistProg"
             :title="item.slug"
           >
+            <!-- Image de l'artiste -->
             <img
               :src="`http://127.0.0.1:8000/build/images/${item.picture}`"
               class="imgArtistsProg"
@@ -62,6 +65,7 @@ export default {
 
       this.artists = visibleArtists.slice(0, 12);
 
+      // Initialiser le carrousel Splide
       this.$nextTick(() => {
         new Splide("#slider3", {
           type: "loop",
@@ -83,6 +87,7 @@ export default {
     }
   },
   methods: {
+    // Formate la date au format français
     formatDate(dateString) {
       const date = new Date(dateString);
       const day = String(date.getDate()).padStart(2, "0");

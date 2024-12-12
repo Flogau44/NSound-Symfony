@@ -8,11 +8,11 @@ export default {
     <div
       class="flex flex-col items-center space-y-4 md:grid md:grid-cols-3 md:gap-x-6 md:justify-items-center"
     >
-      <!--Nation Sound-->
+      <!-- Logo Nation Sound -->
       <div class="flex flex-col">
         <img src="../images/logo.png" class="w-64" />
       </div>
-      <!--Réseaux sociaux-->
+      <!-- Réseaux sociaux -->
       <div class="flex flex-col space-y-6 items-center">
         <div class="flex flex-col items-center space-y-2">
           <div>
@@ -55,7 +55,7 @@ export default {
           </a>
         </div>
       </div>
-      <!--Contact et infos-->
+      <!-- Contact et infos -->
       <div>
         <ul
           class="text-2xl font-semibold flex flex-col items-center space-y-2 md:items-start"

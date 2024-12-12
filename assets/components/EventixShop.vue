@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Iframe pour afficher le contenu de l'URL billeterie -->
     <iframe
       :src="shopUrl"
       style="width: 100%; min-height: 900px; border: none"
@@ -18,6 +19,7 @@ export default {
     },
   },
   methods: {
+    // Méthode appelée lorsque l'iframe est chargée
     onLoad() {
       console.log("Eventix shop loaded successfully");
     },

@@ -19,9 +19,10 @@ class GenresCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            // Champ pour le genre
             TextField::new('genre'),
+            // Champ pour le slug, basé sur le genre
             SlugField::new('slug')->setTargetFieldName('genre'),
         ];
     }
-
 }
