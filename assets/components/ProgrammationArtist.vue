@@ -48,19 +48,20 @@ export default {
           apiClient.get(artistsUrl),
           apiClient.get(datesUrl),
         ]);
-      const concertDetails = concertDetailsResponse.data.member;
+      const concertDetails = concertDetailsResponse.data.member.filter(
+        (detail) => detail.publish
+      );
       const artistsData = artistsResponse.data.member;
       const datesData = datesResponse.data.member;
 
-      this.artists = artistsData.slice(0, 12).map((artist) => {
-        const artistDetails = concertDetails.find(
-          (detail) => detail.artist === artist["@id"]
-        );
-        const date = datesData.find(
-          (date) => date["@id"] === artistDetails?.date
-        )?.date;
+      const visibleArtists = concertDetails.map((detail) => {
+        const artist = artistsData.find((a) => a["@id"] === detail.artist);
+        const date = datesData.find((d) => d["@id"] === detail.date)?.date;
         return { ...artist, date: date };
       });
+
+      this.artists = visibleArtists.slice(0, 12);
+
       this.$nextTick(() => {
         new Splide("#slider3", {
           type: "loop",

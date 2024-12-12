@@ -31,6 +31,9 @@ class ConcertDetails
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $publish = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class ConcertDetails
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getpublish(): bool
+    {
+        return $this->publish;
+    }
+
+    public function setpublish(bool $publish): static
+    {
+        $this->publish = $publish;
 
         return $this;
     }

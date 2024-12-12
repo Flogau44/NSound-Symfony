@@ -63,7 +63,9 @@ export default {
       categories.forEach((category) => {
         const categoryName = category.slug.split("-")[1]; // Extraire le mot après le tiret
         categorizedPartners[categoryName] = partners
-          .filter((partner) => partner.type === category["@id"])
+          .filter(
+            (partner) => partner.type === category["@id"] && partner.publish
+          )
           .map((partner) => ({
             id: partner.id,
             url: partner.url,

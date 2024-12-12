@@ -38,6 +38,9 @@ class News
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $publish = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class News
     public function setCreatedAt(\DateTimeInterface $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getpublish(): bool
+    {
+        return $this->publish;
+    }
+
+    public function setpublish(bool $publish): static
+    {
+        $this->publish = $publish;
 
         return $this;
     }

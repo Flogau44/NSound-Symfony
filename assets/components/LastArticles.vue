@@ -54,14 +54,16 @@ export default {
 
       const types = typesResponse.data.member;
 
-      this.articles = newsResponse.data.member.map((article) => {
-        const type = types.find((t) => t.news.includes(article["@id"]));
-        return {
-          ...article,
-          type: type.type,
-          pictureUrl: `http://127.0.0.1:8000/build/images/${article.picture}`,
-        };
-      });
+      this.articles = newsResponse.data.member
+        .filter((article) => article.publish) // Filtrer les articles publiés
+        .map((article) => {
+          const type = types.find((t) => t.news.includes(article["@id"]));
+          return {
+            ...article,
+            type: type.type,
+            pictureUrl: `http://127.0.0.1:8000/build/images/${article.picture}`,
+          };
+        });
 
       // Filtrer les articles par catégorie "Générale" et "Actualité"
       this.articles = this.articles.filter(

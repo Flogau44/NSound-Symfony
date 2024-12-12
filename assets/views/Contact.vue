@@ -21,7 +21,7 @@
               <input
                 type="text"
                 name="name"
-                class="block w-full mt-1 px-2 placeholder-navyblue-900 bg-blue-300 border-darkblue rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
                 placeholder="Nom"
                 required
               />
@@ -33,7 +33,7 @@
               <input
                 type="text"
                 name="firstname"
-                class="block w-full mt-1 px-2 placeholder-navyblue-900 bg-blue-300 border-darkblue rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
                 placeholder="Prénom"
                 required
               />
@@ -45,7 +45,7 @@
               <input
                 type="email"
                 name="email"
-                class="block w-full mt-1 px-2 placeholder-navyblue-900 bg-blue-300 border-darkblue rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
                 required
               />
             </label>
@@ -56,7 +56,7 @@
               <input
                 type="text"
                 name="firstname"
-                class="block w-full mt-1 px-2 bg-blue-300 border-darkblue rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
                 required
               />
             </label>
@@ -66,7 +66,7 @@
               >
               <textarea
                 name="message"
-                class="block w-full mt-1 px-2 placeholder-navyblue-900 bg-blue-300 border-darkblue rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
                 rows="6"
                 placeholder="Votre message..."
               ></textarea>

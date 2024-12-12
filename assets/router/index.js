@@ -1,20 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
-import Informations from "../views/Informations.vue";
+import Accessibilite from "../views/Accessibilite.vue";
 import ArticleDetail from "../views/ArticleDetail.vue";
-import Programmation from "../views/Programmation.vue";
 import ArtisteDetail from "../views/ArtisteDetail.vue";
 import Billetterie from "../views/Billetterie.vue";
-import Infos_pratiques from "../views/Infos_pratiques.vue";
-import Ou_dormir from "../views/Ou_dormir.vue";
-import Sur_place from "../views/Sur_place.vue";
-import Faq_1 from "../views/Faq_1.vue";
-import Accessibilite from "../views/Accessibilite.vue";
-import Partenaires from "../views/Partenaires.vue";
 import Contact from "../views/Contact.vue";
-import Mentions_legales from "../views/Mentions_legales.vue";
 import Faq from "../views/Faq.vue";
+import Faq_1 from "../views/Faq_1.vue";
+import Home from "../views/Home.vue";
+import Informations from "../views/Informations.vue";
+import Infos_pratiques from "../views/Infos_pratiques.vue";
+import LoginForm from "../views/LoginForm.vue";
+import Mentions_legales from "../views/Mentions_legales.vue";
 import NotFound from "../views/NotFound.vue";
+import Ou_dormir from "../views/Ou_dormir.vue";
+import Partenaires from "../views/Partenaires.vue";
+import Programmation from "../views/Programmation.vue";
+import RegisterForm from "../views/RegisterForm.vue";
+import Sur_place from "../views/Sur_place.vue";
 
 const routes = [
   {
@@ -96,6 +98,16 @@ const routes = [
     path: "/Mentions_legales",
     name: "Mentions_legales",
     component: Mentions_legales,
+  },
+  {
+    path: "/Login",
+    name: "LoginForm",
+    component: LoginForm,
+  },
+  {
+    path: "/Register",
+    name: "RegisterForm",
+    component: RegisterForm,
   },
   {
     path: "/:catchAll(.*)",

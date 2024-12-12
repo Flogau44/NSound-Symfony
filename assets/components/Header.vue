@@ -117,9 +117,15 @@
       </nav>
     </div>
     <!--User-->
-    <div class="user absolute top-8 lg:top-10 right-5 z-50">
-      <i class="fa-regular fa-user fa-xl text-white"></i>
-    </div>
+
+    <router-link
+      :to="{ name: 'LoginForm' }"
+      class="user absolute top-8 lg:top-10 right-5 z-50"
+    >
+      <i
+        class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500"
+      ></i>
+    </router-link>
   </header>
 </template>
 

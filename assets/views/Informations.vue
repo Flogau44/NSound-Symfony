@@ -62,7 +62,8 @@ export default {
           }
           // Toujours afficher les articles des catégories "Générale" et "Actualité"
           return item.type === "Générale" || item.type === "Actualité";
-        });
+        })
+        .filter((item) => item.publish); // Filtrer les articles publiés
 
       // Triez les articles par gravité du plus grand au plus petit
       this.articles.sort((a, b) => b.gravity - a.gravity);

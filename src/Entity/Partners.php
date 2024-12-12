@@ -35,6 +35,9 @@ class Partners
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $publish = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +111,18 @@ class Partners
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getpublish(): bool
+    {
+        return $this->publish;
+    }
+
+    public function setpublish(bool $publish): static
+    {
+        $this->publish = $publish;
 
         return $this;
     }

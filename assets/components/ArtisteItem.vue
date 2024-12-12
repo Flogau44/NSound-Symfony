@@ -4,7 +4,7 @@
       v-for="item in artists"
       :key="item.id"
       class="artist"
-      :data-name="item.date.slice(0, 10)"
+      :data-name="item.date ? item.date.slice(0, 10) : ''"
     >
       <router-link
         :to="{ name: 'ArtisteDetail', params: { id: item.id } }"
@@ -12,13 +12,19 @@
         :title="item.slug"
       >
         <img
-          :src="`http://127.0.0.1:8000/build/images/${item.picture}`"
+          :src="
+            item.picture
+              ? `http://127.0.0.1:8000/build/images/${item.picture}`
+              : ''
+          "
           class="imgArtists"
           :alt="item.slug"
         />
         <div class="descriptionArtist">
           <h2 class="nameArtist">{{ item.name }}</h2>
-          <p class="dateArtists">{{ formatDate(item.date) }}</p>
+          <p class="dateArtists">
+            {{ item.date ? formatDate(item.date) : "" }}
+          </p>
         </div>
       </router-link>
     </article>
@@ -49,7 +55,11 @@
                 :title="artist.slug"
               >
                 <img
-                  :src="`http://127.0.0.1:8000/build/images/${artist.picture}`"
+                  :src="
+                    artist.picture
+                      ? `http://127.0.0.1:8000/build/images/${artist.picture}`
+                      : ''
+                  "
                   class="imgArtistHour"
                   :alt="artist.slug"
                 />
@@ -101,7 +111,9 @@ export default {
         apiClient.get(schedulesUrl),
       ]);
 
-      const concertDetails = concertDetailsResponse.data.member;
+      const concertDetails = concertDetailsResponse.data.member.filter(
+        (detail) => detail.publish
+      );
       const artistsData = artistsResponse.data.member;
       const scenesData = scenesResponse.data.member;
       const datesData = datesResponse.data.member;
@@ -150,18 +162,13 @@ export default {
         return { name: scene, days: dayData };
       });
 
-      this.artists = artistsData.map((artist) => {
-        const artistDetails = concertDetails.find(
-          (detail) => detail.artist === artist["@id"]
-        );
-        const date = datesData.find(
-          (date) => date["@id"] === artistDetails?.date
-        )?.date;
-        return {
-          ...artist,
-          date: date,
-        };
+      const visibleArtists = concertDetails.map((detail) => {
+        const artist = artistsData.find((a) => a["@id"] === detail.artist);
+        const date = datesData.find((d) => d["@id"] === detail.date)?.date;
+        return { ...artist, date: date };
       });
+
+      this.artists = visibleArtists;
       this.scenes = sceneData;
     } catch (error) {
       console.error("Erreur lors de la récupération des artistes :", error);
