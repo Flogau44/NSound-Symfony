@@ -6,7 +6,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class UserCrudController extends AbstractCrudController
@@ -23,6 +23,8 @@ class UserCrudController extends AbstractCrudController
             EmailField::new('email'),
             // Champ pour le mot de passe de l'utilisateur
             TextField::new('password'),
+            // Champ pour le role user
+            ArrayField::new('roles')
         ];
     }
 }

@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+class RegisterController extends AbstractController
+{
+    private $entityManager;
+    private $passwordHasher;
+
+    public function __construct(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->entityManager = $entityManager;
+        $this->passwordHasher = $passwordHasher;
+    }
+
+    #[Route('/api/register', name: 'register', methods: ['POST'])]
+    public function register(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $email = $data['email'] ?? '';
+        $password = $data['password'] ?? '';
+
+        // Validation des données
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return $this->json(['error' => 'Adresse e-mail invalide.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        if (strlen($password) < 12) {
+            return $this->json(['error' => 'Le mot de passe doit contenir au moins 12 caractères.'], Response::HTTP_BAD_REQUEST);
+        }
+
+        // Création de l'utilisateur
+        $user = new User();
+        $user->setEmail($email);
+        $user->setPassword($this->passwordHasher->hashPassword($user, $password));
+
+        // Ajouter le rôle par défaut
+        $user->setRoles(['ROLE_USER']);
+
+        // Sauvegarde de l'utilisateur dans la base de données
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return $this->json(['message' => 'Inscription réussie.'], Response::HTTP_CREATED);
+    }
+}

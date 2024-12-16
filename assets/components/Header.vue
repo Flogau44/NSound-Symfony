@@ -46,7 +46,7 @@
             >
             <router-link
               :to="{ name: 'Infos_pratiques' }"
-              class="uppercase transition duration-0 text-white hover:text-lightblue hover:duration-500"
+              class="uppercase transition duration-0 text-white hover:text-lightblue min-w-[170px] hover:duration-500"
               title="Vers la page d'infos pratiques du site 'Nation Sound'"
               >Infos pratiques</router-link
             >
@@ -116,22 +116,89 @@
         >
       </nav>
     </div>
-    <!-- User -->
-
-    <router-link
-      :to="{ name: 'LoginForm' }"
-      class="user absolute top-8 lg:top-10 right-5 z-50"
-    >
-      <i
-        class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500"
-      ></i>
-    </router-link>
+    <div class="absolute top-8 lg:top-10 right-5 z-50">
+      <div>
+        <router-link class="user" v-if="!auth" :to="{ name: 'LoginForm' }">
+          <i
+            v-if="!auth"
+            class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500"
+          ></i>
+        </router-link>
+        <div class="user" v-if="auth">
+          <i
+            class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500 cursor-pointer"
+            @click="toggleDropdown"
+          ></i>
+          <div
+            v-if="dropdownOpen"
+            class="absolute top-8 right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+          >
+            <div
+              @click="logout"
+              class="cursor-pointer w-full flex flex-row justify-start items-center space-x-2 px-4 py-2"
+            >
+              <div>
+                <i class="fa-solid fa-right-from-bracket text-darkblue"></i>
+              </div>
+              <div class="uppercase text-lg text-darkblue font-bold">
+                Déconnexion
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
 </template>
 
 <script>
+import { ref, watch, onMounted } from "vue";
+import { useStore } from "vuex";
+import apiClient from "../axios";
+
 export default {
   name: "Header",
+  setup() {
+    const store = useStore();
+    const auth = ref(store.getters.isAuthenticated);
+    const dropdownOpen = ref(false);
+
+    // Vérifiez l'état d'authentification au montage du composant
+    onMounted(() => {
+      const authState = localStorage.getItem("auth");
+      store.commit("setAuth", authState === "true");
+      auth.value = store.getters.isAuthenticated;
+      console.log("État d'authentification au montage :", auth.value);
+    });
+
+    // Utilise watch pour surveiller les changements d'état
+    watch(auth, (newVal) => {
+      console.log("Changement de l'état d'authentification :", newVal);
+      store.commit("setAuth", newVal);
+    });
+
+    const toggleDropdown = () => {
+      dropdownOpen.value = !dropdownOpen.value;
+    };
+
+    const logout = async () => {
+      try {
+        await apiClient.post("/logout");
+        store.dispatch("logout");
+        auth.value = store.getters.isAuthenticated;
+        console.log("Déconnexion réussie");
+      } catch (error) {
+        console.error("Erreur lors de la déconnexion :", error);
+      }
+    };
+
+    return {
+      auth,
+      dropdownOpen,
+      toggleDropdown,
+      logout,
+    };
+  },
   mounted() {
     // Menu Mobile
 
