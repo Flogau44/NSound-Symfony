@@ -16,6 +16,8 @@ export default createStore({
     },
     logout({ commit }) {
       commit("setAuth", false);
+      localStorage.removeItem("token");
+      localStorage.removeItem("refresh_token");
     },
   },
   getters: {

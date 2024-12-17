@@ -1,4 +1,5 @@
 <template>
+  <!-- Template principale -->
   <main class="max-h-full pt-0 md:pt-2">
     <section class="mt-6">
       <div class="mb-4 flex flex-row justify-center">
@@ -6,11 +7,13 @@
       </div>
       <div class="w-full md:w-[400px] mx-auto text-xl text-darkblue">
         <div class="p-6">
+          <!-- Formulaire de connexion -->
           <form
             @submit.prevent="login"
             class="flex flex-col gap-y-6"
             novalidate
           >
+            <!-- Message d'erreur -->
             <div
               v-if="errorMessage"
               class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
@@ -21,6 +24,7 @@
                 {{ errorMessage }}</strong
               >
             </div>
+            <!-- Champ pour l'adresse e-mail -->
             <div>
               <label for="email">E-mail<span class="text-red">*</span></label>
               <input
@@ -45,6 +49,7 @@
                 {{ emailError }}
               </div>
             </div>
+            <!-- Champ pour le mot de passe -->
             <div>
               <label for="password"
                 >Mot de passe<span class="text-red">*</span></label
@@ -70,6 +75,7 @@
                 </span>
               </div>
             </div>
+            <!-- Bouton de soumission -->
             <div class="my-6">
               <button
                 type="submit"
@@ -80,6 +86,7 @@
               </button>
             </div>
           </form>
+          <!-- Lien vers l'inscription -->
           <div class="flex flex-row gap-x-4">
             <div>Pas encore inscrit(e)?</div>
             <div>
@@ -117,6 +124,7 @@ export default {
     const emailError = ref("");
     const emailList = ref([]);
 
+    // Fonction de connexion
     const login = async () => {
       const restUrl = "/login";
       try {
@@ -128,6 +136,7 @@ export default {
         if (response.status === 200) {
           console.log("Connexion réussie", result);
           localStorage.setItem("token", result.token);
+          localStorage.setItem("refresh_token", result.refresh_token); // Stocke le refresh token
           store.dispatch("login", true);
           storeEmail(data.email);
           router.push("/");
@@ -141,19 +150,23 @@ export default {
       }
     };
 
+    // Fonction pour basculer la visibilité du mot de passe
     const togglePasswordVisibility = () => {
       showPassword.value = !showPassword.value;
     };
 
+    // Définir le message d'erreur
     const setErrorMessage = (message) => {
       errorMessage.value = message;
     };
 
+    // Effacer le message d'erreur
     const clearErrorMessage = () => {
       errorMessage.value = "";
       emailError.value = "";
     };
 
+    // Valider l'adresse e-mail
     const validateEmail = () => {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(data.email)) {
@@ -163,6 +176,7 @@ export default {
       }
     };
 
+    // Stocker l'adresse e-mail
     const storeEmail = (email) => {
       let emails = JSON.parse(localStorage.getItem("emails")) || [];
       if (!emails.includes(email)) {
@@ -171,6 +185,7 @@ export default {
       }
     };
 
+    // Remplir la liste des adresses e-mail
     const populateEmailList = () => {
       emailList.value = JSON.parse(localStorage.getItem("emails")) || [];
     };

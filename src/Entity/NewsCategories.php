@@ -29,6 +29,12 @@ class NewsCategories
     private ?string $gravity = null;
 
     /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
      * @var Collection<int, News>
      */
     #[ORM\OneToMany(targetEntity: News::class, mappedBy: 'type')]
@@ -95,9 +101,34 @@ class NewsCategories
     }
 
     /**
+     * @see UserInterface
+     *
+     * @return list<string>
+     */
+    // Getter pour les rôles
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // garantir que chaque catégorie a au moins ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * @param list<string> $roles
+     */
+    // Setter pour les rôles
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, News>
      */
-    // Getter pour les news
     public function getNews(): Collection
     {
         return $this->news;

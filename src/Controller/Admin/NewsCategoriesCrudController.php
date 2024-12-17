@@ -6,6 +6,7 @@ use App\Entity\NewsCategories;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -25,6 +26,8 @@ class NewsCategoriesCrudController extends AbstractCrudController
             SlugField::new('slug')->setTargetFieldName('type'),
             // Champ pour la gravité de la news
             TextField::new('gravity'),
+            // Champ pour le role user
+            ArrayField::new('roles')
         ];
     }
 }
