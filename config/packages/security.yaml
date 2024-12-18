@@ -47,6 +47,7 @@ security:
     - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY }
     - { path: ^/api/$, roles: PUBLIC_ACCESS }
     - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    # - { path: ^/api/news_categories, roles: PUBLIC_ACCESS, methods: [GET] }
     - { path: ^/api/register, roles: PUBLIC_ACCESS }
     - { path: ^/admin/logout, roles: IS_AUTHENTICATED_FULLY }
 

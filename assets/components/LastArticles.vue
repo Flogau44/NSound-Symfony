@@ -44,9 +44,13 @@ export default {
   data() {
     return {
       articles: [], // Liste des articles
+      token: null, // Stocker le token JWT
     };
   },
   async mounted() {
+    // Récupérer le token JWT depuis le local storage
+    this.token = localStorage.getItem("token");
+
     const newsUrl = "/news";
     const typesUrl = "/news_categories";
 
@@ -70,10 +74,16 @@ export default {
           };
         });
 
-      // Filtrer les articles par catégorie "Générale" et "Actualité"
-      this.articles = this.articles.filter(
-        (article) => article.type === "Générale" || article.type === "Actualité"
-      );
+      // Filtrer les articles par catégorie "Générale" et "Actualité" si authentifié
+      this.articles = this.articles.filter((article) => {
+        if (article.type === "Générale") {
+          return true;
+        }
+        if (article.type === "Actualité") {
+          return this.token;
+        }
+        return false;
+      });
 
       // Trier les articles par date de création (du plus récent au plus ancien)
       this.articles.sort(

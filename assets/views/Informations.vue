@@ -4,9 +4,13 @@
       <div class="mb-6">
         <h1 class="uppercase">— Actualités —</h1>
       </div>
-      <!--Afficher tous les articles-->
+      <!-- Afficher tous les articles -->
       <section id="articles">
-        <ArticleItem v-for="item in articles" :key="item.id" :item="item" />
+        <ArticleItem
+          v-for="item in filteredArticles"
+          :key="item.id"
+          :item="item"
+        />
       </section>
     </section>
   </main>
@@ -24,14 +28,18 @@ export default {
   data() {
     return {
       articles: [], // Liste des articles
+      token: null, // Stocker le token JWT
     };
   },
   async mounted() {
+    // Récupérer le token JWT depuis le local storage
+    this.token = localStorage.getItem("token");
+
     const newsUrl = "/news";
     const typesUrl = "/news_categories";
 
     try {
-      // Récupère les articles et les catégories d'articles
+      // Récupérer les articles et les catégories d'articles
       const [newsResponse, typesResponse] = await Promise.all([
         apiClient.get(newsUrl),
         apiClient.get(typesUrl),
@@ -61,8 +69,11 @@ export default {
           if (item.type === "Urgente" || item.type === "Sécurité") {
             return this.isRecent(item.created_at);
           }
-          // Toujours afficher les articles des catégories "Générale" et "Actualité"
-          return item.type === "Générale" || item.type === "Actualité";
+          // Toujours afficher les articles des catégories "Générale" et "Actualité" si authentifié
+          if (item.type === "Générale" || item.type === "Actualité") {
+            return this.token || item.type === "Générale";
+          }
+          return false;
         })
         .filter((item) => item.publish); // Filtrer les articles publiés
 
@@ -73,6 +84,11 @@ export default {
     } catch (error) {
       console.log("Erreur lors de la récupération des articles :", error);
     }
+  },
+  computed: {
+    filteredArticles() {
+      return this.articles;
+    },
   },
   methods: {
     // Vérifie si l'article est récent (moins de 3 jours)
