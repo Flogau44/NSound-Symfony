@@ -140,7 +140,9 @@
               <div>
                 <i class="fa-solid fa-right-from-bracket text-darkblue"></i>
               </div>
-              <div class="uppercase text-lg text-darkblue font-bold">
+              <div
+                class="uppercase text-lg text-darkblue font-bold hover:text-lightblue"
+              >
                 Déconnexion
               </div>
             </div>
