@@ -17,7 +17,7 @@
           >
             <!-- Image de l'artiste -->
             <img
-              :src="`http://127.0.0.1:8000/build/images/${item.picture}`"
+              :src="`/build/images/${item.picture}`"
               class="imgArtistsProg"
               :alt="item.slug"
             />

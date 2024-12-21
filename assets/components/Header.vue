@@ -258,7 +258,7 @@ export default {
         ud_header.classList.remove("bg-darkblue");
         ud_header.classList.add("sticky");
         ud_header.classList.add("blueMenu");
-        logo.src = "../assets/images/logo_1.png";
+        logo.src = "/build/images/logo_1.png";
         logoTitle.style.color = "#0b162c";
         hamburgerNonactive.style.color = "#0b162c";
         logoUser.style.color = "#0b162c";
@@ -267,7 +267,7 @@ export default {
         ud_header.classList.add("bg-darkblue");
         ud_header.classList.remove("sticky");
         ud_header.classList.remove("blueMenu");
-        logo.src = "../assets/images/logo.png";
+        logo.src = "/build/images/logo.png";
         logoTitle.style.color = "#ffffff";
         hamburgerNonactive.style.color = "#ffffff";
         logoUser.style.color = "#ffffff";

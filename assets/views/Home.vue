@@ -8,7 +8,7 @@
       class="py-10 px-4 flex flex-col justify-center items-center text-base bg-red md:px-16 md:text-xl"
     >
       <div class="py-4 w-full flex flex-row justify-center">
-        <h2 class="uppercase text-white">— informations importantes —</h2>
+        <h2 class="uppercase text-white">— Infos importantes —</h2>
       </div>
       <Alertes />
     </section>

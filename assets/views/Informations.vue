@@ -59,7 +59,7 @@ export default {
           const category = categoriesMap[item.type];
           return {
             ...item,
-            pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
+            pictureUrl: `/build/images/${item.picture}`,
             gravity: category ? parseInt(category.gravity, 10) : null,
             type: category ? category.type : null,
           };

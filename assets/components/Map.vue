@@ -26,10 +26,6 @@ export default {
         apiClient.get(polygonsUrl),
       ]);
 
-      // Afficher les réponses pour débogage
-      console.log("Markers Response:", markersResponse.data.member);
-      console.log("Polygons Response:", polygonsResponse.data.member);
-
       // Vérifiez que les données sont bien des tableaux
       this.markers = Array.isArray(markersResponse.data.member)
         ? markersResponse.data.member
@@ -65,13 +61,6 @@ export default {
 
       // Ajoute les markers à la carte
       this.markers.forEach((marker) => {
-        console.log(
-          "Adding marker with coordinates:",
-          marker.latitude,
-          marker.longitude
-        );
-        console.log("Marker icon URL:", `/build/images/${marker.iconUrl}`);
-
         var markerIcon = L.icon({
           iconUrl: `/build/images/${marker.iconUrl}`, // Utilisation du chemin relatif correct
           iconSize: [25, 25],

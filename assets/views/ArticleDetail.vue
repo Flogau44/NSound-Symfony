@@ -59,7 +59,7 @@ export default {
         title: item.title,
         content: item.content,
         url: item.url,
-        pictureUrl: `http://127.0.0.1:8000/build/images/${item.picture}`,
+        pictureUrl: `/build/images/${item.picture}`,
         date: new Date(item.created_at).toLocaleDateString("fr-FR", {
           year: "numeric",
           month: "numeric",

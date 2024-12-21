@@ -15,11 +15,7 @@
       >
         <!-- Image de l'artiste -->
         <img
-          :src="
-            item.picture
-              ? `http://127.0.0.1:8000/build/images/${item.picture}`
-              : ''
-          "
+          :src="item.picture ? `/build/images/${item.picture}` : ''"
           class="imgArtists"
           :alt="item.slug"
         />
@@ -64,11 +60,7 @@
               >
                 <!-- Image de l'artiste -->
                 <img
-                  :src="
-                    artist.picture
-                      ? `http://127.0.0.1:8000/build/images/${artist.picture}`
-                      : ''
-                  "
+                  :src="artist.picture ? `/build/images/${artist.picture}` : ''"
                   class="imgArtistHour"
                   :alt="artist.slug"
                 />

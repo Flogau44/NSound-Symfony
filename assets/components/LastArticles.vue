@@ -70,7 +70,7 @@ export default {
           return {
             ...article,
             type: type.type,
-            pictureUrl: `http://127.0.0.1:8000/build/images/${article.picture}`,
+            pictureUrl: `/build/images/${article.picture}`,
           };
         });
 

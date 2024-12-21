@@ -113,7 +113,7 @@ export default {
         genres: genres,
         content: artist.content,
         video: artist.video,
-        pictureUrl: `http://127.0.0.1:8000/build/images/${artist.picture}`,
+        pictureUrl: `/build/images/${artist.picture}`,
         pictureAlt: artist.slug,
         url: artist.url,
         date: new Date(date.date).toLocaleDateString("fr-FR", {
