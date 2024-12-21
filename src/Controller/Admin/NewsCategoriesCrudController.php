@@ -26,8 +26,6 @@ class NewsCategoriesCrudController extends AbstractCrudController
             SlugField::new('slug')->setTargetFieldName('type'),
             // Champ pour la gravité de la news
             TextField::new('gravity'),
-            // Champ pour le role user
-            ArrayField::new('roles')
         ];
     }
 }

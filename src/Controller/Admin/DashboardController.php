@@ -11,8 +11,10 @@ use App\Entity\Artists;
 use App\Entity\Partners;
 use App\Entity\Schedules;
 use App\Entity\ConcertDetails;
+use App\Entity\Markers;
 use App\Entity\NewsCategories;
 use App\Entity\PartnerCategories;
+use App\Entity\Polygons;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -63,6 +65,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Scènes', 'fa-solid fa-sliders', Scenes::class);
         yield MenuItem::linkToCrud('Dates', 'fa-solid fa-calendar-days', Dates::class);
         yield MenuItem::linkToCrud('Horaires', 'fa-regular fa-clock', Schedules::class);
+
+        yield MenuItem::section('Map');
+        yield MenuItem::linkToCrud('Markers', 'fa-solid fa-location-dot', Markers::class);
+        yield MenuItem::linkToCrud('Polygons', 'fa-solid fa-draw-polygon', Polygons::class);
 
         yield MenuItem::section('Utilisateurs');
         yield MenuItem::linkToCrud('Utilisateurs', 'fa-solid fa-user', User::class);
