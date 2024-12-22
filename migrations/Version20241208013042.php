@@ -20,12 +20,12 @@ final class Version20241208013042 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE partners ADD is_visible TINYINT(1) NOT NULL');
+        $this->addSql('ALTER TABLE partners ADD publish TINYINT(1) NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE partners DROP is_visible');
+        $this->addSql('ALTER TABLE partners DROP publish');
     }
 }

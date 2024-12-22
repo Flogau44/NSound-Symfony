@@ -158,6 +158,10 @@ import { ref, watch, onMounted } from "vue";
 import { useStore } from "vuex";
 import apiClient from "../axios";
 
+// Importer les chemins des images générées par Webpack avec hachage
+const logoPath = require("../images/logo.png");
+const logoScrolledPath = require("../images/logo_1.png");
+
 export default {
   name: "Header",
   setup() {
@@ -217,7 +221,7 @@ export default {
     // Je sélectionne et je stocke les liens du menu
     const modalLinks = document.querySelectorAll(".navbar-mobile-list a");
     // Je sélectionne et je stocke le logo
-    const logo = document.getElementById("logo");
+    const logoElement = document.getElementById("logo");
     // Je sélectionne et je stocke le titre du logo
     const logoTitle = document.getElementById("logoTitle");
     // Je sélectionne et je stocke l'icône User
@@ -258,7 +262,7 @@ export default {
         ud_header.classList.remove("bg-darkblue");
         ud_header.classList.add("sticky");
         ud_header.classList.add("blueMenu");
-        logo.src = "/build/images/logo_1.png";
+        logoElement.src = logoScrolledPath;
         logoTitle.style.color = "#0b162c";
         hamburgerNonactive.style.color = "#0b162c";
         logoUser.style.color = "#0b162c";
@@ -267,7 +271,7 @@ export default {
         ud_header.classList.add("bg-darkblue");
         ud_header.classList.remove("sticky");
         ud_header.classList.remove("blueMenu");
-        logo.src = "/build/images/logo.png";
+        logoElement.src = logoPath;
         logoTitle.style.color = "#ffffff";
         hamburgerNonactive.style.color = "#ffffff";
         logoUser.style.color = "#ffffff";

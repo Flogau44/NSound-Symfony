@@ -21,6 +21,13 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry("app", "./assets/app.js")
+  .addStyleEntry("styles", "./assets/styles/app.css")
+
+  // will output as public/build/images/filename.[hash:8].[ext]
+  .copyFiles({
+    from: "./assets/images",
+    to: "images/[path][name].[hash:8].[ext]",
+  })
 
   //enable Vue JS
   .enableVueLoader()
