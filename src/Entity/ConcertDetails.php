@@ -31,7 +31,7 @@ class ConcertDetails
     private ?Schedules $schedule = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $publish = false;
@@ -99,13 +99,13 @@ class ConcertDetails
     }
 
     // Getter pour la date de création
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
     // Setter pour la date de création
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeInterface $created_at): static
     {
         $this->created_at = $created_at;
 

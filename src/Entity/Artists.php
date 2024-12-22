@@ -32,8 +32,8 @@ class Artists
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $url = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $created_at = null;
 
     /**
      * @var Collection<int, Genres>
@@ -122,13 +122,13 @@ class Artists
     }
 
     // Getter pour la date de création
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->created_at;
     }
 
     // Setter pour la date de création
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    public function setCreatedAt(\DateTimeInterface $created_at): static
     {
         $this->created_at = $created_at;
 

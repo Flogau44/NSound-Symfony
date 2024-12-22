@@ -8,7 +8,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -43,7 +42,7 @@ class ArtistsCrudController extends AbstractCrudController
             // Champ pour la vidéo, rendu en HTML
             TextareaField::new('video')->renderAsHtml(),
             // Champ pour la date de création
-            DateTimeField::new('created_at'),
+            DateField::new('created_at'),
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {

@@ -4,10 +4,9 @@ namespace App\Controller\Admin;
 
 use App\Entity\ConcertDetails;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -32,7 +31,7 @@ class ConcertDetailsCrudController extends AbstractCrudController
             // Champ pour l'association avec l'horaire
             AssociationField::new('schedule'),
             // Champ pour la date de création
-            DateTimeField::new('created_at'),
+            DateField::new('created_at'),
         ];
     }
 
