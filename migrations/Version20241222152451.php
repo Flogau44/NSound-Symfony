@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241222151708 extends AbstractMigration
+final class Version20241222152451 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20241222151708 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE artists ADD created_at DATE NOT NULL');
-        $this->addSql('ALTER TABLE concert_details ADD created_at VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE concert_details ADD created_at DATE NOT NULL');
         $this->addSql('ALTER TABLE news ADD title VARCHAR(255) NOT NULL, ADD content LONGTEXT NOT NULL, ADD picture VARCHAR(255) NOT NULL, ADD url LONGTEXT DEFAULT NULL, ADD slug VARCHAR(255) NOT NULL, ADD created_at DATE NOT NULL');
         $this->addSql('ALTER TABLE partners ADD created_at DATE NOT NULL');
     }
