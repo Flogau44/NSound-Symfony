@@ -57,6 +57,38 @@ export default {
         maxZoom: 18,
       }).addTo(this.myMap);
 
+      // Ajouter le contrôle de géolocalisation
+      L.control
+        .locate({
+          position: "topleft",
+          drawCircle: true,
+          follow: true,
+          setView: "untilPan",
+          keepCurrentZoomLevel: true,
+          markerStyle: {
+            weight: 1,
+            opacity: 0.8,
+            fillOpacity: 0.8,
+          },
+          circleStyle: {
+            weight: 1,
+            clickable: false,
+          },
+          icon: "fa fa-location-arrow",
+          metric: true,
+          strings: {
+            title: "Montre moi où je suis !",
+            popup: "Vous êtes dans un rayon de {distance} {unit} de ce point",
+            outsideMapBoundsMsg:
+              "Vous semblez être en dehors des limites de la carte",
+          },
+          locateOptions: {
+            maxZoom: 18,
+            enableHighAccuracy: true,
+          },
+        })
+        .addTo(this.myMap);
+
       var markerGroups = {};
 
       // Ajoute les markers à la carte
