@@ -6,3 +6,10 @@ controllers:
 api_login:
   path: /api/login
   methods: ["POST"]
+
+# Rediriger toutes les routes vers le contrôleur qui sert l'application Vue.js
+app_app:
+  path: /{route}
+  controller: App\Controller\AppController::index
+  requirements:
+    route: .*

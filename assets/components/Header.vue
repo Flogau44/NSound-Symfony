@@ -167,21 +167,20 @@ export default {
   setup() {
     const store = useStore();
     const auth = ref(store.getters.isAuthenticated);
-    const dropdownOpen = ref(false);
+    const dropdownOpen = ref(false); // Assurez-vous que le dropdown est initialisé à false
 
     // Vérifiez l'état d'authentification au montage du composant
     onMounted(() => {
-      const authState = localStorage.getItem("auth");
-      store.commit("setAuth", authState === "true");
       auth.value = store.getters.isAuthenticated;
-      console.log("État d'authentification au montage :", auth.value);
     });
 
     // Utilise watch pour surveiller les changements d'état
-    watch(auth, (newVal) => {
-      console.log("Changement de l'état d'authentification :", newVal);
-      store.commit("setAuth", newVal);
-    });
+    watch(
+      () => store.getters.isAuthenticated,
+      (newVal) => {
+        auth.value = newVal;
+      }
+    );
 
     const toggleDropdown = () => {
       dropdownOpen.value = !dropdownOpen.value;
@@ -192,6 +191,7 @@ export default {
         await apiClient.post("/logout");
         store.dispatch("logout");
         auth.value = store.getters.isAuthenticated;
+        dropdownOpen.value = false; // Assurez-vous que le dropdown est fermé après la déconnexion
         console.log("Déconnexion réussie");
       } catch (error) {
         console.error("Erreur lors de la déconnexion :", error);
