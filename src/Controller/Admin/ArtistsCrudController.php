@@ -28,7 +28,9 @@ class ArtistsCrudController extends AbstractCrudController
             // Champ pour le slug, basé sur le nom
             SlugField::new('slug')->setTargetFieldName('name'),
             // Champ pour l'association avec les genres
-            AssociationField::new('genres'),
+            AssociationField::new('genres')
+                ->setCrudController(GenresCrudController::class)
+                ->autocomplete(),
             // Champ pour le contenu textuel
             TextEditorField::new('content'),
             // Champ pour l'image, avec configuration du chemin de base et du répertoire de téléchargement
@@ -50,7 +52,9 @@ class ArtistsCrudController extends AbstractCrudController
             return [
                 TextField::new('name'),
                 SlugField::new('slug')->setTargetFieldName('name'),
-                AssociationField::new('genres'),
+                AssociationField::new('genres')
+                    ->setCrudController(GenresCrudController::class)
+                    ->autocomplete(),
                 TextEditorField::new('content'),
                 ImageField::new('picture')
                     ->setBasePath('build/images/')

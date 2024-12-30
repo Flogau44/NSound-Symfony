@@ -42,7 +42,7 @@
       <li>
         <!-- Lien vers la page FAQ -->
         <NavLink
-          :to="{ name: 'Faq_1' }"
+          :to="{ name: 'Faq1' }"
           title="Vers la page FAQ du site 'Nation Sound'"
         >
           f.a.q.
@@ -56,7 +56,7 @@
 import NavLink from "../components/NavLink.vue";
 
 export default {
-  name: "Nav_sub",
+  name: "NavSub",
   components: {
     NavLink,
   },

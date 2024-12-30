@@ -1,7 +1,7 @@
 <template>
   <main class="max-h-full pt-0 md:pt-2">
     <h1 class="my-4 uppercase flex justify-center">— Infos Pratiques —</h1>
-    <Nav_sub />
+    <NavSub />
     <section class="py-10 px-4 md:px-16 flex flex-col text-base md:text-xl">
       <h2 class="uppercase flex justify-center">Plan du festival</h2>
       <Map />
@@ -118,7 +118,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import Nav_sub from "../components/Nav_sub.vue";
+import NavSub from "../components/NavSub.vue";
 import Map from "../components/Map.vue";
 
 onMounted(() => {});

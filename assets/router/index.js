@@ -5,7 +5,7 @@ import ArtisteDetail from "../views/ArtisteDetail.vue";
 import Billetterie from "../views/Billetterie.vue";
 import Contact from "../views/Contact.vue";
 import Faq from "../views/Faq.vue";
-import Faq_1 from "../views/Faq_1.vue";
+import Faq1 from "../views/Faq1.vue";
 import Home from "../views/Home.vue";
 import Informations from "../views/Informations.vue";
 import Infos_pratiques from "../views/Infos_pratiques.vue";
@@ -74,9 +74,9 @@ const routes = [
     component: Sur_place,
   },
   {
-    path: "/Faq_1",
-    name: "Faq_1",
-    component: Faq_1,
+    path: "/Faq1",
+    name: "Faq1",
+    component: Faq1,
   },
   {
     path: "/Partenaires",

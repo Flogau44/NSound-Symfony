@@ -1,7 +1,4 @@
 <template>
-  <div class="flex flex-row justify-center">
-    <h1 class="py-2 uppercase">— F.a.q. —</h1>
-  </div>
   <div class="my-10">
     <h2 class="uppercase font-bold">Général</h2>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <main class="max-h-full pt-0 md:pt-2">
     <h1 class="my-4 uppercase flex justify-center">— Infos Pratiques —</h1>
-    <Nav_sub />
+    <NavSub />
     <article
       class="px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
     >
@@ -114,7 +114,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import Nav_sub from "../components/Nav_sub.vue";
+import NavSub from "../components/NavSub.vue";
 
 onMounted(() => {});
 </script>
