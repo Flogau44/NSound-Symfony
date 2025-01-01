@@ -189,4 +189,14 @@ class Artists
 
         return $this;
     }
+
+    // Méthode pour obtenir les noms des genres en une chaîne de caractères
+    public function getGenreNames(): string
+    {
+        $genreNames = array_map(function ($genre) {
+            return $genre->getGenre();
+        }, $this->genres->toArray());
+
+        return implode(', ', $genreNames);
+    }
 }

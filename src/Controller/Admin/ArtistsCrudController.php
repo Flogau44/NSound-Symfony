@@ -52,9 +52,8 @@ class ArtistsCrudController extends AbstractCrudController
             return [
                 TextField::new('name'),
                 SlugField::new('slug')->setTargetFieldName('name'),
-                AssociationField::new('genres')
-                    ->setCrudController(GenresCrudController::class)
-                    ->autocomplete(),
+                // Champ pour les noms des genres dans la vue tableau
+                TextField::new('genreNames', 'Genres'),
                 TextEditorField::new('content'),
                 ImageField::new('picture')
                     ->setBasePath('build/images/')
