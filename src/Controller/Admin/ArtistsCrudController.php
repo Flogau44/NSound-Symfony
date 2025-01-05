@@ -20,39 +20,38 @@ class ArtistsCrudController extends AbstractCrudController
         return Artists::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setDefaultSort(['created_at' => 'DESC']);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         $fields = [
-            // Champ pour le nom de l'artiste
             TextField::new('name'),
-            // Champ pour le slug, basé sur le nom
             SlugField::new('slug')->setTargetFieldName('name'),
-            // Champ pour l'association avec les genres
             AssociationField::new('genres')
                 ->setCrudController(GenresCrudController::class)
                 ->autocomplete(),
-            // Champ pour le contenu textuel
             TextEditorField::new('content'),
-            // Champ pour l'image, avec configuration du chemin de base et du répertoire de téléchargement
             ImageField::new('picture')
                 ->setBasePath('build/images/')
                 ->setUploadDir('public/build/images/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            // Champ pour l'URL
             TextareaField::new('url'),
-            // Champ pour la vidéo, rendu en HTML
             TextareaField::new('video')->renderAsHtml(),
-            // Champ pour la date de création
-            DateField::new('created_at'),
+            DateField::new('created_at')
+                ->setFormTypeOption('disabled', true) // Champ désactivé
+                ->setFormTypeOption('widget', 'single_text')
+                ->hideOnForm()
         ];
 
         if ($pageName === Crud::PAGE_INDEX) {
-            // Afficher seulement certains champs dans la vue tableau
             return [
                 TextField::new('name'),
                 SlugField::new('slug')->setTargetFieldName('name'),
-                // Champ pour les noms des genres dans la vue tableau
                 TextField::new('genreNames', 'Genres'),
                 TextEditorField::new('content'),
                 ImageField::new('picture')

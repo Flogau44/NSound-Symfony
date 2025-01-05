@@ -40,6 +40,11 @@ class Partners
     #[ORM\Column(type: 'boolean')]
     private bool $publish = false;
 
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();  // Initialiser la date de création à aujourd'hui
+    }
+
     // Getter pour l'ID
     public function getId(): ?int
     {

@@ -53,10 +53,11 @@ class Artists
         return $this->name;
     }
 
-    // Constructeur pour initialiser la collection de genres
+    // Constructeur pour initialiser la collection de genres et la date de création
     public function __construct()
     {
         $this->genres = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();  // Initialiser la date de création à aujourd'hui
     }
 
     // Getter pour l'ID

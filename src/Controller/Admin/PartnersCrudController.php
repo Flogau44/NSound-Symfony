@@ -41,7 +41,10 @@ class PartnersCrudController extends AbstractCrudController
             // Champ pour l'URL
             UrlField::new('url'),
             // Champ pour la date de création
-            DateField::new('created_at'),
+            DateField::new('created_at')
+                ->setFormTypeOption('disabled', true) // Désactiver le champ
+                ->setFormTypeOption('widget', 'single_text')
+                ->hideOnForm()
         ];
     }
 
