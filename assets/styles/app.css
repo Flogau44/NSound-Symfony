@@ -1,9 +1,13 @@
 @tailwind base;
 
 @layer base {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
   body {
     font-family: "Cormorant Garamond", serif;
-    display: flex;
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;

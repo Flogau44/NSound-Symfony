@@ -15,6 +15,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordC
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdminAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -22,29 +25,45 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'admin_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator) {}
+    // Constructeur de la classe AdminAuthenticator
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private AuthorizationCheckerInterface $authChecker,
+        private RequestStack $requestStack,
+        private TokenStorageInterface $tokenStorage
+    ) {}
 
+    // Méthode pour authentifier un utilisateur
     public function authenticate(Request $request): Passport
     {
         // Récupère l'email de la requête
-        $email = $request->getPayload()->getString('_username');
-
+        $email = $request->request->get('_username');
         // Enregistre l'email dans la session
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         // Crée un passeport avec les informations d'authentification
         return new Passport(
             new UserBadge($email),
-            new PasswordCredentials($request->getPayload()->getString('_password')),
+            new PasswordCredentials($request->request->get('_password')),
             [
-                new CsrfTokenBadge('authenticate', $request->getPayload()->getString('_csrf_token')),
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
                 new RememberMeBadge(),
             ]
         );
     }
 
+    // Méthode appelée après une authentification réussie
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
+        // Vérifie si l'utilisateur est admin
+        if (!$this->authChecker->isGranted('ROLE_ADMIN')) {
+            // Déconnecter l'utilisateur
+            $request->getSession()->invalidate();
+            $this->tokenStorage->setToken(null);
+            // Redirige vers la page principale
+            return new RedirectResponse($this->urlGenerator->generate('app_app', ['route' => '']));
+        }
+
         // Redirige vers la page cible après une authentification réussie
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
@@ -52,9 +71,9 @@ class AdminAuthenticator extends AbstractLoginFormAuthenticator
         return new RedirectResponse($this->urlGenerator->generate('admin'));
     }
 
+    // Méthode pour obtenir l'URL de la page de connexion
     protected function getLoginUrl(Request $request): string
     {
-        // Génère l'URL de la page de connexion
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

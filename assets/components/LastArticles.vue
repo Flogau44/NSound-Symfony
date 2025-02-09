@@ -8,10 +8,14 @@
     <div class="splide__track">
       <ul class="splide__list" id="slider4-list">
         <!-- Boucle sur les articles pour les afficher -->
-        <li v-for="article in articles" :key="article.id" class="splide__slide">
+        <li
+          v-for="article in articles"
+          :key="article.slug"
+          class="splide__slide"
+        >
           <!-- Lien vers le détail de l'article -->
           <router-link
-            :to="{ name: 'ArticleDetail', params: { id: article.id } }"
+            :to="{ name: 'ArticleDetail', params: { id: article.slug } }"
             class="articleCarousel"
             :title="article.title"
           >
