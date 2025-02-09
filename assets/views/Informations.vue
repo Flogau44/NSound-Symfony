@@ -8,7 +8,7 @@
       <section id="articles">
         <ArticleItem
           v-for="item in filteredArticles"
-          :key="item.id"
+          :key="item.slug"
           :item="item"
         />
       </section>

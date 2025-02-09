@@ -54,7 +54,7 @@ export default {
     try {
       // Récupère les détails de l'article
       const response = await apiClient.get(restUrl);
-      const item = response.data.member.find((news) => news.id == id);
+      const item = response.data.member.find((news) => news.slug == id);
       this.article = {
         title: item.title,
         content: item.content,

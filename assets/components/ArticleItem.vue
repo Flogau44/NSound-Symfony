@@ -2,7 +2,7 @@
   <!-- Article contenant un lien vers le détail de l'article -->
   <article class="article">
     <router-link
-      :to="{ name: 'ArticleDetail', params: { id: item.id } }"
+      :to="{ name: 'ArticleDetail', params: { id: item.slug } }"
       class="linkArticle"
       :title="item.title"
     >

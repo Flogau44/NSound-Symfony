@@ -5,7 +5,7 @@
       <div class="mb-4 flex flex-row justify-center">
         <h1 class="uppercase">— Me connecter —</h1>
       </div>
-      <div class="w-full md:w-[400px] mx-auto text-xl text-darkblue">
+      <div class="pb-20 w-full md:w-[400px] mx-auto text-xl text-darkblue">
         <div class="p-6">
           <!-- Formulaire de connexion -->
           <form
