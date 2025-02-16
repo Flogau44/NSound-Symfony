@@ -25,32 +25,32 @@ export default {
         <div class="flex flex-row space-x-3">
           <a href="#" title="Vers la page facebook">
             <i
-              class="fab fa-facebook text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-blue"
+              class="fab fa-facebook text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-lightblue"
             ></i>
           </a>
           <a href="#" title="Vers la page instagramm">
             <i
-              class="fab fa-instagramm text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-blue"
+              class="fab fa-instagramm text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-lightblue"
             ></i>
           </a>
           <a href="#" title="Vers la page twitter">
             <i
-              class="fab fa-twitter text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-blue"
+              class="fab fa-twitter text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-lightblue"
             ></i>
           </a>
           <a href="#" title="Vers la page youtube">
             <i
-              class="fab fa-youtube text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-blue"
+              class="fab fa-youtube text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-lightblue"
             ></i>
           </a>
           <a href="#" title="Vers la page snapchat">
             <i
-              class="fab fa-snapchat text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-blue"
+              class="fab fa-snapchat text-white fa-2xl transition duration-0 hover:duration-1000 hover:text-lightblue"
             ></i>
           </a>
           <a href="#" title="Vers la page linkedin">
             <i
-              class="fab fa-linkedin text-white transition duration-0 hover:duration-1000 fa-2xl hover:text-blue"
+              class="fab fa-linkedin text-white transition duration-0 hover:duration-1000 fa-2xl hover:text-lightblue"
             ></i>
           </a>
         </div>
@@ -63,7 +63,7 @@ export default {
           <li>
             <router-link
               :to="{ name: 'Contact' }"
-              class="transition duration-0 hover:text-blue hover:duration-1000"
+              class="transition duration-0 hover:text-lightblue hover:duration-1000"
               title="Vers la page contact du site 'Nation Sound'"
               >Contact</router-link
             >
@@ -71,7 +71,7 @@ export default {
           <li>
             <router-link
               :to="{ name: 'Mentions_legales' }"
-              class="transition duration-0 hover:text-blue hover:duration-1000"
+              class="transition duration-0 hover:text-lightblue hover:duration-1000"
               title="Vers la page des mentions légales du site 'Nation Sound'"
               >Mentions légales</router-link
             >
@@ -79,7 +79,7 @@ export default {
           <li>
             <router-link
               :to="{ name: 'Faq' }"
-              class="transition duration-0 hover:text-blue hover:duration-1000"
+              class="transition duration-0 hover:text-lightblue hover:duration-1000"
               title="Vers la page F.A.Q. du site 'Nation Sound'"
               >F.A.Q.</router-link
             >
@@ -87,7 +87,7 @@ export default {
           <li>
             <router-link
               :to="{ name: 'Partenaires' }"
-              class="transition duration-0 hover:text-blue hover:duration-1000"
+              class="transition duration-0 hover:text-lightblue hover:duration-1000"
               title="Vers la page des partenaires du site 'Nation Sound'"
               >Partenaires</router-link
             >

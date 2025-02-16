@@ -8,9 +8,9 @@
   }
   body {
     font-family: "Cormorant Garamond", serif;
+    min-height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
   }
   h1,
   h2,
@@ -39,6 +39,7 @@
   }
   main {
     color: #3b556d;
+    min-height: calc(100vh - 64px - 64px);
   }
 }
 @tailwind components;
