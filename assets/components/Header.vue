@@ -167,9 +167,9 @@ export default {
   setup() {
     const store = useStore();
     const auth = ref(store.getters.isAuthenticated);
-    const dropdownOpen = ref(false); // Assurez-vous que le dropdown est initialisé à false
+    const dropdownOpen = ref(false); // S'assurer que le dropdown est initialisé à false
 
-    // Vérifiez l'état d'authentification au montage du composant
+    // Vérifie l'état d'authentification au montage du composant
     onMounted(() => {
       auth.value = store.getters.isAuthenticated;
     });
@@ -191,7 +191,7 @@ export default {
         await apiClient.post("/logout");
         store.dispatch("logout");
         auth.value = store.getters.isAuthenticated;
-        dropdownOpen.value = false; // Assurez-vous que le dropdown est fermé après la déconnexion
+        dropdownOpen.value = false; // S'assurer que le dropdown est fermé après la déconnexion
         console.log("Déconnexion réussie");
       } catch (error) {
         console.error("Erreur lors de la déconnexion :", error);
@@ -257,7 +257,17 @@ export default {
       // Je stocke le menu en fixed
       const fixed = ud_header.offsetTop;
 
-      // Si un scroll est enclenché alors le menu passe en position fixed et change de couleur
+      // Fonction pour ajouter et retirer les événements de hover
+      function addHoverEvent() {
+        logoUser.addEventListener("mouseover", handleHover);
+        logoUser.addEventListener("mouseout", handleHoverOut);
+      }
+
+      function removeHoverEvent() {
+        logoUser.removeEventListener("mouseover", handleHover);
+        logoUser.removeEventListener("mouseout", handleHoverOut);
+      }
+
       if (window.scrollY > fixed) {
         ud_header.classList.remove("bg-darkblue");
         ud_header.classList.add("sticky");
@@ -266,7 +276,7 @@ export default {
         logoTitle.style.color = "#0b162c";
         hamburgerNonactive.style.color = "#0b162c";
         logoUser.style.color = "#0b162c";
-        // Sinon le menu garde l'état d'origine
+        addHoverEvent();
       } else {
         ud_header.classList.add("bg-darkblue");
         ud_header.classList.remove("sticky");
@@ -275,6 +285,15 @@ export default {
         logoTitle.style.color = "#ffffff";
         hamburgerNonactive.style.color = "#ffffff";
         logoUser.style.color = "#ffffff";
+        removeHoverEvent();
+      }
+
+      function handleHover() {
+        logoUser.style.color = "#5FC2BA"; // Couleur de hover
+      }
+
+      function handleHoverOut() {
+        logoUser.style.color = window.scrollY > fixed ? "#0b162c" : "#ffffff"; // Couleur de base en fonction de l'état du menu
       }
     };
   },

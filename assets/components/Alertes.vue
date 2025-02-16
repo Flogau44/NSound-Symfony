@@ -12,12 +12,12 @@
         <!-- Boucle sur les alertes récentes pour les afficher -->
         <li
           v-for="alert in recentAlertes"
-          :key="alert.id"
+          :key="alert.slug"
           class="splide__slide"
         >
           <!-- Lien vers le détail de l'article -->
           <router-link
-            :to="{ name: 'ArticleDetail', params: { id: alert.id } }"
+            :to="{ name: 'ArticleDetail', params: { id: alert.slug } }"
             class="alerteCarousel"
             :title="alert.title"
           >
