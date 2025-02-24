@@ -2,6 +2,16 @@
 
 Bienvenue sur le site du Festival Nation Sound.
 
+## Table des Matières
+
+1. [Description](#description)
+2. [Installation](#installation)
+3. [Utilisation](#utilisation)
+4. [Construit avec](#construit-avec)
+5. [Contribuer](#contribuer)
+6. [Auteurs](#auteurs)
+7. [Licence](#licence)
+
 ## Description
 
 L’application mobile du festival est de type informationnel pour les cibles identifiées. Pour inciter l’utilisateur à découvrir tous les aspects de l’événement (y compris les activités et animations hors des concerts.)
