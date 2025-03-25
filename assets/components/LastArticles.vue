@@ -42,6 +42,7 @@
 
 <script>
 import apiClient from "../axios";
+import Cookies from "js-cookie";
 
 export default {
   name: "LastArticles",
@@ -53,7 +54,7 @@ export default {
   },
   async mounted() {
     // Récupérer le token JWT depuis le local storage
-    this.token = localStorage.getItem("token");
+    this.token = Cookies.get("token");
 
     const newsUrl = "/news";
     const typesUrl = "/news_categories";

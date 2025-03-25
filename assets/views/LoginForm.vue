@@ -5,7 +5,7 @@
       <div class="mb-4 flex flex-row justify-center">
         <h1 class="uppercase">— Me connecter —</h1>
       </div>
-      <div class="pb-20 w-full md:w-[400px] mx-auto text-xl text-darkblue">
+      <div class="w-full md:w-[400px] mx-auto text-xl text-darkblue">
         <div class="p-6">
           <!-- Formulaire de connexion -->
           <form
@@ -109,6 +109,7 @@ import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import apiClient from "../axios";
+import Cookies from "js-cookie"; // Importation de js-cookie
 
 export default {
   name: "LoginForm",
@@ -135,8 +136,8 @@ export default {
         const result = await response.data;
         if (response.status === 200) {
           console.log("Connexion réussie", result);
-          localStorage.setItem("token", result.token);
-          localStorage.setItem("refresh_token", result.refresh_token); // Stocke le refresh token
+          Cookies.set("token", result.token); // Stocke le token dans les cookies
+          Cookies.set("refresh_token", result.refresh_token); // Stocke le refresh token dans les cookies
           store.dispatch("login", true);
           storeEmail(data.email);
           router.push("/");
@@ -178,16 +179,16 @@ export default {
 
     // Stocker l'adresse e-mail
     const storeEmail = (email) => {
-      let emails = JSON.parse(localStorage.getItem("emails")) || [];
+      let emails = JSON.parse(Cookies.get("emails") || "[]");
       if (!emails.includes(email)) {
         emails.push(email);
-        localStorage.setItem("emails", JSON.stringify(emails));
+        Cookies.set("emails", JSON.stringify(emails));
       }
     };
 
     // Remplir la liste des adresses e-mail
     const populateEmailList = () => {
-      emailList.value = JSON.parse(localStorage.getItem("emails")) || [];
+      emailList.value = JSON.parse(Cookies.get("emails") || "[]");
     };
 
     return {

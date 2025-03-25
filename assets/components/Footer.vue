@@ -97,7 +97,7 @@ export default {
     </div>
     <div class="py-2 flex flex-col justify-center items-center md:flex-row">
       <div>
-        Copyright &copy; 2024 Live Envents -
+        Copyright &copy; 2025 Live Envents -
 
         <span class="text-lightblue font-semibold">N</span>ation
         <span class="text-lightblue font-semibold">S</span>ound -

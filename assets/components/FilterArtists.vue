@@ -53,9 +53,9 @@ export default {
   data() {
     return {
       dates: [
-        { filter: "2025-07-11", label: "Ven.11/07", class: "active" },
-        { filter: "2025-07-12", label: "Sam.12/07", class: "" },
-        { filter: "2025-07-13", label: "Dim.13/07", class: "" },
+        { filter: "2026-07-10", label: "Ven.10/07", class: "active" },
+        { filter: "2026-07-11", label: "Sam.11/07", class: "" },
+        { filter: "2026-07-12", label: "Dim.12/07", class: "" },
       ],
     };
   },

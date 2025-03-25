@@ -19,6 +19,7 @@
 <script>
 import ArticleItem from "../components/ArticleItem.vue";
 import apiClient from "../axios";
+import Cookies from "js-cookie";
 
 export default {
   name: "informations",
@@ -33,7 +34,7 @@ export default {
   },
   async mounted() {
     // Récupérer le token JWT depuis le local storage
-    this.token = localStorage.getItem("token");
+    this.token = Cookies.get("token");
 
     const newsUrl = "/news";
     const typesUrl = "/news_categories";

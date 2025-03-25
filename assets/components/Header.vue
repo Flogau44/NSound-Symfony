@@ -70,7 +70,7 @@
           />
         </router-link>
         <p class="hidden text-xl font-semibold lg:flex">
-          <span class="text-lightblue font-bold">11.12.13</span
+          <span class="text-lightblue font-bold">10.11.12</span
           ><span id="logoTitle">&nbsp;JUILLET</span>
         </p>
       </div>
