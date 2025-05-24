@@ -13,8 +13,8 @@
 
 <script setup>
 import { onMounted } from "vue";
-import FilterArtists from "../components/FilterArtists.vue";
-import ArtisteItem from "../components/ArtisteItem.vue";
+import FilterArtists from "../../components/FilterArtists.vue";
+import ArtisteItem from "../../components/ArtisteItem.vue";
 
 onMounted(() => {});
 </script>

@@ -19,7 +19,7 @@
         </p>
       </div>
       <img
-        src="../images/accueil_PSH_PMR.jpg"
+        src="../../images/accueil_PSH_PMR.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Accueil PSH PMR"
       />
@@ -28,7 +28,7 @@
       class="bg-darkblue text-white px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
     >
       <img
-        src="../images/accompagnant_psh.jpg"
+        src="../../images/accompagnant_psh.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Accompagnat PSH"
       />
@@ -57,7 +57,7 @@
         </p>
       </div>
       <img
-        src="../images/plateforme_psh.jpg"
+        src="../../images/plateforme_psh.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Plateforme PSH"
       />
@@ -66,7 +66,7 @@
       class="bg-darkblue text-white px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
     >
       <img
-        src="../images/navette_psh.png"
+        src="../../images/navette_psh.png"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Navette PSH"
       />
@@ -94,7 +94,7 @@
         </p>
       </div>
       <img
-        src="../images/WC_PSH.png"
+        src="../../images/WC_PSH.png"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="WC PSH"
       />
@@ -104,7 +104,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import NavSub from "../components/NavSub.vue";
+import NavSub from "../../components/NavSub.vue";
 
 onMounted(() => {});
 </script>

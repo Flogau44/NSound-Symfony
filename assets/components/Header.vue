@@ -143,7 +143,7 @@
               <div
                 class="uppercase text-lg text-darkblue font-bold hover:text-lightblue"
               >
-                Déconnexion
+                Logout
               </div>
             </div>
           </div>

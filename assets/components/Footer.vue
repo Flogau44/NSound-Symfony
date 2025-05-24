@@ -10,7 +10,7 @@ export default {
     >
       <!-- Logo Nation Sound -->
       <div class="flex flex-col">
-        <img src="../images/logo.png" class="w-64" />
+        <img src="../images/logo.png" class="w-64" alt="logo" />
       </div>
       <!-- Réseaux sociaux -->
       <div class="flex flex-col space-y-6 items-center">

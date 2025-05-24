@@ -35,7 +35,7 @@
       <p class="uppercase text-base font-medium md:text-xl">
         Billet 1 jour · Forfait 3 Jours
       </p>
-      <img src="../images/ticket.png" alt="ticket" />
+      <img src="../../images/ticket.png" alt="ticket" />
       <button
         type="button"
         class="intersect:animate-fade intersect:animate-duration-1000 intersect:animate-delay-500 h-10 px-5 text-darkblue text-xl font-bold bg-lightblue-900 ring-darkblue rounded-md hover:text-white hover:bg-blue-900 outline-none hover:ring hover:ring-darkblue transition-colors durée-700 animate-fadeinup js-show-on-scroll3"
@@ -63,12 +63,12 @@
 </template>
 
 <script>
-import Carousel from "../components/Carousel.vue";
-import Alertes from "../components/Alertes.vue";
-import ProgrammationArtist from "../components/ProgrammationArtist.vue";
-import Map from "../components/Map.vue";
-import LastArticles from "../components/LastArticles.vue";
-import apiClient from "../axios";
+import Carousel from "../../components/Carousel.vue";
+import Alertes from "../../components/Alertes.vue";
+import ProgrammationArtist from "../../components/ProgrammationArtist.vue";
+import Map from "../../components/Map.vue";
+import LastArticles from "../../components/LastArticles.vue";
+import apiClient from "../../axios";
 
 export default {
   name: "Home",

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import apiClient from "../axios";
+import apiClient from "../../axios";
 
 export default {
   name: "Partenaires",

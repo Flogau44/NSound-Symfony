@@ -10,8 +10,8 @@
 
 <script setup>
 import { onMounted } from "vue";
-import NavSub from "../components/NavSub.vue";
-import FaqItem from "../components/FaqItem.vue";
+import NavSub from "../../components/NavSub.vue";
+import FaqItem from "../../components/FaqItem.vue";
 
 onMounted(() => {});
 </script>

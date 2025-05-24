@@ -2,11 +2,25 @@
   <!-- Template principale -->
   <main class="max-h-full pt-0 md:pt-2">
     <section class="mt-6">
-      <div class="mb-4 flex flex-row justify-center">
-        <h1 class="uppercase">— Me connecter —</h1>
+      <div class="flex flex-col items-center space-y-4">
+        <div>
+          <a href="/">
+            <img
+              src="../../images/logo_1.png"
+              class="w-20 md:w-28"
+              alt="logo"
+            />
+          </a>
+        </div>
+        <div class="mb-4 flex flex-row justify-center">
+          <h1>Sign In</h1>
+        </div>
       </div>
-      <div class="w-full md:w-[400px] mx-auto text-xl text-darkblue">
-        <div class="p-6">
+      <div class="w-full md:w-[600px] mx-auto text-xl text-darkblue">
+        <div class="border rounded m-6 p-6 shadow-md">
+          <p class="text-blue pb-4">
+            Enter your email below to login to your account.
+          </p>
           <!-- Formulaire de connexion -->
           <form
             @submit.prevent="login"
@@ -26,11 +40,15 @@
             </div>
             <!-- Champ pour l'adresse e-mail -->
             <div>
-              <label for="email">E-mail<span class="text-red">*</span></label>
+              <label for="email" class="block font-medium text-blue"
+                >Email<span class="text-red">*</span></label
+              >
               <input
                 type="email"
                 list="email-list"
-                class="block w-full mt-1 px-2 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                class="block border p-2 w-full rounded"
+                :class="data.email ? 'bg-blue-100' : 'bg-white'"
+                placeholder="your@email.com"
                 v-model="data.email"
                 required
                 @focus="populateEmailList"
@@ -51,13 +69,15 @@
             </div>
             <!-- Champ pour le mot de passe -->
             <div>
-              <label for="password"
-                >Mot de passe<span class="text-red">*</span></label
+              <label for="password" class="block font-medium text-blue"
+                >Password<span class="text-red">*</span></label
               >
               <div class="relative">
                 <input
                   :type="showPassword ? 'text' : 'password'"
-                  class="block w-full mt-1 px-2 pr-10 placeholder-navyblue-900 border-darkblue border-2 rounded-sm shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50"
+                  class="block border p-2 w-full rounded"
+                  :class="data.password ? 'bg-blue-100' : 'bg-white'"
+                  placeholder="Enter your password"
                   v-model="data.password"
                   required
                 />
@@ -79,22 +99,22 @@
             <div class="my-6">
               <button
                 type="submit"
-                class="h-10 px-5 text-white text-xl font-bold bg-navyblue rounded-lg transition-colors duration-700 focus:shadow-outline hover:bg-blue-700 cursor-pointer"
+                class="w-full h-10 px-5 text-white text-xl font-bold bg-navyblue rounded-lg transition-colors duration-700 focus:shadow-outline hover:bg-blue-700 cursor-pointer"
                 :disabled="!isEmailValid"
               >
-                Me connecter
+                Sign In
               </button>
             </div>
           </form>
           <!-- Lien vers l'inscription -->
-          <div class="flex flex-row gap-x-4">
-            <div>Pas encore inscrit(e)?</div>
+          <div class="flex flex-row justify-center gap-x-4">
+            <div class="text-blue">Don't have an account ?</div>
             <div>
               <router-link
                 :to="{ name: 'RegisterForm' }"
                 class="text-blue-900 border-blue-900 border-b-2 hover:text-darkblue hover:border-b-2 hover:border-darkblue"
                 title="Vers la page d'inscription du site 'Nation Sound'"
-                >M'inscrire</router-link
+                >Sign Up</router-link
               >
             </div>
           </div>
@@ -108,7 +128,7 @@
 import { reactive, ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import apiClient from "../axios";
+import apiClient from "../../axios";
 import Cookies from "js-cookie"; // Importation de js-cookie
 
 export default {

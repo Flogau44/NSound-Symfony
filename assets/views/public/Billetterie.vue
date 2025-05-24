@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import EventixShop from "../components/EventixShop.vue";
+import EventixShop from "../../components/EventixShop.vue";
 
 export default {
   components: {

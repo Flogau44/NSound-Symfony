@@ -11,7 +11,7 @@
         class="bg-darkblue text-white px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
       >
         <img
-          src="../images/entree_festival.png"
+          src="../../images/entree_festival.png"
           class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
           alt="Entree du festival"
         />
@@ -62,7 +62,7 @@
           </p>
         </div>
         <img
-          src="../images/espace_detente.jpg"
+          src="../../images/espace_detente.jpg"
           class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
           alt="Espace detente"
         />
@@ -71,7 +71,7 @@
         class="bg-darkblue text-white px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
       >
         <img
-          src="../images/stand_prevention.png"
+          src="../../images/stand_prevention.png"
           class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
           alt="Stand de prevention"
         />
@@ -107,7 +107,7 @@
           </p>
         </div>
         <img
-          src="../images/safe_zone.jpg"
+          src="../../images/safe_zone.jpg"
           class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
           alt="Safe zone"
         />
@@ -118,8 +118,8 @@
 
 <script setup>
 import { onMounted } from "vue";
-import NavSub from "../components/NavSub.vue";
-import Map from "../components/Map.vue";
+import NavSub from "../../components/NavSub.vue";
+import Map from "../../components/Map.vue";
 
 onMounted(() => {});
 </script>

@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import ArticleItem from "../components/ArticleItem.vue";
-import apiClient from "../axios";
+import ArticleItem from "../../components/ArticleItem.vue";
+import apiClient from "../../axios";
 import Cookies from "js-cookie";
 
 export default {

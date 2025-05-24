@@ -15,7 +15,7 @@
         </p>
       </div>
       <img
-        src="../images/camping_2.jpg"
+        src="../../images/camping_2.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Camping"
       />
@@ -24,7 +24,7 @@
       class="bg-darkblue text-white px-6 py-10 text-base flex flex-col justify-between gap-y-6 md:px-16 md:text-xl md:flex-row md:items-start md:gap-x-12 md:justify-center"
     >
       <img
-        src="../images/tipi.jpg"
+        src="../../images/tipi.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Tipi"
       />
@@ -61,7 +61,7 @@
         </p>
       </div>
       <img
-        src="../images/gite.jpg"
+        src="../../images/gite.jpg"
         class="max-w-full h-full md:max-w-[400px] lg:max-w-[600px]"
         alt="Gite"
       />
@@ -71,7 +71,7 @@
 
 <script setup>
 import { onMounted } from "vue";
-import NavSub from "../components/NavSub.vue";
+import NavSub from "../../components/NavSub.vue";
 
 onMounted(() => {});
 </script>
