@@ -131,7 +131,7 @@ export default {
       // Validation du mot de passe
       if (this.password.length < 12) {
         this.passwordError =
-          "Le mot de passe doit contenir au moins 12 caractères.";
+          "The password must contain at least 12 characters.";
         return;
       }
       try {
@@ -140,13 +140,13 @@ export default {
           email: this.email,
           password: this.password,
         });
-        console.log("Inscription réussie", response.data);
+        console.log("Successful registration", response.data);
         // Redirection vers la page de connexion après inscription réussie
         this.router.push("/login");
       } catch (error) {
         // Affichage du message d'erreur en cas d'erreur lors de l'inscription
-        console.error("Erreur lors de l'inscription", error);
-        this.emailError = "Une erreur est survenue lors de l'inscription.";
+        console.error("Registration error", error);
+        this.emailError = "An error occurred during registration.";
       }
     },
     // Méthode pour afficher/masquer le mot de passe
@@ -159,7 +159,7 @@ export default {
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
       if (!strongPasswordPattern.test(this.password)) {
         this.passwordError =
-          "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
+          "The password must contain at least 12 characters, one upper case, one lower case, one number and one special character.";
       } else {
         this.passwordError = "";
       }
@@ -168,7 +168,7 @@ export default {
     validateEmail() {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(this.email)) {
-        this.emailError = "Veuillez entrer une adresse e-mail valide.";
+        this.emailError = "Please enter a valid e-mail address.";
       } else {
         this.emailError = "";
       }

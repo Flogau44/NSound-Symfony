@@ -162,11 +162,11 @@ export default {
           storeEmail(data.email);
           router.push("/");
         } else {
-          setErrorMessage("Votre e-mail ou votre mot de passe est invalide.");
+          setErrorMessage("Your e-mail or password is invalid.");
           console.error("Erreur lors de la connexion", result);
         }
       } catch (error) {
-        setErrorMessage("Votre e-mail ou votre mot de passe est invalide.");
+        setErrorMessage("Your e-mail or password is invalid.");
         console.error("Erreur lors de la connexion", error);
       }
     };
@@ -191,7 +191,7 @@ export default {
     const validateEmail = () => {
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(data.email)) {
-        emailError.value = "Veuillez entrer une adresse e-mail valide.";
+        emailError.value = "Please enter a valid e-mail address.";
       } else {
         emailError.value = "";
       }

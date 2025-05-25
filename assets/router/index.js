@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store/store";
 import Home from "../views/public/Home.vue";
 import Accessibilite from "../views/public/Accessibilite.vue";
 import ArticleDetail from "../views/public/ArticleDetail.vue";
@@ -120,13 +121,13 @@ const routes = [
     path: "/Login",
     name: "LoginForm",
     component: LoginForm,
-    meta: { layout: AuthLayout },
+    meta: { layout: AuthLayout, requiresGuest: true },
   },
   {
     path: "/Register",
     name: "RegisterForm",
     component: RegisterForm,
-    meta: { layout: AuthLayout },
+    meta: { layout: AuthLayout, requiresGuest: true },
   },
   {
     path: "/:catchAll(.*)",
@@ -134,5 +135,19 @@ const routes = [
     meta: { layout: DefaultLayout },
   },
 ];
-const router = createRouter({ history: createWebHistory(), routes });
+// Création du router
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+// Guard de navigation pour bloquer Login et Register si déjà authentifié
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresGuest && store.getters.isAuthenticated) {
+    next("/"); // Redirige vers la page d'accueil ou une autre page pour les utilisateurs connectés
+  } else {
+    next();
+  }
+});
+
 export default router;
