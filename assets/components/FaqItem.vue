@@ -7,7 +7,7 @@
       <div
         v-for="questionData in faqData.questions"
         :key="questionData.id"
-        class="border-black-500 border-t-2 border-b-2"
+        class="border-black-500 border-t-2"
       >
         <div class="question" @click="toggleQuestion(questionData.id)">
           <h3>{{ questionData.question }}</h3>

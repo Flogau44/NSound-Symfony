@@ -121,14 +121,21 @@
         <router-link class="user" v-if="!auth" :to="{ name: 'LoginForm' }">
           <i
             v-if="!auth"
-            class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500"
+            class="fa-regular fa-user fa-xl transition duration-0 text-white"
           ></i>
         </router-link>
         <div class="user" v-if="auth">
-          <i
-            class="fa-regular fa-user fa-xl transition duration-0 text-white hover:text-lightblue hover:duration-500 cursor-pointer"
-            @click="toggleDropdown"
-          ></i>
+          <div class="relative">
+            <i
+              class="fa-solid fa-circle fa-2xl text-white cursor-pointer"
+              @click="toggleDropdown"
+            ></i>
+            <div
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-darkblue font-bold text-2xl"
+            >
+              {{ firstLetter }}
+            </div>
+          </div>
           <div
             v-if="dropdownOpen"
             class="absolute top-8 right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
@@ -140,9 +147,7 @@
               <div>
                 <i class="fa-solid fa-right-from-bracket text-darkblue"></i>
               </div>
-              <div
-                class="uppercase text-lg text-darkblue font-bold hover:text-lightblue"
-              >
+              <div class="uppercase text-lg text-darkblue font-bold">
                 Logout
               </div>
             </div>
@@ -154,7 +159,7 @@
 </template>
 
 <script>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import { useStore } from "vuex";
 import apiClient from "../axios";
 
@@ -168,19 +173,27 @@ export default {
     const store = useStore();
     const auth = ref(store.getters.isAuthenticated);
     const dropdownOpen = ref(false); // S'assurer que le dropdown est initialisé à false
+    const userEmail = ref(""); // Stockage de l'email
 
     // Vérifie l'état d'authentification au montage du composant
     onMounted(() => {
       auth.value = store.getters.isAuthenticated;
+      userEmail.value = store.getters.userEmail || ""; // Vérification sécurisée
+      console.log("Email récupéré depuis Vuex :", userEmail.value);
     });
 
-    // Utilise watch pour surveiller les changements d'état
+    // Surveille les changements de l'état d'authentification et de l'email
     watch(
-      () => store.getters.isAuthenticated,
+      () => store.getters.userEmail,
       (newVal) => {
-        auth.value = newVal;
+        userEmail.value = newVal || "";
       }
     );
+
+    // Extraction de la première lettre de l'email
+    const firstLetter = computed(() => {
+      return userEmail.value ? userEmail.value.charAt(0).toUpperCase() : "U";
+    });
 
     const toggleDropdown = () => {
       dropdownOpen.value = !dropdownOpen.value;
@@ -200,6 +213,7 @@ export default {
 
     return {
       auth,
+      firstLetter,
       dropdownOpen,
       toggleDropdown,
       logout,
@@ -226,6 +240,8 @@ export default {
     const logoTitle = document.getElementById("logoTitle");
     // Je sélectionne et je stocke l'icône User
     const logoUser = document.querySelector(".user i");
+    // Je sélectionne et je stocke l'icône User
+    const userName = document.querySelector(".user .relative div");
 
     // Ouvrir le menu quand on clique sur l'hamburger non active (fa-bars)
     hamburgerNonactive.addEventListener("click", () => {
@@ -250,23 +266,23 @@ export default {
       });
     });
 
+    // Fonction pour ajouter et retirer les événements de hover
+    function addHoverEvent() {
+      logoUser.addEventListener("mouseover", handleHover);
+      logoUser.addEventListener("mouseout", handleHoverOut);
+    }
+
+    function removeHoverEvent() {
+      logoUser.removeEventListener("mouseover", handleHover);
+      logoUser.removeEventListener("mouseout", handleHoverOut);
+    }
+
     // Changer la couleur du menu au scroll
     window.onscroll = () => {
       // Je sélectionne et je stocke la barre du menu
       const ud_header = document.querySelector(".ud-header");
       // Je stocke le menu en fixed
       const fixed = ud_header.offsetTop;
-
-      // Fonction pour ajouter et retirer les événements de hover
-      function addHoverEvent() {
-        logoUser.addEventListener("mouseover", handleHover);
-        logoUser.addEventListener("mouseout", handleHoverOut);
-      }
-
-      function removeHoverEvent() {
-        logoUser.removeEventListener("mouseover", handleHover);
-        logoUser.removeEventListener("mouseout", handleHoverOut);
-      }
 
       if (window.scrollY > fixed) {
         ud_header.classList.remove("bg-darkblue");
@@ -276,6 +292,7 @@ export default {
         logoTitle.style.color = "#0b162c";
         hamburgerNonactive.style.color = "#0b162c";
         logoUser.style.color = "#0b162c";
+        userName.style.color = "#ffffff";
         addHoverEvent();
       } else {
         ud_header.classList.add("bg-darkblue");
@@ -285,9 +302,9 @@ export default {
         logoTitle.style.color = "#ffffff";
         hamburgerNonactive.style.color = "#ffffff";
         logoUser.style.color = "#ffffff";
+        userName.style.color = "#0b162c";
         removeHoverEvent();
       }
-
       function handleHover() {
         logoUser.style.color = "#5FC2BA"; // Couleur de hover
       }

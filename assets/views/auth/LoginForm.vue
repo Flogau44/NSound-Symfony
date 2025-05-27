@@ -158,7 +158,7 @@ export default {
           console.log("Connexion réussie", result);
           Cookies.set("token", result.token); // Stocke le token dans les cookies
           Cookies.set("refresh_token", result.refresh_token); // Stocke le refresh token dans les cookies
-          store.dispatch("login", true);
+          store.dispatch("login", { email: data.email });
           storeEmail(data.email);
           router.push("/");
         } else {
