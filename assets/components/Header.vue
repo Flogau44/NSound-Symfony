@@ -125,11 +125,8 @@
           ></i>
         </router-link>
         <div class="user" v-if="auth">
-          <div class="relative">
-            <i
-              class="fa-solid fa-circle fa-2xl text-white cursor-pointer"
-              @click="toggleDropdown"
-            ></i>
+          <div class="relative cursor-pointer" @click="toggleDropdown">
+            <i class="fa-solid fa-circle fa-2xl text-white"></i>
             <div
               class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-darkblue font-bold text-2xl"
             >
@@ -138,18 +135,32 @@
           </div>
           <div
             v-if="dropdownOpen"
-            class="absolute top-8 right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+            class="absolute top-7 right-0 py-1 z-50 w-52 flex flex-col bg-white rounded-md shadow-lg"
           >
             <div
+              class="p-4 flex flex-row justify-start items-center space-x-2 border-b-2 border-blue-100"
+            >
+              <div class="relative">
+                <i class="fa-solid fa-circle fa-2xl text-darkblue"></i>
+                <div
+                  class="absolute z-60 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-2xl"
+                >
+                  {{ firstLetter }}
+                </div>
+              </div>
+              <div class="flex flex-col">
+                <div class="text-blue text-base">Connecté en tant que</div>
+                <div class="text-blue text-base">{{ email }}</div>
+              </div>
+            </div>
+            <div
               @click="logout"
-              class="cursor-pointer w-full flex flex-row justify-start items-center space-x-2 px-4 py-2"
+              class="cursor-pointer w-full p-4 flex flex-row justify-start items-center space-x-2"
             >
               <div>
                 <i class="fa-solid fa-right-from-bracket text-darkblue"></i>
               </div>
-              <div class="uppercase text-lg text-darkblue font-bold">
-                Logout
-              </div>
+              <div class="text-lg text-darkblue font-bold">Se déconnecter</div>
             </div>
           </div>
         </div>
@@ -179,7 +190,6 @@ export default {
     onMounted(() => {
       auth.value = store.getters.isAuthenticated;
       userEmail.value = store.getters.userEmail || ""; // Vérification sécurisée
-      console.log("Email récupéré depuis Vuex :", userEmail.value);
     });
 
     // Surveille les changements de l'état d'authentification et de l'email
@@ -189,6 +199,11 @@ export default {
         userEmail.value = newVal || "";
       }
     );
+
+    // Extraction de l'email
+    const email = computed(() => {
+      return userEmail.value;
+    });
 
     // Extraction de la première lettre de l'email
     const firstLetter = computed(() => {
@@ -213,6 +228,7 @@ export default {
 
     return {
       auth,
+      email,
       firstLetter,
       dropdownOpen,
       toggleDropdown,
