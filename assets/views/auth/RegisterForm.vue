@@ -26,6 +26,36 @@
             class="flex flex-col gap-y-6"
             novalidate
           >
+            <!-- Champ de saisie pour le prénom -->
+            <div>
+              <label htmlFor="firstname" class="block font-medium text-blue">
+                First Name
+              </label>
+              <input
+                type="text"
+                class="block border p-2 w-full rounded"
+                :class="firstname ? 'bg-blue-100' : 'bg-white'"
+                placeholder="Jean"
+                required
+                name="firstname"
+                v-model="firstname"
+              />
+            </div>
+            <!-- Champ de saisie pour le nom -->
+            <div>
+              <label htmlFor="lastname" class="block font-medium text-blue">
+                Last Name
+              </label>
+              <input
+                type="text"
+                class="block border p-2 w-full rounded"
+                :class="lastname ? 'bg-blue-100' : 'bg-white'"
+                placeholder="Dupont"
+                required
+                name="lastname"
+                v-model="lastname"
+              />
+            </div>
             <!-- Champ de saisie pour l'adresse e-mail -->
             <div>
               <label for="email" class="block font-medium text-blue"
@@ -114,6 +144,8 @@ export default {
   name: "RegisterForm", // Nom du composant
   data() {
     return {
+      firstname: "", // Prénom de l'utilisateur
+      lastname: "", // Nom de l'utilisateur
       email: "", // Adresse e-mail de l'utilisateur
       password: "", // Mot de passe de l'utilisateur
       showPassword: false, // Indicateur pour afficher/masquer le mot de passe
@@ -137,6 +169,7 @@ export default {
       try {
         // Envoi de la requête POST à l'API d'inscription
         const response = await apiClient.post("/register", {
+          name: `${this.firstname} ${this.lastname}`,
           email: this.email,
           password: this.password,
         });

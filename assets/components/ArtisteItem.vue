@@ -121,12 +121,6 @@ export default {
       const datesData = datesResponse.data.member;
       const schedulesData = schedulesResponse.data.member;
 
-      console.log(concertDetails);
-      console.log(artistsData);
-      console.log(scenesData);
-      console.log(datesData);
-      console.log(schedulesData);
-
       const sceneNames = scenesData.map((scene) => scene.name);
       const days = datesData.map((date) => date.date.split("T")[0]);
 

@@ -23,33 +23,41 @@ class RegisterController extends AbstractController
 
     #[Route('/api/register', name: 'register', methods: ['POST'])]
     public function register(Request $request): Response
-    {
-        $data = json_decode($request->getContent(), true);
+{
+    $data = json_decode($request->getContent(), true);
 
-        $email = $data['email'] ?? '';
-        $password = $data['password'] ?? '';
+    $email = $data['email'] ?? '';
+    $password = $data['password'] ?? '';
+    $name = $data['name'] ?? '';
 
-        // Validation des données
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return $this->json(['error' => 'Adresse e-mail invalide.'], Response::HTTP_BAD_REQUEST);
-        }
-
-        if (strlen($password) < 12) {
-            return $this->json(['error' => 'Le mot de passe doit contenir au moins 12 caractères.'], Response::HTTP_BAD_REQUEST);
-        }
-
-        // Création de l'utilisateur
-        $user = new User();
-        $user->setEmail($email);
-        $user->setPassword($this->passwordHasher->hashPassword($user, $password));
-
-        // Ajouter le rôle par défaut
-        $user->setRoles(['ROLE_USER']);
-
-        // Sauvegarde de l'utilisateur dans la base de données
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return $this->json(['message' => 'Inscription réussie.'], Response::HTTP_CREATED);
+    // Vérification si le champ name est vide
+    if (empty($name)) {
+        return $this->json(['error' => 'Le champ "name" est obligatoire.'], Response::HTTP_BAD_REQUEST);
     }
+
+    // Validation de l'email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return $this->json(['error' => 'Adresse e-mail invalide.'], Response::HTTP_BAD_REQUEST);
+    }
+
+    // Validation du mot de passe
+    if (strlen($password) < 12) {
+        return $this->json(['error' => 'Le mot de passe doit contenir au moins 12 caractères.'], Response::HTTP_BAD_REQUEST);
+    }
+
+    // Création de l'utilisateur
+    $user = new User();
+    $user->setName($name);
+    $user->setEmail($email);
+    $user->setPassword($this->passwordHasher->hashPassword($user, $password));
+
+    // Ajouter le rôle par défaut
+    $user->setRoles(['ROLE_USER']);
+
+    // Sauvegarde de l'utilisateur dans la base de données
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+
+    return $this->json(['message' => 'Inscription réussie.'], Response::HTTP_CREATED);
+}
 }

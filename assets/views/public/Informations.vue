@@ -80,8 +80,6 @@ export default {
 
       // Triez les articles par gravité du plus grand au plus petit
       this.articles.sort((a, b) => b.gravity - a.gravity);
-
-      console.log(this.articles);
     } catch (error) {
       console.log("Erreur lors de la récupération des articles :", error);
     }
