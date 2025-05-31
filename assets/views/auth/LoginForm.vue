@@ -1,5 +1,4 @@
 <template>
-  <!-- Template principale -->
   <main class="max-h-full pt-0 md:pt-2">
     <section class="mt-6">
       <div class="flex flex-col items-center space-y-4">
@@ -22,55 +21,26 @@
             Enter your email below to login to your account.
           </p>
           <!-- Formulaire de connexion -->
-          <form
-            @submit.prevent="login"
-            class="flex flex-col gap-y-6"
-            novalidate
-          >
-            <!-- Message d'erreur -->
-            <div
-              v-if="errorMessage"
-              class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-              role="alert"
-            >
-              <strong class="font-bold"
-                ><i class="fa-solid fa-circle-xmark"></i>
-                {{ errorMessage }}</strong
-              >
-            </div>
+          <form @submit.prevent="login" class="flex flex-col gap-y-6">
             <!-- Champ pour l'adresse e-mail -->
             <div>
               <label for="email" class="block font-medium text-blue"
-                >Email<span class="text-red">*</span></label
+                >Email</label
               >
               <input
                 type="email"
-                list="email-list"
                 class="block border p-2 w-full rounded"
                 :class="data.email ? 'bg-blue-100' : 'bg-white'"
                 placeholder="your@email.com"
                 v-model="data.email"
+                name="email"
                 required
-                @focus="populateEmailList"
-                @input="validateEmail"
-                autocomplete="off"
-                ref="emailInput"
               />
-              <datalist id="email-list">
-                <option
-                  v-for="email in emailList"
-                  :key="email"
-                  :value="email"
-                ></option>
-              </datalist>
-              <div v-if="emailError" class="text-red mt-1">
-                {{ emailError }}
-              </div>
             </div>
             <!-- Champ pour le mot de passe -->
             <div>
               <label for="password" class="block font-medium text-blue"
-                >Password<span class="text-red">*</span></label
+                >Password</label
               >
               <div class="relative">
                 <input
@@ -100,7 +70,6 @@
               <button
                 type="submit"
                 class="w-full h-10 px-5 text-white text-xl font-bold bg-navyblue rounded-lg transition-colors duration-700 focus:shadow-outline hover:bg-blue-700 cursor-pointer"
-                :disabled="!isEmailValid"
               >
                 Sign In
               </button>
@@ -113,9 +82,9 @@
               <router-link
                 :to="{ name: 'RegisterForm' }"
                 class="text-blue-900 border-blue-900 border-b-2 hover:text-darkblue hover:border-b-2 hover:border-darkblue"
-                title="Vers la page d'inscription du site 'Nation Sound'"
-                >Sign Up</router-link
               >
+                Sign Up
+              </router-link>
             </div>
           </div>
         </div>
@@ -125,11 +94,12 @@
 </template>
 
 <script>
-import { reactive, ref, computed } from "vue";
+import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import apiClient from "../../axios";
-import Cookies from "js-cookie"; // Importation de js-cookie
+import Cookies from "js-cookie";
+import { useToast } from "vue-toastification"; // Import des toasts
 
 export default {
   name: "LoginForm",
@@ -141,11 +111,9 @@ export default {
     const router = useRouter();
     const store = useStore();
     const showPassword = ref(false);
-    const errorMessage = ref("");
-    const emailError = ref("");
-    const emailList = ref([]);
+    const toast = useToast(); // Initialisation des toasts
 
-    // Fonction de connexion
+    // Fonction de connexion avec gestion des notifications
     const login = async () => {
       const restUrl = "/login";
       try {
@@ -153,21 +121,21 @@ export default {
           email: data.email,
           password: data.password,
         });
-        const result = await response.data;
+        const result = response.data;
+
         if (response.status === 200) {
-          console.log("Connexion réussie", result);
-          Cookies.set("token", result.token); // Stocke le token dans les cookies
-          Cookies.set("refresh_token", result.refresh_token); // Stocke le refresh token dans les cookies
+          Cookies.set("token", result.token);
+          Cookies.set("refresh_token", result.refresh_token);
           store.dispatch("login", { email: data.email });
-          storeEmail(data.email);
+
+          toast.success("Connexion réussie !", { timeout: 3000 }); // Toast de succès
           router.push("/");
-        } else {
-          setErrorMessage("Your e-mail or password is invalid.");
-          console.error("Erreur lors de la connexion", result);
         }
       } catch (error) {
-        setErrorMessage("Your e-mail or password is invalid.");
-        console.error("Erreur lors de la connexion", error);
+        toast.error(
+          "Erreur de connexion. Vérifiez votre email et mot de passe.",
+          { timeout: 5000 }
+        ); // Toast d'erreur
       }
     };
 
@@ -176,57 +144,11 @@ export default {
       showPassword.value = !showPassword.value;
     };
 
-    // Définir le message d'erreur
-    const setErrorMessage = (message) => {
-      errorMessage.value = message;
-    };
-
-    // Effacer le message d'erreur
-    const clearErrorMessage = () => {
-      errorMessage.value = "";
-      emailError.value = "";
-    };
-
-    // Valider l'adresse e-mail
-    const validateEmail = () => {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(data.email)) {
-        emailError.value = "Please enter a valid e-mail address.";
-      } else {
-        emailError.value = "";
-      }
-    };
-
-    // Stocker l'adresse e-mail
-    const storeEmail = (email) => {
-      let emails = JSON.parse(Cookies.get("emails") || "[]");
-      if (!emails.includes(email)) {
-        emails.push(email);
-        Cookies.set("emails", JSON.stringify(emails));
-      }
-    };
-
-    // Remplir la liste des adresses e-mail
-    const populateEmailList = () => {
-      emailList.value = JSON.parse(Cookies.get("emails") || "[]");
-    };
-
     return {
       data,
       showPassword,
-      errorMessage,
-      emailError,
-      emailList,
       login,
       togglePasswordVisibility,
-      clearErrorMessage,
-      validateEmail,
-      storeEmail,
-      populateEmailList,
-      isEmailValid: computed(() => {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailPattern.test(data.email);
-      }),
     };
   },
 };

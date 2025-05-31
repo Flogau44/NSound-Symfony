@@ -21,16 +21,11 @@
             Enter your information to create an account.
           </p>
           <!-- Formulaire d'inscription -->
-          <form
-            @submit.prevent="register"
-            class="flex flex-col gap-y-6"
-            novalidate
-          >
-            <!-- Champ de saisie pour le prénom -->
+          <form @submit.prevent="register" class="flex flex-col gap-y-6">
             <div>
-              <label htmlFor="firstname" class="block font-medium text-blue">
-                First Name
-              </label>
+              <label for="firstname" class="block font-medium text-blue"
+                >First Name</label
+              >
               <input
                 type="text"
                 class="block border p-2 w-full rounded"
@@ -41,11 +36,10 @@
                 v-model="firstname"
               />
             </div>
-            <!-- Champ de saisie pour le nom -->
             <div>
-              <label htmlFor="lastname" class="block font-medium text-blue">
-                Last Name
-              </label>
+              <label for="lastname" class="block font-medium text-blue"
+                >Last Name</label
+              >
               <input
                 type="text"
                 class="block border p-2 w-full rounded"
@@ -56,10 +50,9 @@
                 v-model="lastname"
               />
             </div>
-            <!-- Champ de saisie pour l'adresse e-mail -->
             <div>
               <label for="email" class="block font-medium text-blue"
-                >Email<span class="text-red">*</span></label
+                >Email</label
               >
               <input
                 type="email"
@@ -70,13 +63,10 @@
                 required
                 @input="validateEmail"
               />
-              <!-- Message d'erreur pour l'adresse e-mail -->
-              <p v-if="emailError" class="text-red">{{ emailError }}</p>
             </div>
-            <!-- Champ de saisie pour le mot de passe -->
             <div>
               <label for="password" class="block font-medium text-blue"
-                >Password<span class="text-red">*</span></label
+                >Password</label
               >
               <div class="relative">
                 <input
@@ -88,7 +78,6 @@
                   required
                   @input="validatePassword"
                 />
-                <!-- Icône pour afficher/masquer le mot de passe -->
                 <span
                   class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
                   @click="togglePasswordVisibility"
@@ -102,12 +91,7 @@
                   ></i>
                 </span>
               </div>
-              <!-- Message d'erreur pour le mot de passe -->
-              <p v-if="passwordError" class="text-red">
-                {{ passwordError }}
-              </p>
             </div>
-            <!-- Bouton de soumission du formulaire -->
             <div class="my-6">
               <button
                 type="submit"
@@ -137,74 +121,64 @@
 </template>
 
 <script>
-import apiClient from "../../axios"; // Importation du client API pour effectuer les requêtes HTTP
-import { useRouter } from "vue-router"; // Importation de vue-router pour la redirection
+import apiClient from "../../axios";
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification"; // 🔥 Import des toasts
 
 export default {
-  name: "RegisterForm", // Nom du composant
+  name: "RegisterForm",
+  setup() {
+    const router = useRouter();
+    const toast = useToast(); // 🔥 Initialisation des toasts
+
+    return { router, toast };
+  },
   data() {
     return {
-      firstname: "", // Prénom de l'utilisateur
-      lastname: "", // Nom de l'utilisateur
-      email: "", // Adresse e-mail de l'utilisateur
-      password: "", // Mot de passe de l'utilisateur
-      showPassword: false, // Indicateur pour afficher/masquer le mot de passe
-      emailError: "", // Message d'erreur pour l'adresse e-mail
-      passwordError: "", // Message d'erreur pour le mot de passe
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      showPassword: false,
     };
   },
-  setup() {
-    const router = useRouter(); // Utilisation de vue-router pour la redirection
-    return { router };
-  },
   methods: {
-    // Méthode pour gérer la soumission du formulaire d'inscription
     async register() {
-      // Validation du mot de passe
-      if (this.password.length < 12) {
-        this.passwordError =
-          "The password must contain at least 12 characters.";
+      const toast = useToast(); // Définition correcte de `toast`
+
+      if (!this.validatePassword()) {
+        toast.error(
+          "The password must contain at least 12 characters, one uppercase letter, one lowercase letter, one number, and one special character.",
+          { timeout: 5000 }
+        );
         return;
       }
       try {
-        // Envoi de la requête POST à l'API d'inscription
         const response = await apiClient.post("/register", {
           name: `${this.firstname} ${this.lastname}`,
           email: this.email,
           password: this.password,
         });
-        console.log("Successful registration", response.data);
-        // Redirection vers la page de connexion après inscription réussie
-        this.router.push("/login");
+
+        toast.success("Registration successful!", { timeout: 3000 });
+
+        // Ajout d'un délai avant la redirection
+        setTimeout(() => {
+          this.router.push("/login");
+        }, 3500);
       } catch (error) {
-        // Affichage du message d'erreur en cas d'erreur lors de l'inscription
-        console.error("Registration error", error);
-        this.emailError = "An error occurred during registration.";
+        toast.error("An error occurred during registration.", {
+          timeout: 5000,
+        });
       }
     },
-    // Méthode pour afficher/masquer le mot de passe
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
-    // Méthode pour valider le mot de passe
     validatePassword() {
       const strongPasswordPattern =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
-      if (!strongPasswordPattern.test(this.password)) {
-        this.passwordError =
-          "The password must contain at least 12 characters, one upper case, one lower case, one number and one special character.";
-      } else {
-        this.passwordError = "";
-      }
-    },
-    // Méthode pour valider l'adresse e-mail
-    validateEmail() {
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(this.email)) {
-        this.emailError = "Please enter a valid e-mail address.";
-      } else {
-        this.emailError = "";
-      }
+      return strongPasswordPattern.test(this.password);
     },
   },
 };
