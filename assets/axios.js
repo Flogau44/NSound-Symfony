@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Crée une instance d'axios avec une configuration par défaut
 const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api", // Définir l'URL de base pour toutes les requêtes API
+  baseURL: "https://nsound.flo-perso.fr/api", // Définir l'URL de base pour toutes les requêtes API
   headers: {
     "Content-Type": "application/json", // Définir le type de contenu par défaut pour les requêtes
   },
@@ -12,7 +12,7 @@ const apiClient = axios.create({
 const refreshToken = async () => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/token/refresh",
+      "https://nsound.flo-perso.fr/api/token/refresh",
       {
         refresh_token: localStorage.getItem("refresh_token"), // Récupère le refresh token depuis le stockage local
       }

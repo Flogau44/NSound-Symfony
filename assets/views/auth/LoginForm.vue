@@ -12,26 +12,27 @@
           </a>
         </div>
         <div class="mb-4 flex flex-row justify-center">
-          <h1>Sign In</h1>
+          <h1>Se connecter</h1>
         </div>
       </div>
       <div class="w-full md:w-[600px] mx-auto text-xl text-darkblue">
         <div class="border rounded m-6 p-6 shadow-md">
           <p class="text-blue pb-4">
-            Enter your email below to login to your account.
+            Saisissez votre adresse électronique ci-dessous pour vous connecter
+            à votre compte.
           </p>
           <!-- Formulaire de connexion -->
           <form @submit.prevent="login" class="flex flex-col gap-y-6">
             <!-- Champ pour l'adresse e-mail -->
             <div>
               <label for="email" class="block font-medium text-blue"
-                >Email</label
+                >Email *</label
               >
               <input
                 type="email"
                 class="block border p-2 w-full rounded"
                 :class="data.email ? 'bg-blue-100' : 'bg-white'"
-                placeholder="your@email.com"
+                placeholder="votre@email.com"
                 v-model="data.email"
                 name="email"
                 required
@@ -40,14 +41,14 @@
             <!-- Champ pour le mot de passe -->
             <div>
               <label for="password" class="block font-medium text-blue"
-                >Password</label
+                >Password *</label
               >
               <div class="relative">
                 <input
                   :type="showPassword ? 'text' : 'password'"
                   class="block border p-2 w-full rounded"
                   :class="data.password ? 'bg-blue-100' : 'bg-white'"
-                  placeholder="Enter your password"
+                  placeholder="Votre mot de passe"
                   v-model="data.password"
                   required
                 />
@@ -71,19 +72,19 @@
                 type="submit"
                 class="w-full h-10 px-5 text-white text-xl font-bold bg-navyblue rounded-lg transition-colors duration-700 focus:shadow-outline hover:bg-blue-700 cursor-pointer"
               >
-                Sign In
+                Se connecter
               </button>
             </div>
           </form>
           <!-- Lien vers l'inscription -->
           <div class="flex flex-row justify-center gap-x-4">
-            <div class="text-blue">Don't have an account ?</div>
+            <div class="text-blue">Vous n'avez pas de compte ?</div>
             <div>
               <router-link
                 :to="{ name: 'RegisterForm' }"
                 class="text-blue-900 border-blue-900 border-b-2 hover:text-darkblue hover:border-b-2 hover:border-darkblue"
               >
-                Sign Up
+                S'inscrire
               </router-link>
             </div>
           </div>

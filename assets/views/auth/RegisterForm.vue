@@ -12,19 +12,19 @@
           </a>
         </div>
         <div class="mb-4 flex flex-row justify-center">
-          <h1>Sign Up</h1>
+          <h1>S'inscrire</h1>
         </div>
       </div>
       <div class="w-full md:w-[600px] mx-auto text-xl text-darkblue">
         <div class="border rounded m-6 p-6 shadow-md">
           <p class="text-blue pb-4">
-            Enter your information to create an account.
+            Saisissez vos informations pour créer un compte.
           </p>
           <!-- Formulaire d'inscription -->
           <form @submit.prevent="register" class="flex flex-col gap-y-6">
             <div>
               <label for="firstname" class="block font-medium text-blue"
-                >First Name</label
+                >Prénom *</label
               >
               <input
                 type="text"
@@ -38,7 +38,7 @@
             </div>
             <div>
               <label for="lastname" class="block font-medium text-blue"
-                >Last Name</label
+                >Nom *</label
               >
               <input
                 type="text"
@@ -52,13 +52,13 @@
             </div>
             <div>
               <label for="email" class="block font-medium text-blue"
-                >Email</label
+                >Email *</label
               >
               <input
                 type="email"
                 class="block border p-2 w-full rounded"
                 :class="email ? 'bg-blue-100' : 'bg-white'"
-                placeholder="your@email.com"
+                placeholder="votre@email.com"
                 v-model="email"
                 required
                 @input="validateEmail"
@@ -66,14 +66,14 @@
             </div>
             <div>
               <label for="password" class="block font-medium text-blue"
-                >Password</label
+                >Password *</label
               >
               <div class="relative">
                 <input
                   :type="showPassword ? 'text' : 'password'"
                   class="block border p-2 w-full rounded"
                   :class="password ? 'bg-blue-100' : 'bg-white'"
-                  placeholder="Enter your password"
+                  placeholder="Votre mot de passe"
                   v-model="password"
                   required
                   @input="validatePassword"
@@ -97,20 +97,20 @@
                 type="submit"
                 class="w-full h-10 px-5 text-white text-xl font-bold bg-navyblue rounded-lg transition-colors duration-700 focus:shadow-outline hover:bg-blue-700"
               >
-                Sign Up
+                S'inscrire
               </button>
             </div>
           </form>
           <!-- Liens supplémentaires pour se connecter -->
           <div class="flex flex-row justify-center gap-x-4">
-            <div class="text-blue">Already have an account ?</div>
+            <div class="text-blue">Vous avez déjà un compte ?</div>
             <div>
               <router-link
                 :to="{ name: 'LoginForm' }"
                 class="text-blue-900 border-blue-900 border-b-2 hover:text-darkblue hover:border-b-2 hover:border-darkblue"
                 title="Vers la page de connexion du site 'Nation Sound'"
               >
-                Sign In
+                Se connecter
               </router-link>
             </div>
           </div>
