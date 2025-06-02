@@ -8,7 +8,7 @@
       <button
         id="filterButtonsArtist"
         type="button"
-        class="active h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
+        class="active h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold cursor-pointer"
       >
         Artistes
       </button>
@@ -16,7 +16,7 @@
       <button
         id="filterButtonsPlanning"
         type="button"
-        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
+        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold cursor-pointer"
       >
         Horaires
       </button>
@@ -28,7 +28,7 @@
       <!-- Bouton pour afficher la line-up des artistes -->
       <button
         type="button"
-        class="active h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
+        class="active h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold cursor-pointer"
         data-filter="lineupArtist"
       >
         Line-Up
@@ -38,7 +38,7 @@
         v-for="date in dates"
         :key="date.filter"
         type="button"
-        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold"
+        class="h-10 px-5 rounded-md outline-none transition-colors duration-700 text-xl font-bold cursor-pointer"
         :data-filter="date.filter"
       >
         {{ date.label }}

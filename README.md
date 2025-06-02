@@ -18,7 +18,7 @@ L’application mobile du festival est de type informationnel pour les cibles id
 
 ## Installation
 
-Pour installer et exécuter ce projet localement avec Visual Studio Code et l’extension Go Live, suivez ces étapes :
+Pour installer et exécuter ce projet localement avec Visual Studio Code, suivez ces étapes :
 
 1. Préparer l’Environnement
 
@@ -186,7 +186,7 @@ class DefaultController extends AbstractController
 
 Créer le Template Twig:
 
-Dans le répertoire templates/App, créez un fichier index.html.twig :
+Dans le répertoire templates/, créez un fichier index.html.twig :
 
 ```
 html
@@ -245,17 +245,10 @@ framework:
 
 ```
 bash
-npm install -D tailwindcss postcss autoprefixer postcss-loader
+npm install tailwindcss @tailwindcss/postcss postcss postcss-loader
 ```
 
-11. Initialiser le Fichier de Configuration
-
-```
-bash
-npx tailwindcss init -p
-```
-
-12. Configurer Webpack Encore pour Tailwind CSS
+11. Configurer Webpack Encore pour Tailwind CSS
 
 Dans webpack.config.js, ajoutez :
 
@@ -265,36 +258,31 @@ javascript
 .enablePostCssLoader()
 ```
 
-13. Configurer tailwind.config.js
+12. Configurer postcss.config.mjs
 
-Ajoutez les chemins des fichiers à builder :
+Créer le fichier postcss.config.mjs et ajouter :
 
 ```
 javascript
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: ["./assets/**/*.{vue,js,ts,jsx,tsx}", "./templates/**/*.html.twig"],
-  theme: {
-    extend: {},
+export default {
+  plugins: {
+    "@tailwindcss/postcss": {},
   },
-  plugins: [],
 };
 ```
 
-14. Ajouter les Directives Tailwind CSS à app.css
+13. Ajouter les Directives Tailwind CSS à app.css
 
-Dans assets, ajoutez les directives à app.css :
+Dans assets/styles/, ajoutez les directives à app.css :
 
 ```
 css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 ```
 
-15. Ajouter la Balise Viewport
+14. Ajouter la Balise Viewport à index.html.twig
 
-Ajoutez la balise viewport dans votre <head> :
+Dans templates/, ajoutez la balise viewport dans votre <head> à index.html.twig:
 
 ```
 html
@@ -315,7 +303,7 @@ html
 </html>
 ```
 
-16. Installer API Platform
+15. Installer API Platform
 
 bash
 
@@ -323,7 +311,7 @@ bash
 composer require api
 ```
 
-17. Configurer API Platform
+16. Configurer API Platform
 
 API Platform est maintenant installé et configuré automatiquement. Vous pouvez vérifier en lançant le serveur Symfony :
 
@@ -334,7 +322,7 @@ symfony server:start
 
 Accédez à http://localhost:8000/api pour voir l’interface de l’API.
 
-18. Installer Axios
+17. Installer Axios
 
 bash
 
@@ -359,7 +347,7 @@ const apiClient = axios.create({
 export default apiClient;
 ```
 
-19. Utiliser le serveur local :
+18. Utiliser le serveur local :
 
 Compiler les assets :
 

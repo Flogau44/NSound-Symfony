@@ -22,7 +22,7 @@
       <ProgrammationArtist />
       <button
         type="button"
-        class="intersect:animate-fade intersect:animate-duration-1000 intersect:animate-delay-500 h-10 px-5 text-darkblue text-xl font-bold bg-lightblue-900 ring-darkblue rounded-md hover:text-white hover:bg-blue-900 outline-none hover:ring hover:ring-darkblue transition-colors durée-700 animate-fadeinup js-show-on-scroll3"
+        class="intersect:animate-fade intersect:animate-duration-1000 intersect:animate-delay-500 h-10 px-5 text-darkblue text-xl font-bold bg-lightblue-900 ring-darkblue rounded-md hover:text-white hover:bg-blue-900 outline-none hover:ring hover:ring-darkblue transition-colors cursor-pointer"
       >
         <router-link :to="{ name: 'Programmation' }"
           >Découvrez la programmation</router-link
@@ -38,7 +38,7 @@
       <img src="../../images/ticket.png" alt="ticket" />
       <button
         type="button"
-        class="intersect:animate-fade intersect:animate-duration-1000 intersect:animate-delay-500 h-10 px-5 text-darkblue text-xl font-bold bg-lightblue-900 ring-darkblue rounded-md hover:text-white hover:bg-blue-900 outline-none hover:ring hover:ring-darkblue transition-colors durée-700 animate-fadeinup js-show-on-scroll3"
+        class="intersect:animate-fade intersect:animate-duration-1000 intersect:animate-delay-500 h-10 px-5 text-darkblue text-xl font-bold bg-lightblue-900 ring-darkblue rounded-md hover:text-white hover:bg-blue-900 outline-none hover:ring hover:ring-darkblue transition-colors cursor-pointer"
       >
         <router-link :to="{ name: 'Billetterie' }"
           >Voir la billetterie</router-link

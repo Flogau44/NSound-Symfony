@@ -1,49 +1,83 @@
-@tailwind base;
+@import "tailwindcss";
 
-@layer base {
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-  }
-  body {
-    font-family: "Cormorant Garamond", serif;
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  .Roboto {
-    font-family: "Roboto", sans-serif;
-  }
-  h1 {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-    font-weight: 700;
-    color: #0b162c;
-  }
-  h2 {
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: 700;
-    color: #0b162c;
-  }
-  h3 {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    color: #0b162c;
-  }
-  main {
-    color: #3b556d;
-    min-height: calc(100vh - 64px - 64px);
-  }
+@theme {
+  /*Police*/
+  --font-sans: "Roboto", sans-serif;
+  --font-serif: "Cormorant Garamond", serif;
+
+  /* Couleurs */
+  --color-white: #ffffff;
+  --color-white-800: rgba(255, 255, 255, 0.8);
+  --color-black: #000000;
+  --color-black-500: rgba(0, 0, 0, 0.5);
+
+  --color-red: #ff4545;
+  --color-red-100: rgba(255, 69, 69, 0.1);
+  --color-red-400: rgba(255, 69, 69, 0.4);
+  --color-red-700: rgba(255, 69, 69, 0.7);
+
+  --color-darkblue: #0b162c;
+  --color-darkblue-100: rgba(11, 24, 44, 0.1);
+  --color-darkblue-300: rgba(11, 24, 44, 0.3);
+  --color-darkblue-500: rgba(11, 24, 44, 0.5);
+  --color-darkblue-700: rgba(11, 24, 44, 0.7);
+  --color-darkblue-900: rgba(11, 24, 44, 0.9);
+
+  --color-navyblue: #1c2942;
+  --color-navyblue-700: rgba(28, 41, 66, 0.7);
+  --color-navyblue-900: rgba(28, 41, 66, 0.9);
+
+  --color-blue: #3b556d;
+  --color-blue-300: rgba(59, 85, 109, 0.3);
+  --color-blue-500: rgba(59, 85, 109, 0.5);
+  --color-blue-700: rgba(59, 85, 109, 0.7);
+  --color-blue-900: rgba(59, 85, 109, 0.9);
+
+  --color-lightblue: #5fc2ba;
+  --color-lightblue-700: rgba(95, 194, 186, 0.7);
+  --color-lightblue-900: rgba(95, 194, 186, 0.9);
 }
-@tailwind components;
-@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  font-family: "Cormorant Garamond", serif;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+h1,
+h2,
+h3,
+h4,
+.Roboto {
+  font-family: "Roboto", sans-serif;
+}
+h1 {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  color: #0b162c;
+}
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  color: #0b162c;
+}
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 700;
+  color: #0b162c;
+}
+main {
+  color: #3b556d;
+  min-height: calc(100vh - 64px - 64px);
+}
 
 /*Menu*/
 #hamburgerNonactive {
