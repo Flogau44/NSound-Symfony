@@ -1,64 +1,64 @@
 # Festival Nation Sound
 
-Bienvenue sur le site du Festival Nation Sound.
+Welcome to the Festival Nation Sound website.
 
-## Table des Matières
+## Table of Contents
 
 1. [Description](#description)
 2. [Installation](#installation)
-3. [Utilisation](#utilisation)
-4. [Construit avec](#construit-avec)
-5. [Contribuer](#contribuer)
-6. [Auteurs](#auteurs)
-7. [Licence](#licence)
+3. [Usage](#usage)
+4. [Built With](#built-with)
+5. [Contributing](#contributing)
+6. [Authors](#authors)
+7. [License](#license)
 
 ## Description
 
-L’application mobile du festival est de type informationnel pour les cibles identifiées. Pour inciter l’utilisateur à découvrir tous les aspects de l’événement (y compris les activités et animations hors des concerts.)
+The festival's mobile app is designed as an informational platform for the target audience. Its purpose is to encourage users to explore all aspects of the event, including activities and entertainment beyond the concerts.
 
 ## Installation
 
-Pour installer et exécuter ce projet localement avec Visual Studio Code, suivez ces étapes :
+To install and run this project locally with Visual Studio Code, follow these steps:
 
-1. Préparer l’Environnement
+1. Prepare the Environment
 
-Installer Scoop
+Install Scoop
 
 ```
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 iwr -useb get.scoop.sh | iex
 ```
 
-Installer Symfony CLI
+Install Symfony CLI
 
 ```
 scoop install symfony-cli
 ```
 
-Ajoutez Symfony CLI au PATH :
+Add Symfony CLI to PATH :
 
 ```
 bash
 export PATH="$HOME/.symfony/bin:$PATH"
 ```
 
-Télecharger et Installezr Node.js depuis nodejs.org. Ensuite, installez Yarn :
+Download and install Node.js from nodejs.org. Then install Yarn :
 
 ```
 bash
 npm install --global yarn
 ```
 
-2. Créer un Projet Symfony
+2. Create a Symfony project :
 
-Créer un Nouveau Projet Symfony;
+Create a new Symfony project :
 
 ```
 bash
 symfony new --webapp my_project
 ```
 
-OU
+OR
 
 ```
 bash
@@ -67,7 +67,7 @@ cd my_project
 composer require webapp
 ```
 
-Ouvrir le Projet dans VS Code;
+Open the project in VS Code :
 
 ```
 bash
@@ -75,16 +75,16 @@ cd my_project
 code .
 ```
 
-3. Installer API-Platform
+3. Install API-Platform
 
 ```
 bash
 symfony composer require api
 ```
 
-4. Configurer Webpack Encore et Vue.js:
+4. Configure Webpack Encore and Vue.js :
 
-Installer Webpack Encore:
+Install Webpack Encore:
 
 ```
 bash
@@ -92,16 +92,16 @@ composer require symfony/webpack-encore-bundle
 yarn add @symfony/webpack-encore --dev
 ```
 
-Installer Vue.js:
+Install Vue.js:
 
 ```
 bash
 yarn add vue@next vue-loader@next vue-template-compiler
 ```
 
-Configurer Webpack Encore pour Vue.js
+Configure Webpack Encore for Vue.js
 
-Ouvrez webpack.config.js et ajoutez :
+Open webpack.config.js and add :
 
 ```
 javascript
@@ -109,9 +109,9 @@ javascript
 .enableVueLoader()
 ```
 
-Créer le Fichier app.js:
+Create the app.js file :
 
-Dans le répertoire assets, créez un fichier app.js :
+Inside the assets directory, create a file named app.js :
 
 ```
 javascript
@@ -121,9 +121,9 @@ import App from "./App.vue";
 createApp(App).mount("#app");
 ```
 
-Créer un Composant Vue:
+Create a vue component:
 
-Dans le répertoire assets, créez un fichier App.vue :
+Inside the assets directory, create a file named App.vue :
 
 ```
 vue
@@ -141,29 +141,25 @@ export default {
 </script>
 ```
 
-5. Installer Vue Router
+5. Install Vue Router
 
 ```
 bash
 yarn add vue-router@next
 ```
 
-6. Installer Tailwind CSS
+6. Create a Symfony Controller
 
-Suivez le tutoriel d'installation de Tailwind CSS dans vos notes.
-
-7. Créer un Contrôleur Symfony
-
-Créer un Contrôleur:
+Create a controller :
 
 ```
 bash
 php bin/console make:controller AppController
 ```
 
-Modifier le Contrôleur:
+Modify the controller :
 
-Ouvrez src/Controller/AppController.php et modifiez la méthode index :
+Open src/Controller/AppController.php and modify the index method :
 
 ```
 php
@@ -184,9 +180,9 @@ class DefaultController extends AbstractController
 }
 ```
 
-Créer le Template Twig:
+Create the Twig template :
 
-Dans le répertoire templates/, créez un fichier index.html.twig :
+Inside the templates/ directory, create index.html.twig :
 
 ```
 html
@@ -211,46 +207,16 @@ html
 </html>
 ```
 
-8. Composer de Test Unitaire
-
-Symfony utilise PHPUnit pour les tests unitaires. Installez-le via Composer :
-
-```
-bash
-composer require --dev symfony/phpunit-bridge
-```
-
-9. Installer les Fichiers de Traduction
-
-```
-bash
-composer require symfony/translation
-```
-
-Configurer Symfony pour Utiliser le Français.
-
-Dans config/packages/translation.yaml, définissez la langue par défaut en français :
-
-```
-yaml
-framework:
-    default_locale: fr
-    translator:
-        default_path: '%kernel.project_dir%/translations'
-        fallbacks:
-            - fr
-```
-
-10. Installer Tailwind CSS
+7. Install Tailwind CSS
 
 ```
 bash
 npm install tailwindcss @tailwindcss/postcss postcss postcss-loader
 ```
 
-11. Configurer Webpack Encore pour Tailwind CSS
+8. Configure Webpack Encore for Tailwind CSS
 
-Dans webpack.config.js, ajoutez :
+In webpack.config.js, add :
 
 ```
 javascript
@@ -258,9 +224,9 @@ javascript
 .enablePostCssLoader()
 ```
 
-12. Configurer postcss.config.mjs
+9. Configure postcss.config.mjs
 
-Créer le fichier postcss.config.mjs et ajouter :
+Create the postcss.config.mjs file and add :
 
 ```
 javascript
@@ -271,18 +237,18 @@ export default {
 };
 ```
 
-13. Ajouter les Directives Tailwind CSS à app.css
+10. Add Tailwind CSS Directives to app.css
 
-Dans assets/styles/, ajoutez les directives à app.css :
+In assets/styles/, add the directives to app.css :
 
 ```
 css
 @import "tailwindcss";
 ```
 
-14. Ajouter la Balise Viewport à index.html.twig
+11. Add the Viewport Meta Tag to index.html.twig
 
-Dans templates/, ajoutez la balise viewport dans votre <head> à index.html.twig:
+In templates/, add the viewport meta tag inside the <head> of index.html.twig :
 
 ```
 html
@@ -303,7 +269,37 @@ html
 </html>
 ```
 
-15. Installer API Platform
+12. Unit Test Setup
+
+Symfony uses PHPUnit for unit testing. Install it via Composer :
+
+```
+bash
+composer require --dev symfony/phpunit-bridge
+```
+
+13. Install Translation Files
+
+```
+bash
+composer require symfony/translation
+```
+
+Configure Symfony to Use French.
+
+In config/packages/translation.yaml, set the default language to French :
+
+```
+yaml
+framework:
+    default_locale: fr
+    translator:
+        default_path: '%kernel.project_dir%/translations'
+        fallbacks:
+            - fr
+```
+
+14. Install API Platform
 
 bash
 
@@ -311,18 +307,16 @@ bash
 composer require api
 ```
 
-16. Configurer API Platform
-
-API Platform est maintenant installé et configuré automatiquement. Vous pouvez vérifier en lançant le serveur Symfony :
+API Platform is now installed and automatically configured. Start the Symfony server and check the API interface :
 
 ```
 bash
 symfony server:start
 ```
 
-Accédez à http://localhost:8000/api pour voir l’interface de l’API.
+Visit http://localhost:8000/api to see the API interface.
 
-17. Installer Axios
+15. Install Axios
 
 bash
 
@@ -330,9 +324,9 @@ bash
 npm install axios
 ```
 
-Configurer Axios:
+Configure Axios :
 
-Créez un fichier de configuration pour Axios, par exemple src/axios.js :
+Create a file named src/axios.js :
 
 ```
 javascript
@@ -347,25 +341,25 @@ const apiClient = axios.create({
 export default apiClient;
 ```
 
-18. Utiliser le serveur local :
+16. Run the Local Serve
 
-Compiler les assets :
+Compile assets :
 
 ```
 yarn encore dev --watch
 ```
 
-Lancer le serveur Symfony :
+Start Symfony server :
 
 ```
 symfony server:start
 ```
 
-## Utilisation
+## Usage
 
-Accédez à l’application via http://localhost:5500 (ou le port configuré par Live Server).
+Access the application via http://localhost:5500 (or the port configured by Live Server).
 
-## Construit avec
+## Built With
 
 - [Tailwind CSS](https://tailwindcss.com/) - Framework CSS (front-end)
 - [Vue JS](https://vuejs.org/) - Framework front-end
@@ -373,20 +367,20 @@ Accédez à l’application via http://localhost:5500 (ou le port configuré par
 - [Symfony](https://symfony.com/) - Framework back-end
 - [Visual Studio Code](https://code.visualstudio.com/) - IDE
 
-## Contribuer
+## Contributing
 
-Les contributions sont ce qui fait de la communauté open source un endroit si incroyable pour apprendre, inspirer et créer. Toutes les contributions que vous faites sont grandement appréciées.
+Contributions make the open-source community an incredible place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-1. Forkez le projet
-2. Créez votre branche Feature (`git checkout -b feature/AmazingFeature`)
-3. Commitez vos changements (`git commit -m 'Add some AmazingFeature'`)
-4. Pusher vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Auteurs
+## Authors
 
 [@Flogau44](https://github.com/Flogau44)
 
-## Licence
+## License
 
-Ce projet est sous licence MIT. Voir LICENSE pour plus d'informations.
+This project is licensed under the MIT License. See LICENSE for more details.
