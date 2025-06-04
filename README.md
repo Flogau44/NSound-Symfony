@@ -24,28 +24,26 @@ To install and run this project locally with Visual Studio Code, follow these st
 
 Install Scoop
 
-```
+```bash
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 iwr -useb get.scoop.sh | iex
 ```
 
 Install Symfony CLI
 
-```
+```bash
 scoop install symfony-cli
 ```
 
 Add Symfony CLI to PATH :
 
-```
-bash
+```bash
 export PATH="$HOME/.symfony/bin:$PATH"
 ```
 
 Download and install Node.js from nodejs.org. Then install Yarn :
 
-```
-bash
+```bash
 npm install --global yarn
 ```
 
@@ -53,15 +51,13 @@ npm install --global yarn
 
 Create a new Symfony project :
 
-```
-bash
+```bash
 symfony new --webapp my_project
 ```
 
 OR
 
-```
-bash
+```bash
 composer create-project symfony/skeleton my_project
 cd my_project
 composer require webapp
@@ -69,16 +65,14 @@ composer require webapp
 
 Open the project in VS Code :
 
-```
-bash
+```bash
 cd my_project
 code .
 ```
 
 3. Install API-Platform
 
-```
-bash
+```bash
 symfony composer require api
 ```
 
@@ -86,16 +80,14 @@ symfony composer require api
 
 Install Webpack Encore:
 
-```
-bash
+```bash
 composer require symfony/webpack-encore-bundle
 yarn add @symfony/webpack-encore --dev
 ```
 
 Install Vue.js:
 
-```
-bash
+```bash
 yarn add vue@next vue-loader@next vue-template-compiler
 ```
 
@@ -103,7 +95,7 @@ Configure Webpack Encore for Vue.js
 
 Open webpack.config.js and add :
 
-```
+```bash
 javascript
 // enable Vue JS
 .enableVueLoader()
@@ -113,7 +105,7 @@ Create the app.js file :
 
 Inside the assets directory, create a file named app.js :
 
-```
+```bash
 javascript
 import "./styles/app.css";
 import { createApp } from "vue";
@@ -125,7 +117,7 @@ Create a vue component:
 
 Inside the assets directory, create a file named App.vue :
 
-```
+```bash
 vue
 <template>
 
@@ -143,8 +135,7 @@ export default {
 
 5. Install Vue Router
 
-```
-bash
+```bash
 yarn add vue-router@next
 ```
 
@@ -152,8 +143,7 @@ yarn add vue-router@next
 
 Create a controller :
 
-```
-bash
+```bash
 php bin/console make:controller AppController
 ```
 
@@ -161,7 +151,7 @@ Modify the controller :
 
 Open src/Controller/AppController.php and modify the index method :
 
-```
+```bash
 php
 
 <?php
@@ -184,7 +174,7 @@ Create the Twig template :
 
 Inside the templates/ directory, create index.html.twig :
 
-```
+```bash
 html
 <!DOCTYPE html>
 <html>
@@ -209,8 +199,7 @@ html
 
 7. Install Tailwind CSS
 
-```
-bash
+```bash
 npm install tailwindcss @tailwindcss/postcss postcss postcss-loader
 ```
 
@@ -218,7 +207,7 @@ npm install tailwindcss @tailwindcss/postcss postcss postcss-loader
 
 In webpack.config.js, add :
 
-```
+```bash
 javascript
 // enable Tailwind CSS
 .enablePostCssLoader()
@@ -228,7 +217,7 @@ javascript
 
 Create the postcss.config.mjs file and add :
 
-```
+```bash
 javascript
 export default {
   plugins: {
@@ -241,7 +230,7 @@ export default {
 
 In assets/styles/, add the directives to app.css :
 
-```
+```bash
 css
 @import "tailwindcss";
 ```
@@ -250,7 +239,7 @@ css
 
 In templates/, add the viewport meta tag inside the <head> of index.html.twig :
 
-```
+```bash
 html
 <!doctype html>
 <html>
@@ -273,15 +262,13 @@ html
 
 Symfony uses PHPUnit for unit testing. Install it via Composer :
 
-```
-bash
+```bash
 composer require --dev symfony/phpunit-bridge
 ```
 
 13. Install Translation Files
 
-```
-bash
+```bash
 composer require symfony/translation
 ```
 
@@ -289,7 +276,7 @@ Configure Symfony to Use French.
 
 In config/packages/translation.yaml, set the default language to French :
 
-```
+```bash
 yaml
 framework:
     default_locale: fr
@@ -301,16 +288,13 @@ framework:
 
 14. Install API Platform
 
-bash
-
-```
+```bash
 composer require api
 ```
 
 API Platform is now installed and automatically configured. Start the Symfony server and check the API interface :
 
-```
-bash
+```bash
 symfony server:start
 ```
 
@@ -318,9 +302,7 @@ Visit http://localhost:8000/api to see the API interface.
 
 15. Install Axios
 
-bash
-
-```
+```bash
 npm install axios
 ```
 
@@ -328,7 +310,7 @@ Configure Axios :
 
 Create a file named src/axios.js :
 
-```
+```bash
 javascript
 import axios from 'axios';
 
@@ -345,19 +327,19 @@ export default apiClient;
 
 Compile assets :
 
-```
+```bash
 yarn encore dev --watch
 ```
 
 Start Symfony server :
 
-```
+```bash
 symfony server:start
 ```
 
 ## Usage
 
-Access the application via http://localhost:5500 (or the port configured by Live Server).
+Access the application via http://localhost:8000/
 
 ## Built With
 
