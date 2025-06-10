@@ -6,11 +6,12 @@ Welcome to the Festival Nation Sound website.
 
 1. [Description](#description)
 2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Built With](#built-with)
-5. [Contributing](#contributing)
-6. [Authors](#authors)
-7. [License](#license)
+3. [Deployement](#deployement)
+4. [Usage](#usage)
+5. [Built With](#built-with)
+6. [Contributing](#contributing)
+7. [Authors](#authors)
+8. [License](#license)
 
 ## Description
 
@@ -340,6 +341,85 @@ symfony server:start
 ## Usage
 
 Access the application via http://localhost:8000/
+
+## Deployement
+
+1. Compile Vue.js files
+
+```bash
+yarn encore production
+```
+
+2. Clear Symfony cache
+
+Clear syfony cache:
+
+```bash
+php bin/console cache:clear
+```
+
+Clear symfony cache production
+
+```bash
+php bin/console cache:clear --env=prod
+```
+
+3. Check dependency security
+
+```bash
+symfony check:security
+```
+
+4. Web Server Configuration
+
+Ensure the web server points to public/
+
+5. Deploying the Code- Transfer files via FileZilla
+
+Copy your files to the designated directory on your server, excluding vendor/, .git/, or var/.
+
+6. Installing Dependencies- Access the server using Putty
+
+- Install Composer:
+
+```bash
+ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+ php composer-setup.php
+ php -r "unlink('composer-setup.php');"
+```
+
+- Install production dependencies:
+
+```bash
+  php composer.phar install
+```
+
+7. Migrate the data base
+
+- Apply migrations:
+
+```bash
+  php bin/console doctrine:migrations:migrate
+```
+
+- Install .htaccess for Apache:
+
+```bash
+  php composer.phar require symfony/apache-pack
+```
+
+- Optimize Composer for production:
+
+```bash
+  php composer.phar install --no-dev --optimize-autoloader
+```
+
+8. Clearing the Cache- Clean and prepare the cache
+
+```bash
+php bin/console cache:clear --env=prod --no-debug
+php bin/console cache:warmup
+```
 
 ## Built With
 
