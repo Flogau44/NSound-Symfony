@@ -5,23 +5,56 @@ Welcome to the Festival Nation Sound website.
 ## Table of Contents
 
 1. [Description](#description)
-2. [Installation](#installation)
-3. [Deployement](#deployement)
-4. [Usage](#usage)
-5. [Built With](#built-with)
-6. [Contributing](#contributing)
-7. [Authors](#authors)
-8. [License](#license)
+2. [Technical requirements](#Technical-requirements)
+3. [Installation](#installation)
+4. [DataBase Create](#dataBase-create)
+5. [Create JWT for authentication](#create-JWT-for-authentication)
+6. [Deployement](#deployement)
+7. [Usage](#usage)
+8. [Built With](#built-with)
+9. [Contributing](#contributing)
+10. [Authors](#authors)
+11. [License](#license)
 
 ## Description
 
 The festival's mobile app is designed as an informational platform for the target audience. Its purpose is to encourage users to explore all aspects of the event, including activities and entertainment beyond the concerts.
 
-## Installation
+# Technical requirements
 
-To install and run this project locally with Visual Studio Code, follow these steps:
+This project is a Symfony project with version 7.1 and PHP version 8.2 on Windows OS.
 
-1. Prepare the Environment
+So you may need :
+
+- install PHP 8.2 or higher (you can also use xampp)
+- install composer (see the installation guide: [Composer Windows](hhttps://getcomposer.org/doc/00-intro.md#installation-windows))
+
+Don't forget to update the environment variables for php and composer.
+
+With PowerShell, check the version:
+
+```bash
+php -v
+composer -v
+```
+
+If you want to check if your computer meets all requirements, open your console terminal and run this command :
+
+```bash
+symfony check:requirements
+```
+
+# Installation
+
+To work on or read this project, you'll need to retrieve the code from Git and ask Composer to install the dependencies :
+
+1. Clone the project to download its content
+
+```bash
+git clone ...
+```
+
+2. To install and run this project locally with Visual Studio Code, follow these steps (Prepare the Environment):
 
 Install Scoop
 
@@ -45,300 +78,85 @@ export PATH="$HOME/.symfony/bin:$PATH"
 Download and install Node.js from nodejs.org. Then install Yarn :
 
 ```bash
+cd beauty_salon/
 npm install --global yarn
 ```
 
-2. Create a Symfony project :
-
-Create a new Symfony project :
+3. Make composer install dependencies
 
 ```bash
-symfony new --webapp my_project
+composer install
 ```
 
-OR
+When working on a existing Symfony application for the first time, it may be useful to run this command which displays information about the project:
 
 ```bash
-composer create-project symfony/skeleton my_project
-cd my_project
-composer require webapp
+symfony console about
 ```
 
-Open the project in VS Code :
+You'll probably also need to customize your ".env" or ".env.local" file and do a few other project-specific tasks :
+
+## DataBase Create :
+
+- add a ".env.local" file to the project
+- copy/paste the .env file into the .env.local and configure :
 
 ```bash
-cd my_project
-code .
+DATABASE_URL="mysql://root:@127.0.0.1:3306/nation_sound_symfony"
 ```
 
-3. Install API-Platform
+(if in phpmyadmin your user is "root" and your password is "")
+
+- create your database with Doctrine with this command :
 
 ```bash
-symfony composer require api
+php bin/console doctrine:database:create
 ```
 
-4. Configure Webpack Encore and Vue.js :
-
-Install Webpack Encore:
+and push it into phpmyadmin with the command :
 
 ```bash
-composer require symfony/webpack-encore-bundle
-yarn add @symfony/webpack-encore --dev
+php bin/console make:migration
+php bin/console doctrine:migrations:migrate
 ```
 
-Install Vue.js:
+- then to simulate data in your database, use the command
 
 ```bash
-yarn add vue@next vue-loader@next vue-template-compiler
+php bin/console doctrine:fixtures:load
 ```
 
-Configure Webpack Encore for Vue.js
+Now you can check your phpmyadmin, you should have all the data in beauty_salon database.
 
-Open webpack.config.js and add :
+## Create JWT for authentication:
+
+- check in xampp/php/php.ini that your extension=sodium is uncomment,
+- add a new folder named "jwt" in Beauty_salon/config,
+- install JWT :
 
 ```bash
-javascript
-// enable Vue JS
-.enableVueLoader()
+composer require lexik/jwt-authentication-bundle
 ```
 
-Create the app.js file :
-
-Inside the assets directory, create a file named app.js :
+- create a public and private key with command (before openssl must be install):
 
 ```bash
-javascript
-import "./styles/app.css";
-import { createApp } from "vue";
-import App from "./App.vue";
-createApp(App).mount("#app");
+php bin/console lexik:jwt:generate-keypair
 ```
 
-Create a vue component:
+- confirm passphrase,
+- copy/paste the new paragraph about JWT in .env to .env.local
+- and in .env.local modify the value of JWT_PASSPHRASE with the real passphrase you choosed before
 
-Inside the assets directory, create a file named App.vue :
-
-```bash
-vue
-<template>
-
-  <div id="app">
-    <h1>Hello Vue</h1>
-    <p>Test Test</p>
-  </div>
-</template>
-<script>
-export default {
-  name: "App",
-};
-</script>
-```
-
-5. Install Vue Router
-
-```bash
-yarn add vue-router@next
-```
-
-6. Create a Symfony Controller
-
-Create a controller :
-
-```bash
-php bin/console make:controller AppController
-```
-
-Modify the controller :
-
-Open src/Controller/AppController.php and modify the index method :
-
-```bash
-php
-
-<?php
-namespace App\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-class DefaultController extends AbstractController
-{
-    #[Route('/', name: 'app_app')]
-    public function index(): Response
-    {
-        return $this->render('index.html.twig');
-    }
-}
-```
-
-Create the Twig template :
-
-Inside the templates/ directory, create index.html.twig :
-
-```bash
-html
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22></text></svg>">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}
-        <div id="app"></div>
-        {% endblock %}
-    </body>
-</html>
-```
-
-7. Install Tailwind CSS
-
-```bash
-npm install tailwindcss @tailwindcss/postcss postcss postcss-loader
-```
-
-8. Configure Webpack Encore for Tailwind CSS
-
-In webpack.config.js, add :
-
-```bash
-javascript
-// enable Tailwind CSS
-.enablePostCssLoader()
-```
-
-9. Configure postcss.config.mjs
-
-Create the postcss.config.mjs file and add :
-
-```bash
-javascript
-export default {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
-```
-
-10. Add Tailwind CSS Directives to app.css
-
-In assets/styles/, add the directives to app.css :
-
-```bash
-css
-@import "tailwindcss";
-```
-
-11. Add the Viewport Meta Tag to index.html.twig
-
-In templates/, add the viewport meta tag inside the <head> of index.html.twig :
-
-```bash
-html
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% block stylesheets %}
-    {{ encore_entry_link_tags('app') }}
-  {% endblock %}
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-</body>
-</html>
-```
-
-12. Unit Test Setup
-
-Symfony uses PHPUnit for unit testing. Install it via Composer :
-
-```bash
-composer require --dev symfony/phpunit-bridge
-```
-
-13. Install Translation Files
-
-```bash
-composer require symfony/translation
-```
-
-Configure Symfony to Use French.
-
-In config/packages/translation.yaml, set the default language to French :
-
-```bash
-yaml
-framework:
-    default_locale: fr
-    translator:
-        default_path: '%kernel.project_dir%/translations'
-        fallbacks:
-            - fr
-```
-
-14. Install API Platform
-
-```bash
-composer require api
-```
-
-API Platform is now installed and automatically configured. Start the Symfony server and check the API interface :
-
-```bash
-symfony server:start
-```
-
-Visit http://localhost:8000/api to see the API interface.
-
-15. Install Axios
-
-```bash
-npm install axios
-```
-
-Configure Axios :
-
-Create a file named src/axios.js :
-
-```bash
-javascript
-import axios from 'axios';
-
-const apiClient = axios.create({
-  baseURL: 'http://localhost:8000/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-export default apiClient;
-```
-
-16. Run the Local Serve
-
-Compile assets :
-
-```bash
-yarn encore dev --watch
-```
-
-Start Symfony server :
-
-```bash
-symfony server:start
-```
+Now you should be able to request a token from api to authenticate.
 
 ## Usage
+
+If you're using XAMPP, make sure to start Apache & MySQL, then run this command in your project:
+
+```bash
+symfony server:start
+```
 
 Access the application via http://localhost:8000/
 
