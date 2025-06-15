@@ -33,7 +33,7 @@ export default {
     };
   },
   async mounted() {
-    // Récupérer le token JWT depuis le local storage
+    // Récupérer le token JWT depuis les cookies
     this.token = Cookies.get("token");
 
     const newsUrl = "/news";

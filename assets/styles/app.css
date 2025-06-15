@@ -415,9 +415,3 @@ main {
 .imgPartner {
   @apply w-full h-20 object-contain;
 }
-
-/*Erreur 404 Not Found*/
-
-#NotFound {
-  @apply max-h-full my-80 flex flex-col items-center;
-}

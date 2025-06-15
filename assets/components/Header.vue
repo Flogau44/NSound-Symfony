@@ -221,8 +221,8 @@ export default {
         auth.value = store.getters.isAuthenticated;
         dropdownOpen.value = false;
 
-        // Rechargement automatique de la page après la déconnexion
-        window.location.reload();
+        // Redirection vers la page d'accueil après la déconnexion
+        window.location.href = "/";
       } catch (error) {
         console.error("Erreur lors de la déconnexion :", error);
       }

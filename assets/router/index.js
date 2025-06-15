@@ -130,7 +130,8 @@ const routes = [
     meta: { layout: AuthLayout, requiresGuest: true },
   },
   {
-    path: "/:catchAll(.*)",
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
     component: NotFound,
     meta: { layout: DefaultLayout },
   },
