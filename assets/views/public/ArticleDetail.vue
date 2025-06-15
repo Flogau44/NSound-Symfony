@@ -49,12 +49,32 @@ export default {
   },
   async mounted() {
     const id = this.$route.params.id;
+    const isAuthenticated = this.$store.getters.isAuthenticated; // Vérifie la connexion
     const restUrl = "/news";
 
     try {
-      // Récupère les détails de l'article
       const response = await apiClient.get(restUrl);
       const item = response.data.member.find((news) => news.slug == id);
+
+      if (!item) {
+        console.warn("Article introuvable :", id);
+        this.$router.push({ name: "NotFound" }); // Redirige si l'article n'existe pas
+        return;
+      }
+
+      // Extraction de l'ID de la catégorie
+      const articleCategoryId = parseInt(item.type.split("/").pop(), 10);
+
+      // Bloquer les visiteurs qui accèdent à un article "Actualité"
+      if (articleCategoryId === 4 && !isAuthenticated) {
+        console.warn(
+          "Accès interdit à un article 'Actualité' pour un visiteur."
+        );
+        this.$router.push({ name: "NotFound" }); // Redirection vers NotFound.vue
+        return;
+      }
+
+      // Formatage des données
       this.article = {
         title: item.title,
         content: item.content,
@@ -68,6 +88,7 @@ export default {
       };
     } catch (error) {
       console.log("Erreur lors de la récupération de l'article :", error);
+      this.$router.push({ name: "NotFound" }); // Redirection en cas d'erreur API
     }
   },
 };
