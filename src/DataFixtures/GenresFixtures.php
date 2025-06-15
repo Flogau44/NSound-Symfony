@@ -15,7 +15,7 @@ class GenresFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Liste des genres à ajouter
-        $genres = ['Rock', 'Electro', 'R&B', 'Metal', 'House'];
+        $genres = ['Rock', 'Electro', 'R&B', 'Metal', 'House', 'Rap','Folk','Blues','Pop', 'Jazz', 'Reggae'];
 
         foreach ($genres as $genre) {
             $newGenre = new Genres();

@@ -7,7 +7,7 @@ Welcome to the Festival Nation Sound website.
 1. [Description](#description)
 2. [Technical requirements](#Technical-requirements)
 3. [Installation](#installation)
-4. [DataBase Create](#dataBase-create)
+4. [DataBase Create and Setup](#dataBase-create-and-setup)
 5. [Create JWT for authentication](#create-JWT-for-authentication)
 6. [Deployement](#deployement)
 7. [Usage](#usage)
@@ -27,7 +27,7 @@ This project is a Symfony project with version 7.1 and PHP version 8.2 on Window
 So you may need :
 
 - install PHP 8.2 or higher (you can also use xampp)
-- install composer (see the installation guide: [Composer Windows](hhttps://getcomposer.org/doc/00-intro.md#installation-windows))
+- install composer (see the installation guide: [Composer Windows](https://getcomposer.org/doc/00-intro.md#installation-windows))
 
 Don't forget to update the environment variables for php and composer.
 
@@ -96,7 +96,7 @@ symfony console about
 
 You'll probably also need to customize your ".env" or ".env.local" file and do a few other project-specific tasks :
 
-## DataBase Create :
+## DataBase Create and Setup:
 
 - add a ".env.local" file to the project
 - copy/paste the .env file into the .env.local and configure :

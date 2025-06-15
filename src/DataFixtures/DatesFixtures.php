@@ -15,7 +15,7 @@ class DatesFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // Liste des dates à ajouter
-        $dates = ['11/07/2025', '12/07/2025', '13/07/2025'];
+        $dates = ['10/07/2026', '11/07/2026', '12/07/2026'];
         foreach ($dates as $date) {
             $newDate = new Dates();
             // Conversion de la date au format DateTime
