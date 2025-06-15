@@ -219,8 +219,10 @@ export default {
         await apiClient.post("/logout");
         store.dispatch("logout");
         auth.value = store.getters.isAuthenticated;
-        dropdownOpen.value = false; // S'assurer que le dropdown est fermé après la déconnexion
-        console.log("Déconnexion réussie");
+        dropdownOpen.value = false;
+
+        // Rechargement automatique de la page après la déconnexion
+        window.location.reload();
       } catch (error) {
         console.error("Erreur lors de la déconnexion :", error);
       }
@@ -235,28 +237,20 @@ export default {
       logout,
     };
   },
-  mounted() {
-    // Menu Mobile
 
-    // Je sélectionne et je stocke l'icône hamburger non active (fa-bars)
+  mounted() {
+    // Je sélectionne et je stocke les éléments du DOM
     const hamburgerNonactive = document.querySelector(
       ".navbar-mobile #hamburgerNonactive"
     );
-    // Je sélectionne et je stocke l'icône hamburger active (fa-times)
     const hamburgerActive = document.querySelector(
       ".navbar-mobile #hamburgerActive"
     );
-    // Je sélectionne et je stocke l'élément DIV menu global
     const modal = document.querySelector(".modal");
-    // Je sélectionne et je stocke les liens du menu
     const modalLinks = document.querySelectorAll(".navbar-mobile-list a");
-    // Je sélectionne et je stocke le logo
     const logoElement = document.getElementById("logo");
-    // Je sélectionne et je stocke le titre du logo
     const logoTitle = document.getElementById("logoTitle");
-    // Je sélectionne et je stocke l'icône User
     const logoUser = document.querySelector(".user i");
-    // Je sélectionne et je stocke l'icône User
     const userName = document.querySelector(".user .relative div");
 
     // Ouvrir le menu quand on clique sur l'hamburger non active (fa-bars)
@@ -282,51 +276,64 @@ export default {
       });
     });
 
-    // Fonction pour ajouter et retirer les événements de hover
-    function addHoverEvent() {
-      logoUser.addEventListener("mouseover", handleHover);
-      logoUser.addEventListener("mouseout", handleHoverOut);
+    // Fonction pour changer la couleur au hover
+    function handleHover() {
+      if (logoUser) {
+        logoUser.style.color = "#5FC2BA"; // Couleur de hover
+      }
     }
 
+    function handleHoverOut() {
+      if (logoUser) {
+        const ud_header = document.querySelector(".ud-header");
+        logoUser.style.color =
+          window.scrollY > ud_header.offsetTop ? "#0b162c" : "#ffffff"; // Couleur de base
+      }
+    }
+
+    // Ajouter les événements de hover
+    function addHoverEvent() {
+      if (logoUser) {
+        logoUser.addEventListener("mouseover", handleHover);
+        logoUser.addEventListener("mouseout", handleHoverOut);
+      }
+    }
+
+    // Retirer les événements de hover
     function removeHoverEvent() {
-      logoUser.removeEventListener("mouseover", handleHover);
-      logoUser.removeEventListener("mouseout", handleHoverOut);
+      if (logoUser) {
+        logoUser.removeEventListener("mouseover", handleHover);
+        logoUser.removeEventListener("mouseout", handleHoverOut);
+      }
     }
 
     // Changer la couleur du menu au scroll
     window.onscroll = () => {
-      // Je sélectionne et je stocke la barre du menu
       const ud_header = document.querySelector(".ud-header");
-      // Je stocke le menu en fixed
       const fixed = ud_header.offsetTop;
 
       if (window.scrollY > fixed) {
         ud_header.classList.remove("bg-darkblue");
-        ud_header.classList.add("sticky");
-        ud_header.classList.add("blueMenu");
+        ud_header.classList.add("sticky", "blueMenu");
         logoElement.src = logoScrolledPath;
         logoTitle.style.color = "#0b162c";
         hamburgerNonactive.style.color = "#0b162c";
-        logoUser.style.color = "#0b162c";
-        userName.style.color = "#ffffff";
+
+        if (logoUser) logoUser.style.color = "#0b162c";
+        if (userName) userName.style.color = "#ffffff";
+
         addHoverEvent();
       } else {
         ud_header.classList.add("bg-darkblue");
-        ud_header.classList.remove("sticky");
-        ud_header.classList.remove("blueMenu");
+        ud_header.classList.remove("sticky", "blueMenu");
         logoElement.src = logoPath;
         logoTitle.style.color = "#ffffff";
         hamburgerNonactive.style.color = "#ffffff";
-        logoUser.style.color = "#ffffff";
-        userName.style.color = "#0b162c";
-        removeHoverEvent();
-      }
-      function handleHover() {
-        logoUser.style.color = "#5FC2BA"; // Couleur de hover
-      }
 
-      function handleHoverOut() {
-        logoUser.style.color = window.scrollY > fixed ? "#0b162c" : "#ffffff"; // Couleur de base en fonction de l'état du menu
+        if (logoUser) logoUser.style.color = "#ffffff";
+        if (userName) userName.style.color = "#0b162c";
+
+        removeHoverEvent();
       }
     };
   },
