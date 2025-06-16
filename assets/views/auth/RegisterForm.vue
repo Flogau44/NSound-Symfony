@@ -175,7 +175,10 @@ export default {
           password: this.password,
         });
 
-        toast.success("Inscription réussie !", { timeout: 3000 });
+        toast.success(
+          "Inscription réussie ! Utilisez vos identifiants pour vous connecter.",
+          { timeout: 3000 }
+        );
 
         // Ajout d'un délai avant la redirection
         setTimeout(() => {
